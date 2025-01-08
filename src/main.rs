@@ -117,6 +117,20 @@ fn generate_visual_flow(logs: &Vec<Entry>) {
                         }
                     }
                 }
+                LogType::START => {
+                    //Starting another function call to same entity type
+                    let prev_entity_name =
+                        entity_flow_id_map.get(&prev.unwrap().entity_name).unwrap();
+                    stack.push(prev_entity_name.clone());
+                    let entity_flow_id = Uuid::new_v4().to_string();
+                    entity_flow_id_map.insert(log.entity_name.clone(), entity_flow_id.clone());
+
+                    let entity_flow = EntityFlow {
+                        flow: Vec::new(),
+                        name: log.entity_name.clone(),
+                    };
+                    flow_map.insert(entity_flow_id, entity_flow);
+                }
                 _ => panic!(
                     "Invalid log_type {:?} when prev and current log is equal",
                     log.log_type
@@ -441,5 +455,53 @@ fn main() -> () {
 
     */
 
-    generate_visual_flow(&logs);
+    let double_self_fn_call = vec![
+        Entry {
+            entity_name: String::from("main"),
+            log_type: LogType::START,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("main"),
+            log_type: LogType::LOG,
+            value: Option::from(String::from("Adding 1 and 2")),
+        },
+        Entry {
+            entity_name: String::from("add"),
+            log_type: LogType::START,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("add"),
+            log_type: LogType::LOG,
+            value: Option::from(String::from("1+2 = 3")),
+        },
+        Entry {
+            entity_name: String::from("add"),
+            log_type: LogType::START,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("add"),
+            log_type: LogType::LOG,
+            value: Option::from(String::from("internal 1+2 = 3")),
+        },
+        Entry {
+            entity_name: String::from("add"),
+            log_type: LogType::END,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("add"),
+            log_type: LogType::END,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("main"),
+            log_type: LogType::END,
+            value: None,
+        },
+    ];
+
+    generate_visual_flow(&double_self_fn_call);
 }
