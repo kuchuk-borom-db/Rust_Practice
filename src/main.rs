@@ -7,6 +7,7 @@ enum LogType {
     STORE,
     START,
     END,
+    EXTERNAL_CALL,
 }
 
 struct Entry {
@@ -95,7 +96,7 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
             }
             LogType::END => {
                 let prev_flow = id_flow_map.get(prev_entity_id).unwrap();
-                if prev_flow.flow.last().unwrap_or(&"".to_string()) == "::STORE::" {
+                if prev_flow.flow.last().unwrap_or(&"_".to_string()) == "::STORE::" {
                     panic!(
                         "Latest statement of entity_flow {:?} was STORE but it's ENDING.",
                         prev_flow
@@ -141,11 +142,16 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
                         flow.flow.pop();
                         flow.flow.push(format!(
                             "::CALL_STORE::{}",
-                            log.value.as_ref().unwrap_or(&"".to_string())
+                            log.value.as_ref().unwrap_or(&"_".to_string())
                         ));
                     } else {
-                        flow.flow.push(log.value.clone().unwrap_or_default());
+                        flow.flow.push(log.value.clone().unwrap_or("_".to_string()));
                     }
+                }
+            },
+            LogType::EXTERNAL_CALL => {
+                if let Some(flow) = id_flow_map.get_mut(prev_entity_id){
+                    flow.flow.push(format!("::CALL::{}",log.value.clone().unwrap_or("_".to_string())));
                 }
             }
         }
@@ -330,6 +336,22 @@ fn main() -> () {
             entity_name: String::from("add2"),
             log_type: LogType::END,
             value: None,
+        },
+        Entry {
+            entity_name: String::from("main"),
+            log_type: LogType::STORE,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("main"),
+            log_type: LogType::LOG,
+            value: Option::from(String::from("External API Call NEED TO CHANGE")),
+            //TODO Remove the store logic and instead use another special log type
+        },
+        Entry {
+            entity_name: String::from("main"),
+            log_type: LogType::EXTERNAL_CALL,
+            value: Option::from(String::from("External API Call")),
         },
         Entry {
             entity_name: String::from("main"),
