@@ -191,6 +191,77 @@ fn main() -> () {
             value: None,
         },
         Entry {
+            entity_name: String::from("processData"),
+            log_type: LogType::START,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("processData"),
+            log_type: LogType::STORE,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("add"),
+            log_type: LogType::START,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("add"),
+            log_type: LogType::LOG,
+            value: Option::from(String::from("return 0")),
+        },
+        //INVALID
+        // Entry {
+        //     entity_name: String::from("add"),
+        //     log_type: LogType::STORE,
+        //     value: None,
+        // },
+        Entry {
+            entity_name: String::from("add"),
+            log_type: LogType::END,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("processData"),
+            log_type: LogType::LOG,
+            value: Option::from(String::from("0")),
+        },
+        Entry {
+            entity_name: String::from("processData"),
+            log_type: LogType::STORE,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("multiply"),
+            log_type: LogType::START,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("multiply"),
+            log_type: LogType::LOG,
+            value: Option::from(String::from("return 0")),
+        },
+        Entry {
+            entity_name: String::from("multiply"),
+            log_type: LogType::END,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("processData"),
+            log_type: LogType::LOG,
+            value: Option::from(String::from("0+0 = 0")),
+        },
+        Entry {
+            entity_name: String::from("processData"),
+            log_type: LogType::END,
+            value: None,
+        },
+        Entry {
+            entity_name: String::from("processData"),
+            log_type: LogType::STORE,
+            value: None,
+        },
+        Entry {
             entity_name: String::from("add"),
             log_type: LogType::START,
             value: None,
@@ -200,12 +271,6 @@ fn main() -> () {
             log_type: LogType::LOG,
             value: Option::from(String::from("return 4")),
         },
-        //INVALID
-        // Entry {
-        //     entity_name: String::from("add"),
-        //     log_type: LogType::STORE,
-        //     value: None,
-        // },
         Entry {
             entity_name: String::from("add"),
             log_type: LogType::END,
@@ -272,6 +337,76 @@ fn main() -> () {
             value: None,
         },
     ];
+    /*
+    {
+      "e2ac5c3c-2302-4ef0-aa54-8460d52cf375": {
+        "id": "e2ac5c3c-2302-4ef0-aa54-8460d52cf375",
+        "name": "main",
+        "flow": [
+          "num = 2",
+          "::CALL_STORE::69675231-5d7c-4433-b03d-4f27f3dad22e",
+          "process_data(2) = 24",
+          "::CALL::fc8bbfac-820c-403b-a919-08c0b3377306"
+        ]
+      },
+      "a5abd1f5-a348-4efa-b134-89a2cb1cee25": {
+        "id": "a5abd1f5-a348-4efa-b134-89a2cb1cee25",
+        "name": "add",
+        "flow": [
+          "return 4"
+        ]
+      },
+      "69675231-5d7c-4433-b03d-4f27f3dad22e": {
+        "id": "69675231-5d7c-4433-b03d-4f27f3dad22e",
+        "name": "processData",
+        "flow": [
+          "::CALL_STORE::234d09e5-89ee-4f5b-9d6b-2ebdefdb8ade",
+          "::CALL_STORE::a5abd1f5-a348-4efa-b134-89a2cb1cee25",
+          "4",
+          "::CALL_STORE::8ebda133-16f1-4e82-909e-6752e82e009f",
+          "24+4 = 24"
+        ]
+      },
+      "71a70746-12ad-4084-86cd-6567202eabf5": {
+        "id": "71a70746-12ad-4084-86cd-6567202eabf5",
+        "name": "add",
+        "flow": [
+          "return 0"
+        ]
+      },
+      "fc8bbfac-820c-403b-a919-08c0b3377306": {
+        "id": "fc8bbfac-820c-403b-a919-08c0b3377306",
+        "name": "add2",
+        "flow": [
+          "return 3"
+        ]
+      },
+      "8ebda133-16f1-4e82-909e-6752e82e009f": {
+        "id": "8ebda133-16f1-4e82-909e-6752e82e009f",
+        "name": "multiply",
+        "flow": [
+          "return 20"
+        ]
+      },
+      "6c3255f2-a2db-4191-a912-10dcbb9a9447": {
+        "id": "6c3255f2-a2db-4191-a912-10dcbb9a9447",
+        "name": "multiply",
+        "flow": [
+          "return 0"
+        ]
+      },
+      "234d09e5-89ee-4f5b-9d6b-2ebdefdb8ade": {
+        "id": "234d09e5-89ee-4f5b-9d6b-2ebdefdb8ade",
+        "name": "processData",
+        "flow": [
+          "::CALL_STORE::71a70746-12ad-4084-86cd-6567202eabf5",
+          "0",
+          "::CALL_STORE::6c3255f2-a2db-4191-a912-10dcbb9a9447",
+          "0+0 = 0"
+        ]
+      }
+    }
+    */
 
     let single_fn_call_log = vec![
         Entry {
