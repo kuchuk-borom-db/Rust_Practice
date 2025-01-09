@@ -24,12 +24,22 @@ struct EntityFlow {
     flow: Vec<String>,
 }
 fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
+    //To store entity's flow mapped to a unique ID
     let mut id_flow_map: HashMap<String, EntityFlow> = HashMap::new();
+    //The starting entity_flow
     let mut root_entity: Option<String> = None;
+    //Previously iterated entity_flow
     let mut prev_id: Option<String> = None;
+    //Stores caller_entity_flow. i.e entity_flow that "called" another entity_flow.
+    // Example:- foo(){ bar(); }    "foo" is pushed into stack and popped when bar function is complete, thus maintaining the link between caller and the called "function"
     let mut stack: Vec<String> = Vec::new();
 
     for log in logs {
+        /*
+        First entry.
+        LogType must be START.
+        Set root_entity, create entity_flow with UID & store in id_flow_map, set newly created entity_flow as prev
+         */
         if prev_id.is_none() {
             match log.log_type {
                 LogType::START => {}
@@ -51,10 +61,13 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
             root_entity = Some(entity_flow_id);
             continue;
         }
-
+        //Prev entity_flow exists
         let prev_entity_id = prev_id.as_ref().unwrap();
         let prev_entity_flow = id_flow_map.get(prev_entity_id).unwrap();
-
+        /*
+        If prev entity flow's name and current entry's name are not the same then it usually means that it's a new function call.
+        Example flow would be :- [main.start(), main.log(5+2=7), add.start(), add.log(returning 10), add.end(), main.end()]
+        */
         if prev_entity_flow.name != log.entity_name {
             match log.log_type {
                 LogType::START => {
@@ -69,19 +82,17 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
                     prev_id = Some(entity_flow_id);
                     continue;
                 },
-                LogType::END => {
-                    let current_entity_flow = id_flow_map.get(prev_entity_id).unwrap();
-                    prev_id = Some(current_entity_flow.id.clone());
-                    continue;
-                }
                 _ => panic!(
                     "Current log {} & Prev log {} have distinct names BUT has invalid log type {:?}. It needs to be of type START",
                     log.entity_name, prev_entity_flow.name, log.log_type
                 ),
             }
         }
-
+        /*
+        If prev and current log's name are same it's part of the entity_flow OR another call to itself.
+        */
         match log.log_type {
+            //Call to self function. Must create a new entity_flow. It's a new function call because its log type is "START" although it's the same function being called.
             LogType::START => {
                 stack.push(prev_entity_id.clone());
                 let entity_flow_id: String = Uuid::new_v4().to_string();
@@ -95,6 +106,7 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
                 prev_id = Some(entity_flow_id);
                 continue;
             }
+            //End of a function call. To link it to it's caller we pop the stack and Link it based on entity_flow ids.
             LogType::END => {
                 let prev_flow = id_flow_map.get(prev_entity_id).unwrap();
                 if prev_flow.flow.last().unwrap_or(&"_".to_string()) == "::STORE::" {
@@ -121,11 +133,13 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
                             .flow
                             .push(format!("::CALL_STORE::{}", current_flow.id));
                     }
-                    //Since we pop back to caller so it's the latest log entry.
+                    //insert the updated caller which has link to the current entity_flow's ID.
                     id_flow_map.insert(caller_id.clone(), updated_caller);
+                    //prev_id is now caller_id since we popped back to the caller.
                     prev_id = Some(caller_id);
                     continue;
                 } else {
+                    //If popped stack is empty it must be the end of the root entity_flow
                     let root_entity_id = root_entity.as_ref().unwrap();
                     if current_flow.id != *root_entity_id {
                         panic!("Popped stack is empty but current entity is not root entity ");
@@ -139,6 +153,7 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
             }
             LogType::LOG => {
                 if let Some(prev_entity) = id_flow_map.get_mut(prev_entity_id) {
+                    //If previous flow was ::STORE:: it is NOT valid. STORE is only used to represent that the return value of a function call is stored
                     if prev_entity.flow.last().unwrap_or(&String::new()) == "::STORE::" {
                         panic!("Previous flow log was of type STORE but now it's LOG which is NOT valid for entity_flow {:?}", prev_entity)
                     } else {
@@ -149,31 +164,43 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
                 }
             }
             LogType::ExternalCall => {
-                if let Some(flow) = id_flow_map.get_mut(prev_entity_id) {
-                    flow.flow.push(format!(
+                if let Some(prev_entity) = id_flow_map.get_mut(prev_entity_id) {
+                    //If previous flow was ::STORE:: it is NOT valid. STORE is only used to represent that the return value of a function call is stored
+                    if prev_entity.flow.last().unwrap_or(&String::new()) == "::STORE::" {
+                        panic!("Previous flow log was of type STORE but now it's LOG which is NOT valid for entity_flow {:?}", prev_entity)
+                    }
+                    prev_entity.flow.push(format!(
                         "::EXTERNAL_CALL::{}",
                         log.value.clone().unwrap_or("_".to_string())
                     ));
                 }
             }
             LogType::ExternalCallStore => {
-                if let Some(flow) = id_flow_map.get_mut(prev_entity_id) {
-                    flow.flow.push(format!(
+                if let Some(prev_entity) = id_flow_map.get_mut(prev_entity_id) {
+                    //If previous flow was ::STORE:: it is NOT valid. STORE is only used to represent that the return value of a function call is stored
+                    if prev_entity.flow.last().unwrap_or(&String::new()) == "::STORE::" {
+                        panic!("Previous flow log was of type STORE but now it's LOG which is NOT valid for entity_flow {:?}", prev_entity)
+                    }
+                    prev_entity.flow.push(format!(
                         "::EXTERNAL_CALL_RETURN::{}",
                         log.value.clone().unwrap_or("_".to_string())
                     ));
                 }
             }
         }
+        //Since current_flow and prev flow is the same we can get the ID by using prev_entity_id
         let current_flow = id_flow_map.get(prev_entity_id).unwrap();
         prev_id = Some(current_flow.id.clone());
     }
+
+    //If stack is NOT empty after iteration then some function call was left dangling and is not valid.
     if !stack.is_empty() {
         panic!(
             "Invalid function calls. caller_entity {} never had it's called entity terminated",
             stack.pop().unwrap()
         )
     }
+    //Replace the root_entity_id key with "START" to define the Starting entity_flow
     let root_entity_flow = id_flow_map.remove(&root_entity.unwrap()).unwrap();
     id_flow_map.insert(String::from("START"), root_entity_flow);
     id_flow_map
