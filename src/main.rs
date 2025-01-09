@@ -23,6 +23,21 @@ struct EntityFlow {
     name: String,
     flow: Vec<String>,
 }
+
+fn create_entity_flow(
+    id_flow_map: &mut HashMap<String, EntityFlow>,
+    entity_name: String,
+) -> String {
+    let entity_flow_id: String = Uuid::new_v4().to_string();
+    let entity_flow = EntityFlow {
+        id: entity_flow_id.clone(),
+        name: entity_name,
+        flow: Vec::new(),
+    };
+
+    id_flow_map.insert(entity_flow_id.clone(), entity_flow);
+    entity_flow_id
+}
 fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
     //To store entity's flow mapped to a unique ID
     let mut id_flow_map: HashMap<String, EntityFlow> = HashMap::new();
@@ -48,17 +63,9 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
                     log.log_type
                 ),
             }
-
-            let entity_flow_id: String = Uuid::new_v4().to_string();
-            let entity_flow = EntityFlow {
-                id: entity_flow_id.clone(),
-                name: log.entity_name.clone(),
-                flow: Vec::new(),
-            };
-
-            id_flow_map.insert(entity_flow_id.clone(), entity_flow);
-            prev_id = Some(entity_flow_id.clone());
-            root_entity = Some(entity_flow_id);
+            let entity_id = create_entity_flow(&mut id_flow_map, log.entity_name.clone());
+            prev_id = Some(entity_id.clone());
+            root_entity = Some(entity_id);
             continue;
         }
         //Prev entity_flow exists
@@ -72,14 +79,8 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
             match log.log_type {
                 LogType::START => {
                     stack.push(prev_entity_id.clone());
-                    let entity_flow_id: String = Uuid::new_v4().to_string();
-                    let entity_flow = EntityFlow {
-                        id: entity_flow_id.clone(),
-                        name: log.entity_name.clone(),
-                        flow: Vec::new(),
-                    };
-                    id_flow_map.insert(entity_flow_id.clone(), entity_flow);
-                    prev_id = Some(entity_flow_id);
+                    let entity_id = create_entity_flow(&mut id_flow_map, log.entity_name.clone());
+                    prev_id = Some(entity_id);
                     continue;
                 },
                 _ => panic!(
@@ -95,15 +96,8 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
             //Call to self function. Must create a new entity_flow. It's a new function call because its log type is "START" although it's the same function being called.
             LogType::START => {
                 stack.push(prev_entity_id.clone());
-                let entity_flow_id: String = Uuid::new_v4().to_string();
-                let entity_flow = EntityFlow {
-                    id: entity_flow_id.clone(),
-                    name: log.entity_name.clone(),
-                    flow: Vec::new(),
-                };
-
-                id_flow_map.insert(entity_flow_id.clone(), entity_flow);
-                prev_id = Some(entity_flow_id);
+                let entity_id = create_entity_flow(&mut id_flow_map, log.entity_name.clone());
+                prev_id = Some(entity_id);
                 continue;
             }
             //End of a function call. To link it to it's caller we pop the stack and Link it based on entity_flow ids.
