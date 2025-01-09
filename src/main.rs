@@ -7,7 +7,8 @@ enum LogType {
     STORE,
     START,
     END,
-    EXTERNAL_CALL,
+    ExternalCall,
+    ExternalCallStore,
 }
 
 struct Entry {
@@ -137,21 +138,30 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
                 }
             }
             LogType::LOG => {
-                if let Some(flow) = id_flow_map.get_mut(prev_entity_id) {
-                    if flow.flow.last().unwrap_or(&String::new()) == "::STORE::" {
-                        flow.flow.pop();
-                        flow.flow.push(format!(
-                            "::CALL_STORE::{}",
-                            log.value.as_ref().unwrap_or(&"_".to_string())
-                        ));
+                if let Some(prev_entity) = id_flow_map.get_mut(prev_entity_id) {
+                    if prev_entity.flow.last().unwrap_or(&String::new()) == "::STORE::" {
+                        panic!("Previous flow log was of type STORE but now it's LOG which is NOT valid for entity_flow {:?}", prev_entity)
                     } else {
-                        flow.flow.push(log.value.clone().unwrap_or("_".to_string()));
+                        prev_entity
+                            .flow
+                            .push(log.value.clone().unwrap_or("_".to_string()));
                     }
                 }
-            },
-            LogType::EXTERNAL_CALL => {
-                if let Some(flow) = id_flow_map.get_mut(prev_entity_id){
-                    flow.flow.push(format!("::CALL::{}",log.value.clone().unwrap_or("_".to_string())));
+            }
+            LogType::ExternalCall => {
+                if let Some(flow) = id_flow_map.get_mut(prev_entity_id) {
+                    flow.flow.push(format!(
+                        "::EXTERNAL_CALL::{}",
+                        log.value.clone().unwrap_or("_".to_string())
+                    ));
+                }
+            }
+            LogType::ExternalCallStore => {
+                if let Some(flow) = id_flow_map.get_mut(prev_entity_id) {
+                    flow.flow.push(format!(
+                        "::EXTERNAL_CALL_RETURN::{}",
+                        log.value.clone().unwrap_or("_".to_string())
+                    ));
                 }
             }
         }
@@ -164,6 +174,8 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
             stack.pop().unwrap()
         )
     }
+    let root_entity_flow = id_flow_map.remove(&root_entity.unwrap()).unwrap();
+    id_flow_map.insert(String::from("START"), root_entity_flow);
     id_flow_map
 }
 
@@ -339,18 +351,13 @@ fn main() -> () {
         },
         Entry {
             entity_name: String::from("main"),
-            log_type: LogType::STORE,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("External API Call NEED TO CHANGE")),
+            log_type: LogType::ExternalCallStore,
+            value: Option::from(String::from("Db repo")),
             //TODO Remove the store logic and instead use another special log type
         },
         Entry {
             entity_name: String::from("main"),
-            log_type: LogType::EXTERNAL_CALL,
+            log_type: LogType::ExternalCall,
             value: Option::from(String::from("External API Call")),
         },
         Entry {
@@ -360,75 +367,78 @@ fn main() -> () {
         },
     ];
     /*
-    {
-      "e2ac5c3c-2302-4ef0-aa54-8460d52cf375": {
-        "id": "e2ac5c3c-2302-4ef0-aa54-8460d52cf375",
-        "name": "main",
-        "flow": [
-          "num = 2",
-          "::CALL_STORE::69675231-5d7c-4433-b03d-4f27f3dad22e",
-          "process_data(2) = 24",
-          "::CALL::fc8bbfac-820c-403b-a919-08c0b3377306"
-        ]
-      },
-      "a5abd1f5-a348-4efa-b134-89a2cb1cee25": {
-        "id": "a5abd1f5-a348-4efa-b134-89a2cb1cee25",
-        "name": "add",
-        "flow": [
-          "return 4"
-        ]
-      },
-      "69675231-5d7c-4433-b03d-4f27f3dad22e": {
-        "id": "69675231-5d7c-4433-b03d-4f27f3dad22e",
-        "name": "processData",
-        "flow": [
-          "::CALL_STORE::234d09e5-89ee-4f5b-9d6b-2ebdefdb8ade",
-          "::CALL_STORE::a5abd1f5-a348-4efa-b134-89a2cb1cee25",
-          "4",
-          "::CALL_STORE::8ebda133-16f1-4e82-909e-6752e82e009f",
-          "24+4 = 24"
-        ]
-      },
-      "71a70746-12ad-4084-86cd-6567202eabf5": {
-        "id": "71a70746-12ad-4084-86cd-6567202eabf5",
-        "name": "add",
-        "flow": [
-          "return 0"
-        ]
-      },
-      "fc8bbfac-820c-403b-a919-08c0b3377306": {
-        "id": "fc8bbfac-820c-403b-a919-08c0b3377306",
-        "name": "add2",
-        "flow": [
-          "return 3"
-        ]
-      },
-      "8ebda133-16f1-4e82-909e-6752e82e009f": {
-        "id": "8ebda133-16f1-4e82-909e-6752e82e009f",
-        "name": "multiply",
-        "flow": [
-          "return 20"
-        ]
-      },
-      "6c3255f2-a2db-4191-a912-10dcbb9a9447": {
-        "id": "6c3255f2-a2db-4191-a912-10dcbb9a9447",
-        "name": "multiply",
-        "flow": [
-          "return 0"
-        ]
-      },
-      "234d09e5-89ee-4f5b-9d6b-2ebdefdb8ade": {
-        "id": "234d09e5-89ee-4f5b-9d6b-2ebdefdb8ade",
-        "name": "processData",
-        "flow": [
-          "::CALL_STORE::71a70746-12ad-4084-86cd-6567202eabf5",
-          "0",
-          "::CALL_STORE::6c3255f2-a2db-4191-a912-10dcbb9a9447",
-          "0+0 = 0"
-        ]
-      }
+        {
+          "fa891f3e-19de-4bcb-8016-54eea34e34f1": {
+            "id": "fa891f3e-19de-4bcb-8016-54eea34e34f1",
+            "name": "add",
+            "flow": [
+              "return 0"
+            ]
+          },
+          "685cbcc3-5708-4131-bfe9-a97224ba8f51": {
+            "id": "685cbcc3-5708-4131-bfe9-a97224ba8f51",
+            "name": "multiply",
+            "flow": [
+              "return 0"
+            ]
+          },
+          "771583cc-0bf4-4a73-b522-bb6fe7a2a3ad": {
+            "id": "771583cc-0bf4-4a73-b522-bb6fe7a2a3ad",
+            "name": "multiply",
+            "flow": [
+              "return 20"
+            ]
+          },
+          "START": {
+            "id": "7e920f7b-4b87-4ac4-a9b5-59402ea49beb",
+            "name": "main",
+            "flow": [
+              "num = 2",
+              "::CALL_STORE::92acea72-528a-4866-903c-16d6e68fa9ae",
+              "process_data(2) = 24",
+              "::CALL::056a8a89-212c-41f4-94f7-cc564c732e48",
+              "::EXTERNAL_CALL_RETURN::Db repo",
+              "::EXTERNAL_CALL::External API Call"
+            ]
+          },
+          "056a8a89-212c-41f4-94f7-cc564c732e48": {
+            "id": "056a8a89-212c-41f4-94f7-cc564c732e48",
+            "name": "add2",
+            "flow": [
+              "return 3"
+            ]
+          },
+          "36486281-03ba-4d0b-aeed-a6f69eaa6ebd": {
+            "id": "36486281-03ba-4d0b-aeed-a6f69eaa6ebd",
+            "name": "add",
+            "flow": [
+              "return 4"
+            ]
+          },
+          "fc583f08-ec40-42b2-8c28-b8e130dd31bd": {
+            "id": "fc583f08-ec40-42b2-8c28-b8e130dd31bd",
+            "name": "processData",
+            "flow": [
+              "::CALL_STORE::fa891f3e-19de-4bcb-8016-54eea34e34f1",
+              "0",
+              "::CALL_STORE::685cbcc3-5708-4131-bfe9-a97224ba8f51",
+              "0+0 = 0"
+            ]
+          },
+          "92acea72-528a-4866-903c-16d6e68fa9ae": {
+            "id": "92acea72-528a-4866-903c-16d6e68fa9ae",
+            "name": "processData",
+            "flow": [
+              "::CALL_STORE::fc583f08-ec40-42b2-8c28-b8e130dd31bd",
+              "::CALL_STORE::36486281-03ba-4d0b-aeed-a6f69eaa6ebd",
+              "4",
+              "::CALL_STORE::771583cc-0bf4-4a73-b522-bb6fe7a2a3ad",
+              "24+4 = 24"
+            ]
+          }
     }
-    */
+
+        */
 
     let single_fn_call_log = vec![
         Entry {
