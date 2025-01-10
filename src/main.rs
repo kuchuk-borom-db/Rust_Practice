@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use uuid::Uuid;
 
-#[derive(PartialEq, Debug)] // Allows binary comparison such as ==, !=
+#[derive(PartialEq, Debug, Clone)] // Allows binary comparison such as ==, !=
 enum LogType {
     LOG,
     STORE,
@@ -12,25 +12,48 @@ enum LogType {
 }
 
 struct Entry {
+    uuid: String,
     entity_name: String,
     log_type: LogType,
     value: Option<String>,
 }
 
+#[derive(PartialEq, Debug, Clone)]
+enum FlowType {
+    STORE,
+    CALL,
+    CALL_STORE,
+    LOG,
+    EXTERNAL_CALL,
+    EXTERNAL_CALL_STORE,
+}
+
+#[derive(Debug, Clone)]
+struct Flow {
+    flow_pointer_id: Option<String>,
+    flow_id: String,
+    flow_type: FlowType,
+    value: Option<String>,
+}
 #[derive(Debug, Clone)]
 struct EntityFlow {
     id: String, //For internal use.
     caller: Option<String>,
     name: String,
-    flow: Vec<String>,
+    flow: Vec<Flow>,
 }
 
 fn create_entity_flow(
     id_flow_map: &mut HashMap<String, EntityFlow>,
     entity_name: String,
     caller: Option<String>,
+    id: Option<String>,
 ) -> String {
-    let entity_flow_id: String = Uuid::new_v4().to_string();
+    let entity_flow_id: String = if id.is_some() {
+        id.unwrap()
+    } else {
+        Uuid::new_v4().to_string()
+    };
     let entity_flow = EntityFlow {
         id: entity_flow_id.clone(),
         caller,
@@ -61,7 +84,12 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
                 first_log.log_type
             );
         }
-        let entity_id = create_entity_flow(&mut id_flow_map, first_log.entity_name.clone(), None);
+        let entity_id = create_entity_flow(
+            &mut id_flow_map,
+            first_log.entity_name.clone(),
+            None,
+            Some("START".parse().unwrap()),
+        );
         prev_id = Some(entity_id.clone());
         root_entity = Some(entity_id);
     } else {
@@ -75,93 +103,105 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
             LogType::START => {
                 stack.push(prev_entity_id.clone());
                 let entity_id =
-                    create_entity_flow(&mut id_flow_map, log.entity_name.clone(), prev_id);
+                    create_entity_flow(&mut id_flow_map, log.entity_name.clone(), prev_id, None);
                 prev_id = Some(entity_id);
                 continue;
             }
             //End of a function call. To link it to its caller we pop the stack and Link it based on entity_flow ids.
             LogType::END => {
                 //prev_flow will ALWAYS match current flow as for a function to END it at least NEEDS to start previously.
-                let prev_flow = id_flow_map.get(prev_entity_id).unwrap();
-                if prev_flow.flow.last().unwrap_or(&"_".to_string()) == "::STORE::" {
-                    panic!(
-                        "Latest statement of entity_flow {:?} was STORE but it's ENDING.",
-                        prev_flow
-                    )
-                }
-                let current_flow = id_flow_map.get(prev_entity_id).unwrap();
-
-                if let Some(caller_id) = stack.pop() {
-                    let caller_entity = id_flow_map.get(&caller_id).unwrap().clone();
-                    let mut updated_caller = caller_entity.clone();
-
-                    if caller_entity.flow.is_empty()
-                        || caller_entity.flow.last().unwrap() != "::STORE::"
-                    {
-                        updated_caller
-                            .flow
-                            .push(format!("::CALL::{}", current_flow.id));
-                    } else {
-                        updated_caller.flow.pop();
-                        updated_caller
-                            .flow
-                            .push(format!("::CALL_STORE::{}", current_flow.id));
+                let current_entity_flow = id_flow_map.get(prev_entity_id).unwrap();
+                //Having store and then ending a function is NOT allowed. STORE needs to be accompanied by another function call
+                if let Some(last_flow) = current_entity_flow.flow.last() {
+                    if (last_flow.flow_type == FlowType::STORE) {
+                        panic!(
+                            "Latest statement of entity_flow {:?} was STORE but it's ENDING.",
+                            current_entity_flow
+                        )
                     }
-                    //insert the updated caller which has link to the current entity_flow's ID.
-                    id_flow_map.insert(caller_id.clone(), updated_caller);
-                    //prev_id is now caller_id since we popped back to the caller.
-                    prev_id = Some(caller_id);
+                }
+
+                if let Some(caller_entity_id) = stack.pop() {
+                    let mut updated_caller = id_flow_map.get(&caller_entity_id).unwrap().clone();
+                    //If caller's last flow was not a store then it is not storing and thus this function call can be linked directly
+                    if updated_caller.flow.is_empty()
+                        || updated_caller.flow.last().unwrap().flow_type != FlowType::STORE
+                    {
+                        updated_caller.flow.push(Flow {
+                            flow_id: log.uuid.clone(),
+                            flow_type: FlowType::CALL,
+                            flow_pointer_id: Some(current_entity_flow.id.clone()),
+                            value: None,
+                        });
+                    } else {
+                        //If caller's last flow was store then it needs to be popped and replaced with CALL_STORE flow
+                        updated_caller.flow.pop();
+                        updated_caller.flow.push(Flow {
+                            flow_id: log.uuid.clone(),
+                            flow_type: FlowType::CALL_STORE,
+                            flow_pointer_id: Some(current_entity_flow.id.clone()),
+                            value: None,
+                        });
+                    }
+                    //Replace existing caller_entity_flow with the updated one.
+                    id_flow_map.insert(caller_entity_id.clone(), updated_caller);
+                    //Since we popped back to the caller, it is the latest entity_flow we interacted with and thus, needs to be set as prev_id.
+                    prev_id = Some(caller_entity_id);
                     continue;
                 } else {
                     //If popped stack is empty it must be the end of the root entity_flow
                     let root_entity_id = root_entity.as_ref().unwrap();
-                    if current_flow.id != *root_entity_id {
+                    if current_entity_flow.id != *root_entity_id {
                         panic!("Popped stack is empty but current entity is not root entity ");
                     }
                 }
             }
             LogType::STORE => {
-                if let Some(flow) = id_flow_map.get_mut(prev_entity_id) {
-                    flow.flow.push("::STORE::".to_string());
+                if let Some(prev_entity_flow) = id_flow_map.get_mut(prev_entity_id) {
+                    prev_entity_flow.flow.push(Flow {
+                        flow_id: log.uuid.clone(),
+                        flow_type: FlowType::STORE,
+                        value: None,
+                        flow_pointer_id: None,
+                    });
                 }
             }
-            LogType::LOG => {
-                if let Some(prev_entity) = id_flow_map.get_mut(prev_entity_id) {
+            LogType::ExternalCall | LogType::ExternalCallStore | LogType::LOG => {
+                if let Some(prev_entity_flow) = id_flow_map.get_mut(prev_entity_id) {
                     //If previous flow was ::STORE:: it is NOT valid. STORE is only used to represent that the return value of a function call is stored
-                    if prev_entity.flow.last().unwrap_or(&String::new()) == "::STORE::" {
-                        panic!("Previous flow log was of type STORE but now it's LOG which is NOT valid for entity_flow {:?}", prev_entity)
-                    } else {
-                        prev_entity
-                            .flow
-                            .push(log.value.clone().unwrap_or("_".to_string()));
+                    if prev_entity_flow.flow.last().is_some()
+                        && prev_entity_flow.flow.last().unwrap().flow_type == FlowType::STORE
+                    {
+                        panic!("Previous flow log was of type STORE but now it's LOG which is NOT valid for entity_flow {:?}", prev_entity_flow)
                     }
-                }
-            }
-            LogType::ExternalCall => {
-                if let Some(prev_entity) = id_flow_map.get_mut(prev_entity_id) {
-                    //If previous flow was ::STORE:: it is NOT valid. STORE is only used to represent that the return value of a function call is stored
-                    if prev_entity.flow.last().unwrap_or(&String::new()) == "::STORE::" {
-                        panic!("Previous flow log was of type STORE but now it's LOG which is NOT valid for entity_flow {:?}", prev_entity)
-                    }
-                    prev_entity.flow.push(format!(
-                        "::EXTERNAL_CALL::{}",
-                        log.value.clone().unwrap_or("_".to_string())
-                    ));
-                }
-            }
-            LogType::ExternalCallStore => {
-                if let Some(prev_entity) = id_flow_map.get_mut(prev_entity_id) {
-                    //If previous flow was ::STORE:: it is NOT valid. STORE is only used to represent that the return value of a function call is stored
-                    if prev_entity.flow.last().unwrap_or(&String::new()) == "::STORE::" {
-                        panic!("Previous flow log was of type STORE but now it's LOG which is NOT valid for entity_flow {:?}", prev_entity)
-                    }
-                    prev_entity.flow.push(format!(
-                        "::EXTERNAL_CALL_STORE::{}",
-                        log.value.clone().unwrap_or("_".to_string())
-                    ));
+                    prev_entity_flow
+                        .flow
+                        .push(if log.log_type == LogType::ExternalCall {
+                            Flow {
+                                flow_id: log.uuid.clone(),
+                                flow_type: FlowType::EXTERNAL_CALL,
+                                value: Some(log.value.clone().unwrap_or("_".to_string())),
+                                flow_pointer_id: None,
+                            }
+                        } else if log.log_type == LogType::ExternalCallStore {
+                            Flow {
+                                flow_id: log.uuid.clone(),
+                                flow_type: FlowType::EXTERNAL_CALL_STORE,
+                                value: Some(log.value.clone().unwrap_or("_".to_string())),
+                                flow_pointer_id: None,
+                            }
+                        } else {
+                            Flow {
+                                flow_id: log.uuid.clone(),
+                                flow_type: FlowType::LOG,
+                                value: Option::from(log.value.clone().unwrap_or("".to_string())),
+                                flow_pointer_id: None,
+                            }
+                        });
                 }
             }
         }
+
         //Since current_flow and prev flow is the same we can get the ID by using prev_entity_id
         let current_flow = id_flow_map.get(prev_entity_id).unwrap();
         prev_id = Some(current_flow.id.clone());
@@ -182,650 +222,271 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
 
 fn generate_mermaid_diagram_from_visual_flow_log_map(map: &HashMap<String, EntityFlow>) -> String {
     let mut mermaid = String::from("flowchart TB\n");
-    let flow_uid_map: HashMap<String, String> = HashMap::new();
     //Generate subgraphs and direct arrows
     for (k, v) in map {
         mermaid += &String::from(format!("\tsubgraph {}[\"{}\"]\n", k, v.name));
         let mut prev_flow: Option<String> = None;
         for flow in &v.flow {
-            let mut current_flow: String = "".to_string();
-            if flow.starts_with("::CALL::") || flow.starts_with("::CALL_STORE::") {
-                //We need access to the entity_flow name of the called entity_flow
-                let called_entity_id = if flow.starts_with("::CALL::") {
-                    flow.replace("::CALL::", "")
-                } else {
-                    flow.replace("::CALL_STORE::", "")
-                };
-                let called_entity = map.get(&called_entity_id).unwrap();
-
-                let appended_string = if flow.starts_with("::CALL::") {
-                    &String::from(format!("\t\t{}[\"{}\"]\n", flow, called_entity.name))
-                } else {
-                    &String::from(format!("\t\t{}[/\"{}\"/]\n", flow, called_entity.name))
-                };
-                mermaid += appended_string;
-                current_flow = flow.clone();
-            } else if flow.starts_with("::EXTERNAL_CALL::") {
-                let flow_uid = Uuid::new_v4().to_string();
-                let log = flow.replace("::EXTERNAL_CALL::", "");
-                mermaid += &String::from(format!("\t\t{}([\"{}\"])\n", flow_uid.clone(), log));
-                current_flow = flow_uid;
-            } else if flow.starts_with("::EXTERNAL_CALL_STORE::") {
-                let flow_uid = Uuid::new_v4().to_string();
-                let log = flow.replace("::EXTERNAL_CALL_STORE::", "");
-                mermaid += &String::from(format!("\t\t{}([\"{}\"])\n", flow_uid, log));
-                current_flow = flow_uid;
-            } else {
-                let flow_uid = Uuid::new_v4().to_string();
-                mermaid += &String::from(format!("\t\t{}([\"{}\"])\n", flow_uid, flow));
-                current_flow = flow_uid;
+            let mut to_append: String = String::from("");
+            match flow.flow_type {
+                FlowType::LOG => {
+                    to_append = format!(
+                        "\t\t{}([\"{}\"])",
+                        flow.flow_id,
+                        flow.value.as_ref().unwrap()
+                    );
+                }
+                FlowType::CALL | FlowType::CALL_STORE => {
+                    let called_entity_flow =
+                        map.get(flow.flow_pointer_id.as_ref().unwrap()).unwrap();
+                    to_append = if flow.flow_type == FlowType::CALL {
+                        format!("\t\t{}[\"{}\"]", flow.flow_id, called_entity_flow.name)
+                    } else {
+                        format!("\t\t{}[/\"{}\"/]", flow.flow_id, called_entity_flow.name)
+                    };
+                }
+                FlowType::EXTERNAL_CALL | FlowType::EXTERNAL_CALL_STORE => {
+                    to_append = if flow.flow_type == FlowType::EXTERNAL_CALL {
+                        format!("\t\t{}[\\{}/]", flow.flow_id, flow.value.as_ref().unwrap())
+                    } else {
+                        //TODO Set arrow to self.
+                        format!(
+                            "\t\t{}[/\"{}\"\\]",
+                            flow.flow_id,
+                            flow.value.as_ref().unwrap()
+                        )
+                    };
+                }
+                FlowType::STORE => {
+                    panic!("STORE FlowType should not be present! {:?}", flow)
+                }
             }
-            //Define arrow between prev and current flow
-            if let Some(prev) = prev_flow.as_ref() {
-                mermaid += &String::from(format!("\t\t{} --> {}\n", prev, current_flow));
+            mermaid += &to_append;
+            mermaid += "\n";
+            //Basic internal flow arrow
+            if prev_flow.is_none() {
+                prev_flow = Option::from(flow.flow_id.clone());
+                continue;
             }
-            prev_flow = Some(current_flow);
+            mermaid += &String::from(format!("\t\t{} --> {}\n", prev_flow.unwrap(), flow.flow_id));
+            prev_flow = Option::from(flow.flow_id.clone());
         }
         mermaid += "\tend\n";
     }
+
     mermaid
 }
+
 fn main() -> () {
     //List of fake entries
 
     let logs = vec![
         Entry {
+            uuid: String::from("a"),
             entity_name: String::from("main"),
             log_type: LogType::START,
             value: None,
         },
         Entry {
+            uuid: String::from("b"),
             entity_name: String::from("main"),
             log_type: LogType::LOG,
             value: Option::from(String::from("num = 2")),
         },
         Entry {
+            uuid: String::from("c"),
             entity_name: String::from("main"),
             log_type: LogType::STORE,
             value: None,
         },
         Entry {
+            uuid: String::from("d"),
             entity_name: String::from("processData"),
             log_type: LogType::START,
             value: None,
         },
         Entry {
+            uuid: String::from("e"),
             entity_name: String::from("processData"),
             log_type: LogType::STORE,
             value: None,
         },
         Entry {
+            uuid: String::from("f"),
             entity_name: String::from("processData"),
             log_type: LogType::START,
             value: None,
         },
         Entry {
+            uuid: String::from("g"),
             entity_name: String::from("processData"),
             log_type: LogType::STORE,
             value: None,
         },
         Entry {
+            uuid: String::from("h"),
             entity_name: String::from("add"),
             log_type: LogType::START,
             value: None,
         },
         Entry {
+            uuid: String::from("i"),
             entity_name: String::from("add"),
             log_type: LogType::LOG,
             value: Option::from(String::from("return 0")),
         },
-        //INVALID
-        // Entry {
-        //     entity_name: String::from("add"),
-        //     log_type: LogType::STORE,
-        //     value: None,
-        // },
         Entry {
+            uuid: String::from("j"),
             entity_name: String::from("add"),
             log_type: LogType::END,
             value: None,
         },
         Entry {
+            uuid: String::from("k"),
             entity_name: String::from("processData"),
             log_type: LogType::LOG,
             value: Option::from(String::from("0")),
         },
         Entry {
+            uuid: String::from("l"),
             entity_name: String::from("processData"),
             log_type: LogType::STORE,
             value: None,
         },
         Entry {
+            uuid: String::from("m"),
             entity_name: String::from("multiply"),
             log_type: LogType::START,
             value: None,
         },
         Entry {
+            uuid: String::from("n"),
             entity_name: String::from("multiply"),
             log_type: LogType::LOG,
             value: Option::from(String::from("return 0")),
         },
         Entry {
+            uuid: String::from("o"),
             entity_name: String::from("multiply"),
             log_type: LogType::END,
             value: None,
         },
         Entry {
+            uuid: String::from("p"),
             entity_name: String::from("processData"),
             log_type: LogType::LOG,
             value: Option::from(String::from("0+0 = 0")),
         },
         Entry {
+            uuid: String::from("q"),
             entity_name: String::from("processData"),
             log_type: LogType::END,
             value: None,
         },
         Entry {
+            uuid: String::from("r"),
             entity_name: String::from("processData"),
             log_type: LogType::STORE,
             value: None,
         },
         Entry {
+            uuid: String::from("s"),
             entity_name: String::from("add"),
             log_type: LogType::START,
             value: None,
         },
         Entry {
+            uuid: String::from("t"),
             entity_name: String::from("add"),
             log_type: LogType::LOG,
             value: Option::from(String::from("return 4")),
         },
         Entry {
+            uuid: String::from("u"),
             entity_name: String::from("add"),
             log_type: LogType::END,
             value: None,
         },
         Entry {
+            uuid: String::from("v"),
             entity_name: String::from("processData"),
             log_type: LogType::LOG,
             value: Option::from(String::from("4")),
         },
         Entry {
+            uuid: String::from("w"),
             entity_name: String::from("processData"),
             log_type: LogType::STORE,
             value: None,
         },
         Entry {
+            uuid: String::from("x"),
             entity_name: String::from("multiply"),
             log_type: LogType::START,
             value: None,
         },
         Entry {
+            uuid: String::from("y"),
             entity_name: String::from("multiply"),
             log_type: LogType::LOG,
             value: Option::from(String::from("return 20")),
         },
         Entry {
+            uuid: String::from("z"),
             entity_name: String::from("multiply"),
             log_type: LogType::END,
             value: None,
         },
         Entry {
+            uuid: String::from("1"),
             entity_name: String::from("processData"),
             log_type: LogType::LOG,
             value: Option::from(String::from("24+4 = 24")),
         },
         Entry {
+            uuid: String::from("2"),
             entity_name: String::from("processData"),
             log_type: LogType::END,
             value: None,
         },
         Entry {
+            uuid: String::from("3"),
             entity_name: String::from("main"),
             log_type: LogType::LOG,
             value: Option::from(String::from("process_data(2) = 24")),
         },
         Entry {
+            uuid: String::from("4"),
             entity_name: String::from("add2"),
             log_type: LogType::START,
             value: None,
         },
         Entry {
+            uuid: String::from("5"),
             entity_name: String::from("add2"),
             log_type: LogType::LOG,
             value: Option::from(String::from("return 3")),
         },
         Entry {
+            uuid: String::from("6"),
             entity_name: String::from("add2"),
             log_type: LogType::END,
             value: None,
         },
         Entry {
+            uuid: String::from("7"),
             entity_name: String::from("main"),
             log_type: LogType::ExternalCallStore,
             value: Option::from(String::from("Db repo")),
-            //TODO Remove the store logic and instead use another special log type
         },
         Entry {
+            uuid: String::from("8"),
             entity_name: String::from("main"),
             log_type: LogType::ExternalCall,
             value: Option::from(String::from("External API Call")),
         },
         Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::END,
-            value: None,
-        },
-    ];
-    /*
-        {
-          "fa891f3e-19de-4bcb-8016-54eea34e34f1": {
-            "id": "fa891f3e-19de-4bcb-8016-54eea34e34f1",
-            "name": "add",
-            "flow": [
-              "return 0"
-            ]
-          },
-          "685cbcc3-5708-4131-bfe9-a97224ba8f51": {
-            "id": "685cbcc3-5708-4131-bfe9-a97224ba8f51",
-            "name": "multiply",
-            "flow": [
-              "return 0"
-            ]
-          },
-          "771583cc-0bf4-4a73-b522-bb6fe7a2a3ad": {
-            "id": "771583cc-0bf4-4a73-b522-bb6fe7a2a3ad",
-            "name": "multiply",
-            "flow": [
-              "return 20"
-            ]
-          },
-          "START": {
-            "id": "7e920f7b-4b87-4ac4-a9b5-59402ea49beb",
-            "name": "main",
-            "flow": [
-              "num = 2",
-              "::CALL_STORE::92acea72-528a-4866-903c-16d6e68fa9ae",
-              "process_data(2) = 24",
-              "::CALL::056a8a89-212c-41f4-94f7-cc564c732e48",
-              "::EXTERNAL_CALL_RETURN::Db repo",
-              "::EXTERNAL_CALL::External API Call"
-            ]
-          },
-          "056a8a89-212c-41f4-94f7-cc564c732e48": {
-            "id": "056a8a89-212c-41f4-94f7-cc564c732e48",
-            "name": "add2",
-            "flow": [
-              "return 3"
-            ]
-          },
-          "36486281-03ba-4d0b-aeed-a6f69eaa6ebd": {
-            "id": "36486281-03ba-4d0b-aeed-a6f69eaa6ebd",
-            "name": "add",
-            "flow": [
-              "return 4"
-            ]
-          },
-          "fc583f08-ec40-42b2-8c28-b8e130dd31bd": {
-            "id": "fc583f08-ec40-42b2-8c28-b8e130dd31bd",
-            "name": "processData",
-            "flow": [
-              "::CALL_STORE::fa891f3e-19de-4bcb-8016-54eea34e34f1",
-              "0",
-              "::CALL_STORE::685cbcc3-5708-4131-bfe9-a97224ba8f51",
-              "0+0 = 0"
-            ]
-          },
-          "92acea72-528a-4866-903c-16d6e68fa9ae": {
-            "id": "92acea72-528a-4866-903c-16d6e68fa9ae",
-            "name": "processData",
-            "flow": [
-              "::CALL_STORE::fc583f08-ec40-42b2-8c28-b8e130dd31bd",
-              "::CALL_STORE::36486281-03ba-4d0b-aeed-a6f69eaa6ebd",
-              "4",
-              "::CALL_STORE::771583cc-0bf4-4a73-b522-bb6fe7a2a3ad",
-              "24+4 = 24"
-            ]
-          }
-    }
-    */
-
-    let single_fn_call_log = vec![
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("Adding 1 and 2")),
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("1+2 = 3")),
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::END,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::END,
-            value: None,
-        },
-    ];
-    /*
-    {
-        "110ed917-adf4-4c0a-8fee-55de9db83a8d": EntityFlow {
-            name: "main",
-            flow: [
-                "Adding 1 and 2",
-                "CALL::10a8bda9-1a58-4904-9647-39a280c86c56"
-            ]
-        },
-        "10a8bda9-1a58-4904-9647-39a280c86c56": EntityFlow {
-            name: "add",
-            flow: [
-                "1+2 = 3"
-            ]
-        }
-    }
-    */
-    let single_fn_call_store_log = vec![
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("Adding 1 and 2")),
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::STORE,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("1+2 = 3")),
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::END,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::END,
-            value: None,
-        },
-    ];
-    /*
-    {
-        "6a6482b4-75ea-48f3-99b1-aae6902b1bdc": {
-            "name": "add",
-            "flow": [
-                "1+2 = 3"
-            ]
-        },
-        "753a4844-e606-4dd6-95d4-4dfccf713222": {
-            "name": "main",
-            "flow": [
-                "Adding 1 and 2",
-                "CALL_RETURN::6a6482b4-75ea-48f3-99b1-aae6902b1bdc"
-            ]
-        }
-    }
-
-     */
-
-    let double_fn_call_log = vec![
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("Adding 1 and 2")),
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("1+2 = 3")),
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::END,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("1+2 = 3")),
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::END,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::END,
-            value: None,
-        },
-    ];
-    /*
-    {
-        "fab7e9e5-60ea-4d33-97ce-892b1b733046": EntityFlow {
-            name: "add",
-            flow: [
-                "1+2 = 3"
-            ]
-        },
-        "3f920fb4-0a31-4e37-bae9-11aeb7404094": EntityFlow {
-            name: "add",
-            flow: [
-                "1+2 = 3"
-            ]
-        },
-        "d70ba754-bedf-481e-9b72-fee0dae4b9b7": EntityFlow {
-            name: "main",
-            flow: [
-                "Adding 1 and 2",
-                "CALL::fab7e9e5-60ea-4d33-97ce-892b1b733046",
-                "CALL::3f920fb4-0a31-4e37-bae9-11aeb7404094"
-            ]
-        }
-    }
-
-    */
-
-    let double_self_fn_call = vec![
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("Adding 1 and 2")),
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("1+2 = 3")),
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::STORE,
-            value: Option::from(String::from("1+2 = 3")),
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("internal 1+2 = 3")),
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::END,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::END,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::ExternalCallStore,
-            value: Option::from(String::from("Storing API call result")),
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::END,
-            value: None,
-        },
-    ];
-
-    let super_fake_log = vec![
-        // Main function starts
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("Initiating main process")),
-        },
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::STORE,
-            value: None,
-        },
-        // First function call: "add"
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("Adding 2 + 3")),
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::STORE,
-            value: Option::from(String::from("5")),
-        },
-        Entry {
-            entity_name: String::from("add"),
-            log_type: LogType::END,
-            value: None,
-        },
-        // Main function logs result
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("Result of add: 5")),
-        },
-        // Nested function call: "multiply"
-        Entry {
-            entity_name: String::from("multiply"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("multiply"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("Multiplying 5 * 4")),
-        },
-        Entry {
-            entity_name: String::from("multiply"),
-            log_type: LogType::STORE,
-            value: Option::from(String::from("20")),
-        },
-        Entry {
-            entity_name: String::from("multiply"),
-            log_type: LogType::END,
-            value: None,
-        },
-        // Main logs result of multiply
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("Result of multiply: 20")),
-        },
-        // Recursive function call: "factorial"
-        Entry {
-            entity_name: String::from("factorial"),
-            log_type: LogType::START,
-            value: None,
-        },
-        Entry {
-            entity_name: String::from("factorial"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("Calculating factorial(4)")),
-        },
-        Entry {
-            entity_name: String::from("factorial"),
-            log_type: LogType::STORE,
-            value: Option::from(String::from("24")),
-        },
-        Entry {
-            entity_name: String::from("factorial"),
-            log_type: LogType::END,
-            value: None,
-        },
-        // Main logs result of factorial
-        Entry {
-            entity_name: String::from("main"),
-            log_type: LogType::LOG,
-            value: Option::from(String::from("Result of factorial: 24")),
-        },
-        // Main ends
-        Entry {
+            uuid: String::from("9"),
             entity_name: String::from("main"),
             log_type: LogType::END,
             value: None,
