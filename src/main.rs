@@ -274,6 +274,54 @@ fn generate_mermaid_diagram_from_visual_flow_log_map(map: &HashMap<String, Entit
         mermaid += "\tend\n";
     }
 
+    for (k, v) in map {
+        for flow in &v.flow {
+            let mut to_append: String = String::from("");
+            match flow.flow_type {
+                FlowType::STORE => {
+                    panic!("STORE FlowType should not be present! {:?}", flow)
+                }
+                FlowType::CALL | FlowType::CALL_STORE => {
+                    //Get the  called entity_flow and set dotted arrows to the first flow or subgraph itself if flow is empty
+                    let called_entity_flow =
+                        map.get(flow.flow_pointer_id.as_ref().unwrap()).unwrap();
+                    if let Some(first_flow) = called_entity_flow.flow.first() {
+                        to_append = format!("{} ..-o {}", flow.flow_id, first_flow.flow_id);
+                    } else {
+                        to_append = format!("{} ..-o {}", flow.flow_id, called_entity_flow.id);
+                    }
+                    //If it's call_store type then we need to have a returning arrow
+                    if flow.flow_type == FlowType::CALL_STORE {
+                        to_append += &String::from("\n");
+                        if let Some(last_flow) = called_entity_flow.flow.last() {
+                            to_append += &String::from(format!(
+                                "{} ===> {}",
+                                last_flow.flow_id, flow.flow_id
+                            ));
+                        } else {
+                            to_append = format!("{} ===> {}", called_entity_flow.id, flow.flow_id);
+                        }
+                    }
+                }
+                FlowType::EXTERNAL_CALL_STORE => {
+                    to_append = format!("{} .-x {}", flow.flow_id, flow.flow_id);
+                }
+                FlowType::EXTERNAL_CALL => {
+                    to_append += &String::from(format!(
+                        "{} ..-x {}([\"{}\"])",
+                        flow.flow_id,
+                        Uuid::new_v4().to_string(),
+                        "External Call"
+                    ));
+                }
+                FlowType::LOG => {}
+                _ => {}
+            }
+            mermaid += &to_append;
+            mermaid += "\n";
+        }
+    }
+
     mermaid
 }
 
