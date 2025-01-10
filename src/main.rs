@@ -268,7 +268,7 @@ fn generate_mermaid_diagram_from_visual_flow_log_map(map: &HashMap<String, Entit
                 prev_flow = Option::from(flow.flow_id.clone());
                 continue;
             }
-            mermaid += &String::from(format!("\t\t{} --> {}\n", prev_flow.unwrap(), flow.flow_id));
+            mermaid += &String::from(format!("\t\t{} ==> {}\n", prev_flow.unwrap(), flow.flow_id));
             prev_flow = Option::from(flow.flow_id.clone());
         }
         mermaid += "\tend\n";
@@ -295,11 +295,11 @@ fn generate_mermaid_diagram_from_visual_flow_log_map(map: &HashMap<String, Entit
                         to_append += &String::from("\n");
                         if let Some(last_flow) = called_entity_flow.flow.last() {
                             to_append += &String::from(format!(
-                                "{} ===> {}",
+                                "{} ---> {}",
                                 last_flow.flow_id, flow.flow_id
                             ));
                         } else {
-                            to_append = format!("{} ===> {}", called_entity_flow.id, flow.flow_id);
+                            to_append = format!("{} ---> {}", called_entity_flow.id, flow.flow_id);
                         }
                     }
                 }
@@ -321,6 +321,16 @@ fn generate_mermaid_diagram_from_visual_flow_log_map(map: &HashMap<String, Entit
             mermaid += "\n";
         }
     }
+
+    let starting_flow = map.get("START").unwrap();
+    mermaid += &String::from(format!(
+        "\nBEGIN((\"START\")) ==> {}\n",
+        starting_flow.flow.first().unwrap().flow_id
+    ));
+    mermaid += &String::from(format!(
+        " {} ==> END((\"END\"))\n",
+        starting_flow.flow.last().unwrap().flow_id
+    ));
 
     mermaid
 }
