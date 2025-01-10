@@ -20,6 +20,7 @@ struct Entry {
 #[derive(Debug, Clone)]
 struct EntityFlow {
     id: String, //For internal use.
+    caller: Option<String>,
     name: String,
     flow: Vec<String>,
 }
@@ -27,10 +28,12 @@ struct EntityFlow {
 fn create_entity_flow(
     id_flow_map: &mut HashMap<String, EntityFlow>,
     entity_name: String,
+    caller: Option<String>,
 ) -> String {
     let entity_flow_id: String = Uuid::new_v4().to_string();
     let entity_flow = EntityFlow {
         id: entity_flow_id.clone(),
+        caller,
         name: entity_name,
         flow: Vec::new(),
     };
@@ -58,7 +61,7 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
                 first_log.log_type
             );
         }
-        let entity_id = create_entity_flow(&mut id_flow_map, first_log.entity_name.clone());
+        let entity_id = create_entity_flow(&mut id_flow_map, first_log.entity_name.clone(), None);
         prev_id = Some(entity_id.clone());
         root_entity = Some(entity_id);
     } else {
@@ -71,7 +74,8 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
             //Start of a new function call.
             LogType::START => {
                 stack.push(prev_entity_id.clone());
-                let entity_id = create_entity_flow(&mut id_flow_map, log.entity_name.clone());
+                let entity_id =
+                    create_entity_flow(&mut id_flow_map, log.entity_name.clone(), prev_id);
                 prev_id = Some(entity_id);
                 continue;
             }
@@ -152,7 +156,7 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
                         panic!("Previous flow log was of type STORE but now it's LOG which is NOT valid for entity_flow {:?}", prev_entity)
                     }
                     prev_entity.flow.push(format!(
-                        "::EXTERNAL_CALL_RETURN::{}",
+                        "::EXTERNAL_CALL_STORE::{}",
                         log.value.clone().unwrap_or("_".to_string())
                     ));
                 }
@@ -176,6 +180,56 @@ fn generate_visual_flow_v2(logs: &Vec<Entry>) -> HashMap<String, EntityFlow> {
     id_flow_map
 }
 
+fn generate_mermaid_diagram_from_visual_flow_log_map(map: &HashMap<String, EntityFlow>) -> String {
+    let mut mermaid = String::from("flowchart TB\n");
+    let flow_uid_map: HashMap<String, String> = HashMap::new();
+    //Generate subgraphs and direct arrows
+    for (k, v) in map {
+        mermaid += &String::from(format!("\tsubgraph {}[\"{}\"]\n", k, v.name));
+        let mut prev_flow: Option<String> = None;
+        for flow in &v.flow {
+            let mut current_flow: String = "".to_string();
+            if flow.starts_with("::CALL::") || flow.starts_with("::CALL_STORE::") {
+                //We need access to the entity_flow name of the called entity_flow
+                let called_entity_id = if flow.starts_with("::CALL::") {
+                    flow.replace("::CALL::", "")
+                } else {
+                    flow.replace("::CALL_STORE::", "")
+                };
+                let called_entity = map.get(&called_entity_id).unwrap();
+
+                let appended_string = if flow.starts_with("::CALL::") {
+                    &String::from(format!("\t\t{}[\"{}\"]\n", flow, called_entity.name))
+                } else {
+                    &String::from(format!("\t\t{}[/\"{}\"/]\n", flow, called_entity.name))
+                };
+                mermaid += appended_string;
+                current_flow = flow.clone();
+            } else if flow.starts_with("::EXTERNAL_CALL::") {
+                let flow_uid = Uuid::new_v4().to_string();
+                let log = flow.replace("::EXTERNAL_CALL::", "");
+                mermaid += &String::from(format!("\t\t{}([\"{}\"])\n", flow_uid.clone(), log));
+                current_flow = flow_uid;
+            } else if flow.starts_with("::EXTERNAL_CALL_STORE::") {
+                let flow_uid = Uuid::new_v4().to_string();
+                let log = flow.replace("::EXTERNAL_CALL_STORE::", "");
+                mermaid += &String::from(format!("\t\t{}([\"{}\"])\n", flow_uid, log));
+                current_flow = flow_uid;
+            } else {
+                let flow_uid = Uuid::new_v4().to_string();
+                mermaid += &String::from(format!("\t\t{}([\"{}\"])\n", flow_uid, flow));
+                current_flow = flow_uid;
+            }
+            //Define arrow between prev and current flow
+            if let Some(prev) = prev_flow.as_ref() {
+                mermaid += &String::from(format!("\t\t{} --> {}\n", prev, current_flow));
+            }
+            prev_flow = Some(current_flow);
+        }
+        mermaid += "\tend\n";
+    }
+    mermaid
+}
 fn main() -> () {
     //List of fake entries
 
@@ -778,6 +832,8 @@ fn main() -> () {
         },
     ];
 
-    let data = generate_visual_flow_v2(&double_self_fn_call);
+    let data = generate_visual_flow_v2(&logs);
+    let mermaid = generate_mermaid_diagram_from_visual_flow_log_map(&data);
     println!("{:?}", data);
+    println!("{}", mermaid);
 }
