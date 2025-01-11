@@ -1,6 +1,4 @@
-mod graph_generator;
-mod diagram_generator;
-mod database;
+mod services;
 
 use std::collections::HashMap;
 use uuid::Uuid;
@@ -559,4 +557,7 @@ fn main() -> () {
     let mermaid = generate_mermaid_diagram_from_visual_flow_log_map(&data);
     println!("{:?}", data);
     println!("{}", mermaid);
+
+    use crate::services::graph_generator::api::service::factory;
+    let gg = factory();
 }
