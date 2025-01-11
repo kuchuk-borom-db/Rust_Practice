@@ -1,3 +1,3 @@
-pub(crate) mod api;
-mod repo;
+pub mod api;
 mod internal;
+pub mod repo;
