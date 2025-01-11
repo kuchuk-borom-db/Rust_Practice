@@ -1,3 +1,7 @@
+mod graph_generator;
+mod diagram_generator;
+mod database;
+
 use std::collections::HashMap;
 use uuid::Uuid;
 
