@@ -6,14 +6,32 @@ use crate::services::graph_generator::api::model::{FlowType, VisEntity};
 use std::collections::HashMap;
 use uuid::Uuid;
 
+impl MermaidDiagramGenerator {
+    // Function to generate a random color in hex format
+    fn generate_color() -> String {
+        let r = rand::random::<u8>();
+        let g = rand::random::<u8>();
+        let b = rand::random::<u8>();
+        format!("#{:02X}{:02X}{:02X}", r, g, b)
+    }
+}
+
 impl DiagramGeneratorTrait for MermaidDiagramGenerator {
     fn generate_diagram(
         &self,
         graph: &HashMap<String, VisEntity>,
     ) -> Result<String, DiagramGeneratorErr> {
         let mut mermaid = String::from("flowchart TB\n");
-        //Generate subgraphs and direct arrows
+        let mut subgraph_colors = HashMap::new();
+        let starting_color = "#FF5733"; // Consistent color for the START module
+
+        // Generate subgraphs and direct arrows
         for (k, v) in graph {
+            // Assign a unique color for the subgraph if not already assigned
+            let color = subgraph_colors
+                .entry(k.clone())
+                .or_insert_with(MermaidDiagramGenerator::generate_color);
+
             mermaid += &String::from(format!("\tsubgraph {}[\"{}\"]\n", k, v.name));
             let mut prev_flow: Option<String> = None;
             for flow in &v.flow {
@@ -39,7 +57,6 @@ impl DiagramGeneratorTrait for MermaidDiagramGenerator {
                         to_append = if flow.flow_type == FlowType::ExternalCall {
                             format!("\t\t{}[\\{}/]", flow.flow_id, flow.value.as_ref().unwrap())
                         } else {
-                            //TODO Set arrow to self.
                             format!(
                                 "\t\t{}[/\"{}\"\\]",
                                 flow.flow_id,
@@ -53,16 +70,17 @@ impl DiagramGeneratorTrait for MermaidDiagramGenerator {
                 }
                 mermaid += &to_append;
                 mermaid += "\n";
-                //Basic internal flow arrow
+                // Basic internal flow arrow
                 if prev_flow.is_none() {
                     prev_flow = Option::from(flow.flow_id.clone());
                     continue;
                 }
-                mermaid +=
-                    &String::from(format!("\t\t{} ==> {}\n", prev_flow.unwrap(), flow.flow_id));
+                mermaid += &String::from(format!("\t\t{} ==> {}\n", prev_flow.unwrap(), flow.flow_id));
                 prev_flow = Option::from(flow.flow_id.clone());
             }
             mermaid += "\tend\n";
+            // Add style for the subgraph
+            mermaid += &format!("style {} fill:{}\n", k, color);
         }
 
         for (_, v) in graph {
@@ -73,7 +91,6 @@ impl DiagramGeneratorTrait for MermaidDiagramGenerator {
                         panic!("STORE FlowType should not be present! {:?}", flow)
                     }
                     FlowType::CALL | FlowType::CallStore => {
-                        //Get the  called entity_flow and set dotted arrows to the first flow or subgraph itself if flow is empty
                         let called_entity_flow =
                             graph.get(flow.flow_pointer_id.as_ref().unwrap()).unwrap();
                         if let Some(first_flow) = called_entity_flow.flow.first() {
@@ -81,7 +98,6 @@ impl DiagramGeneratorTrait for MermaidDiagramGenerator {
                         } else {
                             to_append = format!("{} ...-o {}", flow.flow_id, called_entity_flow.id);
                         }
-                        //If it's call_store type then we need to have a returning arrow
                         if flow.flow_type == FlowType::CallStore {
                             to_append += &String::from("\n");
                             if let Some(last_flow) = called_entity_flow.flow.last() {
@@ -115,13 +131,14 @@ impl DiagramGeneratorTrait for MermaidDiagramGenerator {
 
         let starting_flow = graph.get("START").unwrap();
         mermaid += &String::from(format!(
-            "\nBEGIN((\"START\")) ==> {}\n",
+            "\nBEGIN((\"START\")):::starting ==> {}\n",
             starting_flow.flow.first().unwrap().flow_id
         ));
         mermaid += &String::from(format!(
-            " {} ==> END((\"END\"))\n",
+            " {} ==> END((\"END\")):::starting\n",
             starting_flow.flow.last().unwrap().flow_id
         ));
+        mermaid += &format!("classDef starting fill:{};\n", starting_color);
 
         Ok(mermaid)
     }
