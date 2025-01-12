@@ -9,6 +9,7 @@ dependencies = [
  "actix-web",
  "log",
  "rand",
+ "serde",
  "simple_logger",
  "uuid",
 ]

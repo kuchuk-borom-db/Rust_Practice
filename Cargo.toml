@@ -9,3 +9,4 @@ simple_logger = "5.0.0"
 uuid = { version = "1.11.0", features = ["v4"] }
 log = "0.4.22"
 rand = "0.8.5"
+serde = { version = "1.0.217", features = ["derive"] }

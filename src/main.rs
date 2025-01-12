@@ -1,14 +1,5 @@
 mod services;
 mod utils;
-
-use crate::services::diagram_generator;
-use crate::services::diagram_generator::api::service::DiagramGeneratorTrait;
-use crate::services::graph_generator::api::GraphGeneratorTrait;
-use crate::services::graph_generator::repo::api::model::{LogType, VisLog};
-use crate::services::graph_generator::*;
-use crate::services::graph_generator::*;
-use simple_logger::SimpleLogger;
-
 fn generate_test_log() -> Vec<VisLog> {
     let logs = vec![
         VisLog {
@@ -259,16 +250,42 @@ fn generate_test_log() -> Vec<VisLog> {
     ];
     logs
 }
-fn main() -> () {
-    SimpleLogger::new().init().unwrap();
 
-    //List of fake entries
+use crate::services::graph_generator::repo::api::model::{LogType, VisLog};
+use actix_web::{web, App, HttpServer, Responder, HttpResponse};
+use serde::{Deserialize};
 
-    let graph_gen = api::Factory::factory();
-    let result = graph_gen.generate_graph(generate_test_log());
-    let diagram_gen = diagram_generator::api::service::Factory::factory();
-    let generated_diagram = diagram_gen.generate_diagram(result.as_ref().unwrap());
+#[derive(Deserialize)]
+struct LogEntry {
+    operation_id: String,
+    log_name: String,
+    log_type: String,
+    log_value: String,
+}
 
-    println!("{:?}", result.unwrap());
-    println!("{}", generated_diagram.unwrap());
+async fn index() -> impl Responder {
+    "Hello world!"
+}
+
+async fn create_log_entry(log: web::Json<LogEntry>) -> impl Responder {
+    // Here you can do something with the data, like logging it or processing it
+    HttpResponse::Ok().json(log.into_inner())  // Echo back the received JSON
+}
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            .service(
+                // Prefixes all resources and routes attached to it...
+                web::scope("")
+                    // Handle requests for `GET /gg`
+                    .route("/gg", web::get().to(index))
+                    // Handle POST request for `/log_entry`
+                    .route("/log_entry", web::post().to(create_log_entry)),
+            )
+    })
+        .bind(("127.0.0.1", 8080))?
+        .run()
+        .await
 }
