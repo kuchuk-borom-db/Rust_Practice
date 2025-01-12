@@ -1,15 +1,15 @@
 mod services;
 mod utils;
 
+use crate::services::diagram_generator;
+use crate::services::diagram_generator::api::service::DiagramGeneratorTrait;
+use crate::services::graph_generator::api::GraphGeneratorTrait;
 use crate::services::graph_generator::repo::api::model::{LogType, VisLog};
+use crate::services::graph_generator::*;
+use crate::services::graph_generator::*;
 use simple_logger::SimpleLogger;
-use crate::services::graph_generator::api::service::factory;
-use crate::services::graph_generator::api::GraphGenerator;
-fn main() -> () {
-    SimpleLogger::new().init().unwrap();
 
-    //List of fake entries
-
+fn generate_test_log() -> Vec<VisLog> {
     let logs = vec![
         VisLog {
             id: String::from("a"),
@@ -257,8 +257,18 @@ fn main() -> () {
             value: None,
         },
     ];
+    logs
+}
+fn main() -> () {
+    SimpleLogger::new().init().unwrap();
 
-    let graph_gen = factory();
-    let result = graph_gen.generate_graph(logs);
+    //List of fake entries
+
+    let graph_gen = api::Factory::factory();
+    let result = graph_gen.generate_graph(generate_test_log());
+    let diagram_gen = diagram_generator::api::service::Factory::factory();
+    let generated_diagram = diagram_gen.generate_diagram(result.as_ref().unwrap());
+
     println!("{:?}", result.unwrap());
+    println!("{}", generated_diagram.unwrap());
 }

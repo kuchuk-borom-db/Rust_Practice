@@ -27,22 +27,22 @@ pub mod model {
         pub flow: Vec<Flow>,
     }
 }
-pub mod service {
-    use crate::services::graph_generator::api::GraphGenerator;
-    use crate::services::graph_generator::internal::model::GGImpl;
-    pub fn factory() -> impl GraphGenerator {
-        GGImpl {}
-    }
-}
 
 use crate::services::graph_generator::api::model::errors::GraphError;
 use crate::services::graph_generator::api::model::VisEntity;
 use crate::services::graph_generator::repo::api::model::VisLog;
 use std::collections::HashMap;
 
-pub trait GraphGenerator {
+pub trait GraphGeneratorTrait {
     fn generate_graph(
         &self,
         entries: Vec<VisLog>,
     ) -> Result<HashMap<String, VisEntity>, GraphError>;
+}
+
+pub struct Factory;
+impl Factory {
+    pub fn factory() -> impl GraphGeneratorTrait {
+        crate::services::graph_generator::internal::model::GGImpl {}
+    }
 }
