@@ -62,12 +62,12 @@ pub(crate) mod application {
                         //Push caller(previous VisEntity) to stack.
                         caller_entity_id_stack.push(prev_entity_id.as_ref().unwrap().clone());
                         //Create new VisEntityFlow to represent the current VisFlowLog
-                        let current_vis_entity = create_vis_entity(log.name.clone(), None, None);
+                        let current_vis_entity = create_vis_entity(log.name.clone(), prev_entity_id, None);
                         let current_vis_entity_id = current_vis_entity.id.clone();
                         id_entity_map.insert(current_vis_entity_id.clone(), current_vis_entity);
                         prev_entity_id = Some(current_vis_entity_id);
                     }
-                    //End of Previous VisEntity. Time to link it to the caller stored in stack.
+                    //End of Previous VisEntity. Time to add function call to caller
                     LogType::END => {
                         //Validations
                         {
@@ -85,26 +85,12 @@ pub(crate) mod application {
                         if let Some(caller_entity_id) = caller_entity_id_stack.pop() {
                             let mut caller_entity =
                                 id_entity_map.get_mut(&caller_entity_id).unwrap();
-                            if caller_entity.flow.is_empty()
-                                || caller_entity.flow.last().unwrap().flow_type != FlowType::STORE
-                            {
-                                caller_entity.flow.push(Flow {
-                                    flow_id: log.id.clone(),
-                                    flow_type: FlowType::CALL,
-                                    //Prev VisEntity ID is valid because current log represents the end of prev VisEntity. We throw Error if this isn't the case in validation scope.
-                                    flow_pointer_id: Some(prev_entity_id.as_ref().unwrap().clone()),
-                                    value: None,
-                                });
-                            } else {
-                                caller_entity.flow.pop();
-                                caller_entity.flow.push(Flow {
-                                    flow_id: log.id.clone(),
-                                    flow_type: FlowType::CallStore,
-                                    //Prev VisEntity ID is valid because current log represents the end of prev VisEntity. We throw Error if this isn't the case in validation scope.
-                                    flow_pointer_id: Some(prev_entity_id.as_ref().unwrap().clone()),
-                                    value: None,
-                                })
-                            }
+                            caller_entity.flow.push(Flow {
+                                flow_id: log.id.clone(),
+                                flow_type: FlowType::CALL,
+                                flow_pointer_id: Some(prev_entity_id.as_ref().unwrap().clone()),
+                                value: None,
+                            });
                             //Caller is the latest processed entity and thus, needs to be set as previous Entity
                             prev_entity_id = Some(caller_entity.id.clone());
                         } else {
@@ -115,12 +101,23 @@ pub(crate) mod application {
                             }
                         }
                     }
-                    LogType::STORE => prev_vis_entity.flow.push(Flow {
-                        flow_id: log.id.clone(),
-                        flow_type: FlowType::STORE,
-                        value: None,
-                        flow_pointer_id: None,
-                    }),
+                    LogType::STORE => {
+                        //Validation
+                        {
+                            if prev_vis_entity.flow.is_empty()
+                                || prev_vis_entity.flow.last().unwrap().flow_type != FlowType::CALL
+                            {
+                                return Err(GraphError {});
+                            }
+                        }
+                        let called_entity_call = prev_vis_entity.flow.pop();
+                        prev_vis_entity.flow.push(Flow {
+                            flow_id: log.id.clone(),
+                            flow_type: FlowType::CallStore,
+                            value: log.value.clone(),
+                            flow_pointer_id: called_entity_call.unwrap().flow_pointer_id,
+                        });
+                    }
                     LogType::ExternalCall | LogType::ExternalCallStore | LogType::LOG => {
                         //Validations
                         {

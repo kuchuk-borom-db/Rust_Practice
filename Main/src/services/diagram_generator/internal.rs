@@ -50,7 +50,11 @@ impl DiagramGeneratorTrait for MermaidDiagramGenerator {
                         to_append = if flow.flow_type == FlowType::CALL {
                             format!("\t\t{}[\"{}\"]", flow.flow_id, called_entity_flow.name)
                         } else {
-                            format!("\t\t{}[/\"{}\"/]", flow.flow_id, called_entity_flow.name)
+                            format!(
+                                "\t\t{}[/\"{}\"/]",
+                                flow.flow_id,
+                                flow.value.as_ref().unwrap()
+                            )
                         };
                     }
                     FlowType::ExternalCall | FlowType::ExternalCallStore => {
@@ -75,7 +79,8 @@ impl DiagramGeneratorTrait for MermaidDiagramGenerator {
                     prev_flow = Option::from(flow.flow_id.clone());
                     continue;
                 }
-                mermaid += &String::from(format!("\t\t{} ==> {}\n", prev_flow.unwrap(), flow.flow_id));
+                mermaid +=
+                    &String::from(format!("\t\t{} ==> {}\n", prev_flow.unwrap(), flow.flow_id));
                 prev_flow = Option::from(flow.flow_id.clone());
             }
             mermaid += "\tend\n";

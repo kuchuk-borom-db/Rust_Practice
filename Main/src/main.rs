@@ -250,42 +250,72 @@ fn generate_test_log() -> Vec<VisLog> {
     ];
     logs
 }
-
+fn generate_simple_test_log() -> Vec<VisLog> {
+    vec![
+        VisLog {
+            id: "1".to_string(),
+            log_type: LogType::START,
+            name: "main".to_string(),
+            operation_id: "1".to_string(),
+            value: None,
+        },
+        VisLog {
+            id: "2".to_string(),
+            log_type: LogType::LOG,
+            name: "main".to_string(),
+            operation_id: "1".to_string(),
+            value: Some(String::from("num = 1")),
+        },
+        VisLog {
+            id: "3".to_string(),
+            log_type: LogType::START,
+            name: "add".to_string(),
+            operation_id: "1".to_string(),
+            value: None,
+        },
+        VisLog {
+            id: "4".to_string(),
+            log_type: LogType::LOG,
+            name: "add".to_string(),
+            operation_id: "1".to_string(),
+            value: Some(String::from("Adding 1+1")),
+        },
+        VisLog {
+            id: "5".to_string(),
+            log_type: LogType::END,
+            name: "add".to_string(),
+            operation_id: "1".to_string(),
+            value: None,
+        },
+        VisLog {
+            id: "6".to_string(),
+            log_type: LogType::STORE,
+            name: "main".to_string(),
+            operation_id: "1".to_string(),
+            value: Some(String::from("result = 2")),
+        },
+        VisLog {
+            id: "7".to_string(),
+            log_type: LogType::END,
+            name: "main".to_string(),
+            operation_id: "1".to_string(),
+            value: None,
+        },
+    ]
+}
+use crate::services::graph_generator::api::GraphGeneratorTrait;
+use crate::services::diagram_generator::api::service::DiagramGeneratorTrait;
 use crate::services::graph_generator::repo::api::model::{LogType, VisLog};
-use actix_web::{web, App, HttpServer, Responder, HttpResponse};
-use serde::{Deserialize};
+use crate::services::*;
+use actix_web::Responder;
+use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize)]
-struct LogEntry {
-    operation_id: String,
-    log_name: String,
-    log_type: String,
-    log_value: String,
-}
-
-async fn index() -> impl Responder {
-    "Hello world!"
-}
-
-async fn create_log_entry(log: web::Json<LogEntry>) -> impl Responder {
-    // Here you can do something with the data, like logging it or processing it
-    HttpResponse::Ok().json(log.into_inner())  // Echo back the received JSON
-}
-
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| {
-        App::new()
-            .service(
-                // Prefixes all resources and routes attached to it...
-                web::scope("")
-                    // Handle requests for `GET /gg`
-                    .route("/gg", web::get().to(index))
-                    // Handle POST request for `/log_entry`
-                    .route("/log_entry", web::post().to(create_log_entry)),
-            )
-    })
-        .bind(("127.0.0.1", 8080))?
-        .run()
-        .await
+fn main() {
+    let log = generate_simple_test_log();
+    let gg = graph_generator::api::Factory::factory();
+    let result = gg.generate_graph(log);
+    let dg = diagram_generator::api::service::Factory::factory();
+    let result2 = dg.generate_diagram(&result.as_ref().unwrap());
+    println!("{:?}", result.unwrap());
+    println!("{}", result2.unwrap());
 }

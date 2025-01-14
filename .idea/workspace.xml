@@ -7,11 +7,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Main/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Created simple api to generate logs for javascript">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="FIX: sending log to server after end of function call done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestSamples/javascript/KukuVisualFlowLogger/KukuVisualFlowLoggerManual.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestSamples/javascript/KukuVisualFlowLogger/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/TestSamples/javascript/KukuVisualFlowLogger/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestSamples/javascript/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/TestSamples/javascript/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services/diagram_generator/internal.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/services/diagram_generator/internal.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services/graph_generator/internal.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/services/graph_generator/internal.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +114,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1736818634742</updated>
-      <workItem from="1736818641469" duration="9633000" />
+      <workItem from="1736818641469" duration="10453000" />
+      <workItem from="1736829904574" duration="1676000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -148,7 +149,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736827832603</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="FIX: sending log to server after end of function call done">
+      <option name="closed" value="true" />
+      <created>1736828714736</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1736828714736</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,6 +166,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="REFACTOR: moved rust files to MAIn folder" />
     <MESSAGE value="Created simple api to generate logs for javascript" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created simple api to generate logs for javascript" />
+    <MESSAGE value="FIX: sending log to server after end of function call done" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIX: sending log to server after end of function call done" />
   </component>
 </project>
