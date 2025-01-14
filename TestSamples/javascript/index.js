@@ -1,6 +1,6 @@
 import {KukuVisualFlowLoggerManual} from "./KukuVisualFlowLogger/index.js";
 
-const logger = new KukuVisualFlowLoggerManual("");
+const logger = new KukuVisualFlowLoggerManual("http://127.0.0.1:8080/");
 
 function square(num) {
     logger.START("Square");
@@ -24,7 +24,6 @@ function calculate() {
     logger.LOG("Calculate", `num = ${num}`);
     const square1 = square(num);
     logger.STORE("Calculate", `Square1 = ${square1}`)
-    logger.LOG("Calculate", `Square = ${square}`);
     double(square1);
     logger.LOG("Calculate", "Calculation Complete");
     logger.END("Calculate");
@@ -33,6 +32,6 @@ function calculate() {
 }
 
 const result1 = await logger.run(calculate);
-const result2 = await logger.run(calculate);
+//const result2 = await logger.run(calculate);
 
-console.log(`Result1 = ${result1} and result2 = ${result2}`);
+console.log(`Result1 = ${result1} and result2 = ${"GG"}`);

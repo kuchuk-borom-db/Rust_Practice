@@ -8,8 +8,9 @@ export class KukuVisualFlowLoggerManual {
 
     async run(fn) {
         return await this.asyncLocalStorage.run({
-            operationId: this._generateOperationID(),
-            entries: []
+            "operationId": this._generateOperationID(),
+            "entries": [],
+            "counter": 0,
         }, async () => {
             const result = await fn();
             await this.sendLogToServer();
@@ -17,41 +18,65 @@ export class KukuVisualFlowLoggerManual {
         });
     }
 
-    constructor(config) {
+    _getStoreValue(name) {
+        const store = this.asyncLocalStorage.getStore();
+        return store[name];
+    }
+
+    constructor(url) {
         this.asyncLocalStorage = new AsyncLocalStorage();
+        this.url = url;
     }
 
     _generateOperationID() {
         return `${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
     }
 
+    _getCounter() {
+        const current = this.asyncLocalStorage.getStore()["counter"];
+        this.asyncLocalStorage.getStore()["counter"] += 1;
+        return current;
+    }
+
     START = (name) => {
-        this.asyncLocalStorage.getStore().entries.push(new VisLogEntry(this.asyncLocalStorage.getStore().operationId, name, "START", null));
+        this.asyncLocalStorage.getStore()["entries"].push(new VisLogEntry(this._getStoreValue("operationId"), name, "START", null, this._getCounter()));
     }
     END = (name) => {
-        this.asyncLocalStorage.getStore().entries.push(new VisLogEntry(this.asyncLocalStorage.getStore().operationId, name, "END", null));
-        console.log(`\nEND of ${name} with stack ${JSON.stringify(this.asyncLocalStorage.getStore().entries)}`);
+        this.asyncLocalStorage.getStore()["entries"].push(new VisLogEntry(this._getStoreValue("operationId"), name, "END", null, this._getCounter()));
     }
-    STORE = (name) => {
-        this.asyncLocalStorage.getStore().entries.push(new VisLogEntry(this.asyncLocalStorage.getStore().operationId, name, "STORE", null));
+    STORE = (name, value) => {
+        this.asyncLocalStorage.getStore()["entries"].push(new VisLogEntry(this._getStoreValue("operationId"), name, "STORE", value, this._getCounter()));
     }
     LOG = (name, log) => {
-        this.asyncLocalStorage.getStore().entries.push(new VisLogEntry(this.asyncLocalStorage.getStore().operationId, name, "LOG", log));
+        this.asyncLocalStorage.getStore()["entries"].push(new VisLogEntry(this._getStoreValue("operationId"), name, "LOG", log, this._getCounter()));
     }
 
     async sendLogToServer() {
-        const entries = this.asyncLocalStorage.getStore().entries;
+        const entries = this.asyncLocalStorage.getStore()["entries"];
+        const jsonEntries = JSON.stringify(entries);
+        const response = await fetch(this.url, {
+            body: jsonEntries,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: "POST"
+        })
+        if (!response.ok) {
+            console.log(`\nError = ${response.statusText}\n`)
+            return;
+        }
+        console.log(await response.text());
     }
 }
 
 
 class VisLogEntry {
-    constructor(operationID, name, logType, value) {
-        this.operationId = operationID;
+    constructor(operationID, name, logType, value, sequence) {
+        this.operationId = operationID;   // Maps to operation_id in JSON
         this.name = name;
-        this.logType = logType;
+        this.logType = logType;           // Maps to log_type in JSON
         this.value = value;
+        this.sequence = sequence;        // Matches sequence
     }
 }
-
 
