@@ -1,4 +1,5 @@
-import {KukuVisualFlowLoggerManual} from  "./KukuVisualFlowLogger/index.js";
+import {KukuVisualFlowLoggerManual} from "./KukuVisualFlowLogger/index.js";
+
 const logger = new KukuVisualFlowLoggerManual("");
 
 function square(num) {
@@ -21,8 +22,8 @@ function calculate() {
     logger.START("Calculate");
     const num = Math.floor(Math.random() * 5);
     logger.LOG("Calculate", `num = ${num}`);
-    logger.STORE("Calculate")
     const square1 = square(num);
+    logger.STORE("Calculate", `Square1 = ${square1}`)
     logger.LOG("Calculate", `Square = ${square}`);
     double(square1);
     logger.LOG("Calculate", "Calculation Complete");

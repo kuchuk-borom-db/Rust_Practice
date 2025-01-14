@@ -1,6 +1,6 @@
-use crate::services::diagram_generator::api::models::DiagramGeneratorErr;
-use crate::services::diagram_generator::internal::MermaidDiagramGenerator;
-use crate::services::graph_generator::api::model::VisEntity;
+use crate::domain::diagram_generator::api::models::DiagramGeneratorErr;
+use crate::domain::diagram_generator::internal::MermaidDiagramGenerator;
+use crate::domain::graph_generator::api::model::VisEntity;
 use std::collections::HashMap;
 
 pub trait DiagramGeneratorTrait {

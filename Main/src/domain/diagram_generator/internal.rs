@@ -1,8 +1,8 @@
 pub struct MermaidDiagramGenerator;
 
-use crate::services::diagram_generator::api::models::DiagramGeneratorErr;
-use crate::services::diagram_generator::api::service::DiagramGeneratorTrait;
-use crate::services::graph_generator::api::model::{FlowType, VisEntity};
+use crate::domain::diagram_generator::api::models::DiagramGeneratorErr;
+use crate::domain::diagram_generator::api::service::DiagramGeneratorTrait;
+use crate::domain::graph_generator::api::model::{FlowType, VisEntity};
 use std::collections::HashMap;
 use uuid::Uuid;
 

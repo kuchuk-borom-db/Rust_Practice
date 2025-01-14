@@ -3,11 +3,11 @@ pub(crate) mod model {
 }
 
 pub(crate) mod application {
-    use crate::services::graph_generator::api::model::errors::GraphError;
-    use crate::services::graph_generator::api::model::{Flow, FlowType, VisEntity};
-    use crate::services::graph_generator::api::GraphGeneratorTrait;
-    use crate::services::graph_generator::internal::model::GGImpl;
-    use crate::services::graph_generator::repo::api::model::{LogType, VisLog};
+    use crate::domain::graph_generator::api::model::errors::GraphError;
+    use crate::domain::graph_generator::api::model::{Flow, FlowType, VisEntity};
+    use crate::domain::graph_generator::api::service::GraphGeneratorTrait;
+    use crate::domain::graph_generator::internal::model::GGImpl;
+    use crate::domain::graph_generator::repo::api::model::{LogType, VisLog};
     use std::collections::HashMap;
     use uuid::Uuid;
 

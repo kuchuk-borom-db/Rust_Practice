@@ -1,5 +1,6 @@
-mod services;
-mod utils;
+mod domain;
+mod infrastructure;
+
 fn generate_test_log() -> Vec<VisLog> {
     let logs = vec![
         VisLog {
@@ -303,16 +304,16 @@ fn generate_simple_test_log() -> Vec<VisLog> {
         },
     ]
 }
-use crate::services::graph_generator::api::GraphGeneratorTrait;
-use crate::services::diagram_generator::api::service::DiagramGeneratorTrait;
-use crate::services::graph_generator::repo::api::model::{LogType, VisLog};
-use crate::services::*;
+use crate::domain::diagram_generator::api::service::DiagramGeneratorTrait;
+use crate::domain::graph_generator::api::service::GraphGeneratorTrait;
+use crate::domain::graph_generator::repo::api::model::{LogType, VisLog};
+use crate::domain::*;
 use actix_web::Responder;
 use serde::{Deserialize, Serialize};
 
 fn main() {
     let log = generate_simple_test_log();
-    let gg = graph_generator::api::Factory::factory();
+    let gg = graph_generator::api::service::Factory::factory();
     let result = gg.generate_graph(log);
     let dg = diagram_generator::api::service::Factory::factory();
     let result2 = dg.generate_diagram(&result.as_ref().unwrap());

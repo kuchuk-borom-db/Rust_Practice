@@ -7,11 +7,23 @@
     <cargoProject FILE="$PROJECT_DIR$/Main/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="FIX: sending log to server after end of function call done">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="REFACTOR: Changed logic to add STORE after function call. Made necessary changes required for new change">
+      <change afterPath="$PROJECT_DIR$/Main/src/infrastructure/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/services/diagram_generator/internal.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/services/diagram_generator/internal.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/services/graph_generator/internal.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/services/graph_generator/internal.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services/diagram_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/diagram_generator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services/diagram_generator/api.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/diagram_generator/api.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services/diagram_generator/api/models.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/diagram_generator/api/models.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services/diagram_generator/api/service.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/diagram_generator/api/service.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services/diagram_generator/internal.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/diagram_generator/internal.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services/graph_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/graph_generator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services/graph_generator/api.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/graph_generator/api.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services/graph_generator/internal.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/graph_generator/internal.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services/graph_generator/repo.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/graph_generator/repo.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/services/graph_generator/repo/api.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/graph_generator/repo/api.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/utils.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestSamples/javascript/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/TestSamples/javascript/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +31,13 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:dev" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Rust File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
@@ -115,7 +134,7 @@
       <option name="presentableId" value="Default" />
       <updated>1736818634742</updated>
       <workItem from="1736818641469" duration="10453000" />
-      <workItem from="1736829904574" duration="1676000" />
+      <workItem from="1736829904574" duration="3289000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -157,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736828714736</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="REFACTOR: Changed logic to add STORE after function call. Made necessary changes required for new change">
+      <option name="closed" value="true" />
+      <created>1736831653344</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1736831653345</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,6 +194,7 @@
     <MESSAGE value="REFACTOR: moved rust files to MAIn folder" />
     <MESSAGE value="Created simple api to generate logs for javascript" />
     <MESSAGE value="FIX: sending log to server after end of function call done" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIX: sending log to server after end of function call done" />
+    <MESSAGE value="REFACTOR: Changed logic to add STORE after function call. Made necessary changes required for new change" />
+    <option name="LAST_COMMIT_MESSAGE" value="REFACTOR: Changed logic to add STORE after function call. Made necessary changes required for new change" />
   </component>
 </project>
