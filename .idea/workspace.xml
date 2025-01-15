@@ -7,15 +7,12 @@
     <cargoProject FILE="$PROJECT_DIR$/Main/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="REFACTOR: Folder structure changes">
-      <change afterPath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/payloads.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/routes/handler.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/routes/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Main/src/infrastructure/web/mod.rs" afterDir="false" />
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="PROGRESS: Setting up proper end to end intergration">
+      <change afterPath="$PROJECT_DIR$/TestSamples/javascript/basic.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/infrastructure/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/routes/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/routes/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TestSamples/javascript/KukuVisualFlowLogger/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/TestSamples/javascript/KukuVisualFlowLogger/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TestSamples/javascript/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/TestSamples/javascript/index.js" afterDir="false" />
     </list>
@@ -24,7 +21,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:test" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:dev" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -60,35 +57,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Cargo.Run VisLog.executor": "Run",
-    "Node.js.JS Sample.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.rust.reset.selective.auto.import": "true",
-    "git-widget-placeholder": "master",
-    "javascript.nodejs.core.library.configured.version": "22.12.0",
-    "javascript.nodejs.core.library.typings.version": "22.10.6",
-    "last_opened_file_path": "D:/Projects/Rust_Practice/TestSamples/javascript/index.js",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
-    "org.rust.first.attach.projects": "true",
-    "ts.external.directory.path": "D:\\Program Files\\JetBrains\\RustRover 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Cargo.Run VisLog.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.JS Sample.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.12.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.6&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Projects/Rust_Practice/TestSamples/javascript/index.js&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
+    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Program Files\\JetBrains\\RustRover 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Projects\Rust_Practice\Main\src\infrastructure\web\internal" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.JS Sample">
+  <component name="RunManager" selected="Cargo.Run VisLog">
     <configuration name="Run VisLog" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package VisLog --bin VisLog" />
@@ -147,7 +144,8 @@
       <updated>1736818634742</updated>
       <workItem from="1736818641469" duration="10453000" />
       <workItem from="1736829904574" duration="3963000" />
-      <workItem from="1736876332737" duration="5315000" />
+      <workItem from="1736876332737" duration="5424000" />
+      <workItem from="1736909058573" duration="4739000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -205,7 +203,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736833235823</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="PROGRESS: Setting up proper end to end intergration">
+      <option name="closed" value="true" />
+      <created>1736881843503</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1736881843503</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,6 +223,7 @@
     <MESSAGE value="FIX: sending log to server after end of function call done" />
     <MESSAGE value="REFACTOR: Changed logic to add STORE after function call. Made necessary changes required for new change" />
     <MESSAGE value="REFACTOR: Folder structure changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="REFACTOR: Folder structure changes" />
+    <MESSAGE value="PROGRESS: Setting up proper end to end intergration" />
+    <option name="LAST_COMMIT_MESSAGE" value="PROGRESS: Setting up proper end to end intergration" />
   </component>
 </project>

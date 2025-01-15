@@ -47,7 +47,7 @@ export class KukuVisualFlowLoggerManual {
     STORE = (name, value) => {
         this.asyncLocalStorage.getStore()["entries"].push(new VisLogEntry(this._getStoreValue("operationId"), name, "STORE", value, this._getCounter()));
     }
-    LOG = (name, log) => {
+    log = (name, log) => {
         this.asyncLocalStorage.getStore()["entries"].push(new VisLogEntry(this._getStoreValue("operationId"), name, "LOG", log, this._getCounter()));
     }
 
@@ -60,12 +60,17 @@ export class KukuVisualFlowLoggerManual {
                 'Content-Type': 'application/json'
             },
             method: "POST"
-        })
+        });
+
         if (!response.ok) {
-            console.log(`\nError = ${response.statusText}\n`)
+            console.log(`\nError = ${response.statusText}\n`);
             return;
         }
-        console.log(await response.text());
+        const base64Response = await response.text();
+        console.log(base64Response);
+        const decodedDiagram = atob(base64Response); // Decode base64 to string
+        console.log(decodedDiagram);
+        return decodedDiagram;
     }
 }
 
@@ -79,4 +84,5 @@ class VisLogEntry {
         this.sequence = sequence;        // Matches sequence
     }
 }
+//TODO Add a way to define START and it returns a custom mini logger which can be used to log stuff and then call log.end with it to end the function call
 

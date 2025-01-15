@@ -7,6 +7,7 @@ name = "VisLog"
 version = "0.1.0"
 dependencies = [
  "actix-web",
+ "base64",
  "log",
  "rand",
  "serde",

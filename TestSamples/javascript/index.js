@@ -1,37 +1,53 @@
 import {KukuVisualFlowLoggerManual} from "./KukuVisualFlowLogger/index.js";
-
 const logger = new KukuVisualFlowLoggerManual("http://127.0.0.1:8080/");
-
-function square(num) {
-    logger.START("Square");
-    const result = num * num;
-    logger.LOG("Square", `Result = ${result}`);
-    logger.END("Square");
-    return result;
+function calculateInterest(amount) {
+    logger.START("calculateInterest")
+    logger.log("calculateInterest", `Calculating interest for ${amount}`)
+    const interest = amount * 0.1;
+    logger.log("calculateInterest" `Interest = ${interest}`);
+    return interest;
+    logger.END("calculateInterest");
 }
 
-function double(num) {
-    logger.START("Double");
-    const result = num * num;
-    logger.LOG("Double", `Result = ${result}`);
-    logger.END("Double");
-    return result;
+function addMoney(balance, deposit) {
+    logger.START("addMoney")
+    logger.log("addMoney",`Adding money (${deposit}) to balance ${balance}`)
+    const updatedBalance = balance + deposit;
+    logger.log("addMoney",`Balance = ${updatedBalance}`)
+    return updatedBalance;
 }
 
-function calculate() {
-    logger.START("Calculate");
-    const num = Math.floor(Math.random() * 5);
-    logger.LOG("Calculate", `num = ${num}`);
-    const square1 = square(num);
-    logger.STORE("Calculate", `Square1 = ${square1}`)
-    double(square1);
-    logger.LOG("Calculate", "Calculation Complete");
-    logger.END("Calculate");
-    return square1;
+function getCompoundInterest(initialAmount, years) {
+    logger.log(`Getting CI for ${initialAmount}, ${years}`)
+    if (years === 0) {
+        logger.log(`Year == 0. Returning ${initialAmount}`);
+        return initialAmount;
+    }
 
+    const interest = calculateInterest(initialAmount);
+    logger.log(`interest = ${interest}`)
+    const newBalance = addMoney(initialAmount, interest);
+    logger.log(`Updated Balance = ${newBalance}`)
+    const ci = getCompoundInterest(newBalance, years - 1);
+    logger.log(`CI = ${ci}`);
+    return ci;
 }
 
-const result1 = await logger.run(calculate);
-//const result2 = await logger.run(calculate);
+//Logs transaction to database. Returns true if successful
+function logTransaction(message) {
+    const timestamp = new Date().toISOString();
+    const msg = `${timestamp}: ${message}`;  // Return value not used by caller
+    logger.log(`Logging transaction ${msg}`)
+    return true;
+}
 
-console.log(`Result1 = ${result1} and result2 = ${"GG"}`);
+function calculateInvestment(balance) {
+    logger.log(`Calculating investment for ${balance}`)
+    const finalAmount = getCompoundInterest(balance, 2);
+    logger.log(`final Amount After investing = ${finalAmount}`);
+    logTransaction(`Investment matured: $${finalAmount}`);
+}
+
+calculateInvestment(1000);
+
+
