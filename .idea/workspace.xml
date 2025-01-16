@@ -8,16 +8,11 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Created basic web module">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Created dynamic app_state">
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/api/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/api/models/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/api/services/mod.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/application/handlers/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/application/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/application/routes/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/mod.rs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +62,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "Cargo.Run Server.executor": "Run",
     "Cargo.Run VisLog.executor": "Run",
     "Node.js.JS Sample.executor": "Run",
@@ -91,6 +87,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server" />
       <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\core" />
       <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\web" />
       <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\web\api\application" />
@@ -181,7 +178,8 @@
       <workItem from="1736829904574" duration="3963000" />
       <workItem from="1736876332737" duration="5424000" />
       <workItem from="1736909058573" duration="6095000" />
-      <workItem from="1736993639812" duration="5400000" />
+      <workItem from="1736993639812" duration="5912000" />
+      <workItem from="1737047187145" duration="5431000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -263,7 +261,23 @@
       <option name="project" value="LOCAL" />
       <updated>1737001708421</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Created dynamic app_state">
+      <option name="closed" value="true" />
+      <created>1737004763434</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1737004763434</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Created dynamic app_state">
+      <option name="closed" value="true" />
+      <created>1737005136296</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1737005136296</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,6 +292,7 @@
     <MESSAGE value="PROGRESS: Setting up proper end to end intergration" />
     <MESSAGE value="FEATURE: API works now" />
     <MESSAGE value="Created basic web module" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created basic web module" />
+    <MESSAGE value="Created dynamic app_state" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created dynamic app_state" />
   </component>
 </project>
