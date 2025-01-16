@@ -8,18 +8,16 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="FEATURE: API works now">
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/api/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/api/models/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/api/services/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/application/handlers/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/application/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/application/routes/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Rust_Practice.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Rust_Practice.iml" afterDir="false" />
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Created basic web module">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/api/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/api/models/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/api/services/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/application/handlers/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/application/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/application/routes/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/mod.rs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,6 +91,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\core" />
       <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\web" />
       <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\web\api\application" />
       <recent name="D:\Projects\Rust_Practice\Main\src\infrastructure\web\internal" />
@@ -182,7 +181,7 @@
       <workItem from="1736829904574" duration="3963000" />
       <workItem from="1736876332737" duration="5424000" />
       <workItem from="1736909058573" duration="6095000" />
-      <workItem from="1736993639812" duration="2415000" />
+      <workItem from="1736993639812" duration="5400000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -256,7 +255,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736916312405</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Created basic web module">
+      <option name="closed" value="true" />
+      <created>1737001708421</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1737001708421</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,6 +277,7 @@
     <MESSAGE value="REFACTOR: Folder structure changes" />
     <MESSAGE value="PROGRESS: Setting up proper end to end intergration" />
     <MESSAGE value="FEATURE: API works now" />
-    <option name="LAST_COMMIT_MESSAGE" value="FEATURE: API works now" />
+    <MESSAGE value="Created basic web module" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created basic web module" />
   </component>
 </project>
