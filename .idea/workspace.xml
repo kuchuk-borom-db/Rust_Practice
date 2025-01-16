@@ -5,16 +5,21 @@
   </component>
   <component name="CargoProjects">
     <cargoProject FILE="$PROJECT_DIR$/Main/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="PROGRESS: Setting up proper end to end intergration">
-      <change afterPath="$PROJECT_DIR$/TestSamples/javascript/basic.js" afterDir="false" />
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="FEATURE: API works now">
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/api/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/api/models/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/api/services/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/application/handlers/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/application/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/application/routes/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/web/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Rust_Practice.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Rust_Practice.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/routes/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/routes/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestSamples/javascript/KukuVisualFlowLogger/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/TestSamples/javascript/KukuVisualFlowLogger/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestSamples/javascript/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/TestSamples/javascript/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +35,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
@@ -57,35 +67,55 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Cargo.Run VisLog.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.JS Sample.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.12.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.6&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Projects/Rust_Practice/TestSamples/javascript/index.js&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
-    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Program Files\\JetBrains\\RustRover 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Cargo.Run Server.executor": "Run",
+    "Cargo.Run VisLog.executor": "Run",
+    "Node.js.JS Sample.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.rust.reset.selective.auto.import": "true",
+    "git-widget-placeholder": "project__structure__change",
+    "javascript.nodejs.core.library.configured.version": "22.12.0",
+    "javascript.nodejs.core.library.typings.version": "22.10.6",
+    "last_opened_file_path": "D:/Projects/Rust_Practice/TestSamples/javascript/index.js",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
+    "org.rust.first.attach.projects": "true",
+    "ts.external.directory.path": "D:\\Program Files\\JetBrains\\RustRover 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\web" />
+      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\web\api\application" />
       <recent name="D:\Projects\Rust_Practice\Main\src\infrastructure\web\internal" />
     </key>
   </component>
-  <component name="RunManager" selected="Cargo.Run VisLog">
+  <component name="RunManager" selected="Cargo.Run Server">
+    <configuration name="Run Server" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package Server --bin Server" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/VisFlowLogger/Server" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run VisLog" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package VisLog --bin VisLog" />
@@ -128,8 +158,14 @@
     <list>
       <item itemvalue="Cargo.Run VisLog" />
       <item itemvalue="Cargo.Test VisLog" />
+      <item itemvalue="Cargo.Run Server" />
       <item itemvalue="Node.js.JS Sample" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Cargo.Run Server" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
@@ -145,7 +181,8 @@
       <workItem from="1736818641469" duration="10453000" />
       <workItem from="1736829904574" duration="3963000" />
       <workItem from="1736876332737" duration="5424000" />
-      <workItem from="1736909058573" duration="4739000" />
+      <workItem from="1736909058573" duration="6095000" />
+      <workItem from="1736993639812" duration="2415000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -211,7 +248,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736881843503</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="FEATURE: API works now">
+      <option name="closed" value="true" />
+      <created>1736916312405</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1736916312405</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -224,6 +269,7 @@
     <MESSAGE value="REFACTOR: Changed logic to add STORE after function call. Made necessary changes required for new change" />
     <MESSAGE value="REFACTOR: Folder structure changes" />
     <MESSAGE value="PROGRESS: Setting up proper end to end intergration" />
-    <option name="LAST_COMMIT_MESSAGE" value="PROGRESS: Setting up proper end to end intergration" />
+    <MESSAGE value="FEATURE: API works now" />
+    <option name="LAST_COMMIT_MESSAGE" value="FEATURE: API works now" />
   </component>
 </project>
