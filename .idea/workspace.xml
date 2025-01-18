@@ -8,26 +8,26 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="So confusing">
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_log_model.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_log.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_log_impl.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/db.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/mod.rs" afterDir="false" />
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Project structure progress">
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/models/app_state.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/models/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_op.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_op_impl.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/database/mod.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/routes/handlers/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/routes/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_log_model.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_log_model.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_log.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_log.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_log_impl.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_log_impl.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,7 +198,7 @@
       <workItem from="1737069796345" duration="745000" />
       <workItem from="1737087355534" duration="5373000" />
       <workItem from="1737120604279" duration="636000" />
-      <workItem from="1737163619809" duration="9346000" />
+      <workItem from="1737163619809" duration="15861000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -312,7 +312,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737092141779</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Project structure progress">
+      <option name="closed" value="true" />
+      <created>1737173983838</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1737173983838</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -330,6 +338,7 @@
     <MESSAGE value="Created dynamic app_state" />
     <MESSAGE value="Created core module" />
     <MESSAGE value="So confusing" />
-    <option name="LAST_COMMIT_MESSAGE" value="So confusing" />
+    <MESSAGE value="Project structure progress" />
+    <option name="LAST_COMMIT_MESSAGE" value="Project structure progress" />
   </component>
 </project>
