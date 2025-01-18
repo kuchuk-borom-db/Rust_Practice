@@ -26,6 +26,8 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(web::Data::new(app_state.clone()))
             .service(server::route::save_logs)
+            .service(server::route::get_logs_by_operation_id)
+            .service(server::route::get_operations)
     })
     .bind("127.0.0.1:8080")?
     .run()

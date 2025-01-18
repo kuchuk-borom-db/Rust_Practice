@@ -1,5 +1,5 @@
-use sqlx::{Error, Pool, Postgres};
 use sqlx::postgres::PgPoolOptions;
+use sqlx::{Error, Pool, Postgres};
 
 pub async fn init_database() -> Result<Pool<Postgres>, Error> {
     PgPoolOptions::new()

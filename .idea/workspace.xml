@@ -8,14 +8,14 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="PROGRESS: Setting up proper end to end intergration">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Created get endpoints for operation and logs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_log_model.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_log_model.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_log.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_log.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_log_impl.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_log_impl.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_op_impl.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_op_impl.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/db.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/db.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736881843503</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Created get endpoints for operation and logs">
+      <option name="closed" value="true" />
+      <created>1737206285695</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1737206285695</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,6 +238,7 @@
     <MESSAGE value="REFACTOR: Changed logic to add STORE after function call. Made necessary changes required for new change" />
     <MESSAGE value="REFACTOR: Folder structure changes" />
     <MESSAGE value="PROGRESS: Setting up proper end to end intergration" />
-    <option name="LAST_COMMIT_MESSAGE" value="PROGRESS: Setting up proper end to end intergration" />
+    <MESSAGE value="Created get endpoints for operation and logs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created get endpoints for operation and logs" />
   </component>
 </project>

@@ -17,8 +17,13 @@ impl VisLogOpImpl {
 #[async_trait]
 impl VisFlowOp for VisLogOpImpl {
     async fn upsert(&self, operation_id: &str) -> bool {
-        let query = "INSERT INTO operations (id, created, updated) VALUES ($1, NOW(), NOW())
-                 ON CONFLICT (id) DO UPDATE SET updated = NOW()";
+        let query = "
+        INSERT INTO operations (id, created, updated)
+        VALUES ($1, NOW(), NOW())
+        ON CONFLICT (id)
+        DO UPDATE SET updated = NOW();
+    ";
+
         let result = sqlx::query(query)
             .bind(operation_id)
             .execute(&self.db)
@@ -26,7 +31,10 @@ impl VisFlowOp for VisLogOpImpl {
 
         match result {
             Ok(result) => result.rows_affected() > 0,
-            Err(_) => false, // Handle errors gracefully
+            Err(e) => {
+                eprintln!("Error in upsert: {}", e); // You can log the error for better tracking
+                false
+            }
         }
     }
 
