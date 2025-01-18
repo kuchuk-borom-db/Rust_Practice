@@ -8,17 +8,14 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Project structure progress #1">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Project structure progress #2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/models/app_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/models/app_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/models/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/models/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/domain/graph_generator/internal.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/graph_generator/internal.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_log.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_log.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_op.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_op.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/db.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/db.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_op_impl.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_op_impl.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +187,7 @@
       <workItem from="1737087355534" duration="5373000" />
       <workItem from="1737120604279" duration="636000" />
       <workItem from="1737163619809" duration="15992000" />
-      <workItem from="1737201671875" duration="734000" />
+      <workItem from="1737201671875" duration="2365000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -320,7 +317,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737180329706</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Project structure progress #2">
+      <option name="closed" value="true" />
+      <created>1737202439278</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1737202439278</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,6 +345,7 @@
     <MESSAGE value="So confusing" />
     <MESSAGE value="Project structure progress" />
     <MESSAGE value="Project structure progress #1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Project structure progress #1" />
+    <MESSAGE value="Project structure progress #2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Project structure progress #2" />
   </component>
 </project>

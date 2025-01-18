@@ -1,3 +1,4 @@
+use crate::services::persistence::api::model::vis_flow_op_model::VisFlowOperationEntity;
 use crate::services::persistence::api::services::vis_flow_op::VisFlowOp;
 use crate::services::persistence::internal::common::db::init_database;
 use async_trait::async_trait;
@@ -26,6 +27,20 @@ impl VisFlowOp for VisLogOpImpl {
         match result {
             Ok(result) => result.rows_affected() > 0,
             Err(_) => false, // Handle errors gracefully
+        }
+    }
+
+    async fn get_operations(&self) -> Result<Vec<VisFlowOperationEntity>, String> {
+        let query = "SELECT * FROM operations ORDER BY updated";
+        match sqlx::query(query).fetch_all(&self.db).await {
+            Ok(rows) => {
+                let operations = rows
+                    .iter()
+                    .map(|row| VisFlowOperationEntity::from_row(row))
+                    .collect();
+                Ok(operations)
+            }
+            Err(err) => Err(format!("Error fetching operations: {}", err)),
         }
     }
 }
