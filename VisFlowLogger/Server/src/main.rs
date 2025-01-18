@@ -6,6 +6,7 @@ use std::sync::Arc;
 
 mod server;
 mod services;
+mod utils;
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {

@@ -36,6 +36,7 @@ pub async fn save_logs(
 #[get("/")]
 pub async fn get_operations(app_state: web::Data<AppState>) -> HttpResponse {
     //TODO Cursor Pagination with both prev and next reference.
+    println!("Getting all operations");
     match app_state
         .services
         .persistence

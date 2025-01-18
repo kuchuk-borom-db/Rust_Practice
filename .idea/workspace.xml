@@ -8,13 +8,41 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Created get endpoints for operation and logs">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Added table migration script and services">
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/utils/constants.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/utils/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/.idea/Rust_Practice.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/Cargo.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/Cargo.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/domain/diagram_generator.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/domain/diagram_generator/api.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/domain/diagram_generator/api/models.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/domain/diagram_generator/api/service.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/domain/diagram_generator/internal.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/domain/graph_generator.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/domain/graph_generator/api.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/domain/graph_generator/internal.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/domain/graph_generator/repo.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/domain/graph_generator/repo/api.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/domain/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/payloads.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/routes/handler.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/routes/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/web/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/src/main.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_op_impl.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_op_impl.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/db.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/db.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,7 +123,7 @@
     <configuration name="Run VisLog" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package VisLog --bin VisLog" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$/Main" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/VisFlowLogger/Server" />
       <envs />
       <option name="emulateTerminal" value="true" />
       <option name="channel" value="DEFAULT" />
@@ -225,7 +253,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737206285695</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added table migration script and services">
+      <option name="closed" value="true" />
+      <created>1737208047871</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1737208047871</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,6 +275,7 @@
     <MESSAGE value="REFACTOR: Folder structure changes" />
     <MESSAGE value="PROGRESS: Setting up proper end to end intergration" />
     <MESSAGE value="Created get endpoints for operation and logs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created get endpoints for operation and logs" />
+    <MESSAGE value="Added table migration script and services" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added table migration script and services" />
   </component>
 </project>
