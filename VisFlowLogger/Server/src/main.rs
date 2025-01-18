@@ -1,7 +1,7 @@
-use server::models::app_state::{AppState, AvailableServices as AS};
 use crate::services::persistence::api::services::vis_flow_op::VisFlowOp;
 use crate::services::persistence::AvailableServices as PAS;
 use actix_web::{web, App, HttpServer};
+use server::models::app_state::{AppState, AvailableServices as AS};
 use std::sync::Arc;
 
 mod server;

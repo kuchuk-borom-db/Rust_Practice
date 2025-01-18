@@ -2,7 +2,7 @@ use crate::services::persistence::api::model::vis_flow_log_model::VisFlowLogMode
 use crate::services::persistence::api::services::vis_flow_log::VisFlowLog;
 use crate::services::persistence::internal::common::db::init_database;
 use async_trait::async_trait;
-use sqlx::{Pool, Postgres};
+use sqlx::{Pool, Postgres, Row};
 use uuid::Uuid;
 
 pub struct VisFlowLogImpl {
@@ -68,6 +68,26 @@ impl VisFlowLog for VisFlowLogImpl {
                 eprintln!("Error saving logs: {}", e);
                 false
             }
+        }
+    }
+
+    async fn get_logs_by_operation_id(
+        &self,
+        operation_id: String,
+    ) -> Result<Vec<VisFlowLogModel>, String> {
+        match sqlx::query("SELECT * FROM logs WHERE operation_id = $1 ORDER BY sequence")
+            .bind(operation_id)
+            .fetch_all(&self.db)
+            .await
+        {
+            Ok(rows) => {
+                let logs = rows
+                    .iter()
+                    .map(|row| VisFlowLogModel::from_row(row))
+                    .collect();
+                Ok(logs)
+            }
+            Err(err) => Err(format!("Error fetching logs: {}", err)),
         }
     }
 }

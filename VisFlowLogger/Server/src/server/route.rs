@@ -36,5 +36,31 @@ pub async fn save_logs(
 #[get("/")]
 pub async fn get_operations(app_state: web::Data<AppState>) -> HttpResponse {
     //TODO Cursor Pagination with both prev and next reference.
-    app_state.services.persistence.vis_flow_op.get_operations();
+    match app_state
+        .services
+        .persistence
+        .vis_flow_op
+        .get_operations()
+        .await
+    {
+        Ok(ops) => HttpResponse::Ok().json(ops),
+        Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
+    }
+}
+#[get("/{operation_id}")]
+pub async fn get_logs_by_operation_id(
+    operation_id: web::Path<String>,
+    app_state: web::Data<AppState>,
+) -> HttpResponse {
+    //TODO simple offset based pagination.
+    match app_state
+        .services
+        .persistence
+        .vis_flow_log
+        .get_logs_by_operation_id(operation_id.into_inner())
+        .await
+    {
+        Ok(logs) => HttpResponse::Ok().json(logs),
+        Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
+    }
 }

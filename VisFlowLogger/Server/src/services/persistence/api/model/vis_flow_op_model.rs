@@ -1,7 +1,7 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use sqlx::Row;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct VisFlowOperationEntity {
     pub operation_id: String,
     pub created_at: String, // yyyy-mm-dd
