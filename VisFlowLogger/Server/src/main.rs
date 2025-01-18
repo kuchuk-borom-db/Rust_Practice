@@ -1,10 +1,9 @@
-use crate::models::app_state::{AppState, AvailableServices as AS};
+use server::models::app_state::{AppState, AvailableServices as AS};
 use crate::services::persistence::api::services::vis_flow_op::VisFlowOp;
 use crate::services::persistence::AvailableServices as PAS;
 use actix_web::{web, App, HttpServer};
 use std::sync::Arc;
 
-mod models;
 mod server;
 mod services;
 
@@ -32,3 +31,31 @@ async fn main() -> std::io::Result<()> {
     .run()
     .await
 }
+
+/*
+Box<T>
+- Used for single ownership of a value stored on the heap.
+- Allows mutation if the Box itself is mutable.
+
+Rc<T> (Reference Counted)
+- Allows multiple ownership of the same data within a single thread.
+- Provides shared (immutable) references to the inner value.
+- If mutation is needed, use Rc<RefCell<T>>.
+
+Arc<T> (Atomic Reference Counted)
+- Similar to Rc<T>, but designed for thread-safe multiple ownership.
+- Provides shared (immutable) references to the inner value.
+- For mutation in a thread-safe context, use Arc<Mutex<T>> or Arc<RwLock<T>>.
+
+Arc<Mutex<T>>
+- Combines Arc for thread-safe multiple ownership and Mutex for interior mutability.
+- Allows safe, mutable access to the inner value across threads via mutual exclusion.
+
+Cell<T>
+- Provides interior mutability for types that implement the Copy trait.
+- Enables modifying the value inside a Cell even with an immutable reference (&T).
+
+Notes:
+- RefCell<T>: Often paired with Rc<T> for interior mutability in single-threaded contexts.
+- Interior Mutability: A design pattern that allows data to be modified through an immutable reference, using wrappers like Cell or RefCell.
+*/

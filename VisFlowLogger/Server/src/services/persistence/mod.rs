@@ -6,8 +6,9 @@ pub mod api;
 mod internal;
 #[derive(Clone)]
 pub struct AvailableServices {
-    pub vis_flow_log: Arc<Box<dyn VisFlowLog>>,
-    pub vis_flow_op: Arc<Box<dyn VisFlowOp>>,
+    //Arc = multi owner just like ReferenceCount but thread safe
+    pub vis_flow_log: Arc<dyn VisFlowLog>,
+    pub vis_flow_op: Arc<dyn VisFlowOp>,
 }
 /*
 Why we need Arc:

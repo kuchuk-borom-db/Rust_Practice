@@ -7,8 +7,8 @@ pub trait VisFlowLog: Send + Sync {
     ///Save log to database
     async fn save_log(&self, logs: &Vec<VisFlowLogModel>) -> bool;
 }
-pub async fn new() -> Box<dyn VisFlowLog> {
-    Box::new(VisFlowLogImpl::new().await)
+pub async fn new() -> impl VisFlowLog {
+   VisFlowLogImpl::new().await
 }
 
 /*
