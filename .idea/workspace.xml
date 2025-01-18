@@ -8,26 +8,26 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Created core module">
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/database/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/routes/handlers/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/routes/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/mod.rs" afterDir="false" />
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="So confusing">
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_log_model.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_log.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_log_impl.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/db.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/persistence/api/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/persistence/api/repositories/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/persistence/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/shared/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/shared/models/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/shared/models/vis_flow_log/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/web/api/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/web/api/models/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/web/application/handlers/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/web/application/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/web/application/routes/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/core/web/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/database/mod.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/routes/handlers/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/routes/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,38 +75,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;Cargo.Run Server.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Run VisLog.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.JS Sample.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;project__structure__change&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.12.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.6&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Projects/Rust_Practice/TestSamples/javascript/index.js&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
-    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Program Files\\JetBrains\\RustRover 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Cargo.Run Server.executor": "Run",
+    "Cargo.Run VisLog.executor": "Run",
+    "Node.js.JS Sample.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.rust.reset.selective.auto.import": "true",
+    "git-widget-placeholder": "project__structure__change",
+    "javascript.nodejs.core.library.configured.version": "22.12.0",
+    "javascript.nodejs.core.library.typings.version": "22.10.6",
+    "last_opened_file_path": "D:/Projects/Rust_Practice/TestSamples/javascript/index.js",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
+    "org.rust.first.attach.projects": "true",
+    "ts.external.directory.path": "D:\\Program Files\\JetBrains\\RustRover 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\services\persistence\internal\application" />
+      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\services\persistence\internal" />
       <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server" />
       <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\core" />
       <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\web" />
-      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\web\api\application" />
-      <recent name="D:\Projects\Rust_Practice\Main\src\infrastructure\web\internal" />
     </key>
   </component>
   <component name="RunManager" selected="Cargo.Run Server">
@@ -196,7 +196,9 @@
       <workItem from="1736993639812" duration="5912000" />
       <workItem from="1737047187145" duration="9177000" />
       <workItem from="1737069796345" duration="745000" />
-      <workItem from="1737087355534" duration="4520000" />
+      <workItem from="1737087355534" duration="5373000" />
+      <workItem from="1737120604279" duration="636000" />
+      <workItem from="1737163619809" duration="9346000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -302,7 +304,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737056107676</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="So confusing">
+      <option name="closed" value="true" />
+      <created>1737092141779</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1737092141779</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -319,6 +329,7 @@
     <MESSAGE value="Created basic web module" />
     <MESSAGE value="Created dynamic app_state" />
     <MESSAGE value="Created core module" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created core module" />
+    <MESSAGE value="So confusing" />
+    <option name="LAST_COMMIT_MESSAGE" value="So confusing" />
   </component>
 </project>
