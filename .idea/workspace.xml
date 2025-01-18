@@ -8,42 +8,11 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Added table migration script and services">
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/utils/constants.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/utils/mod.rs" afterDir="false" />
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Removed main folder. Now to fix endpoints">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/.idea/Rust_Practice.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/Cargo.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/Cargo.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/domain/diagram_generator.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/domain/diagram_generator/api.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/domain/diagram_generator/api/models.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/domain/diagram_generator/api/service.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/domain/diagram_generator/internal.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/domain/graph_generator.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/domain/graph_generator/api.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/domain/graph_generator/internal.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/domain/graph_generator/repo.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/domain/graph_generator/repo/api.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/domain/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/payloads.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/routes/handler.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/web/internal/routes/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/infrastructure/web/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/main.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/db.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/common/db.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_log_model.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_log_model.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_log_impl.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_log_impl.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,29 +60,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Cargo.Run VisLog.executor": "Run",
-    "Node.js.JS Sample.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.rust.reset.selective.auto.import": "true",
-    "git-widget-placeholder": "feature/endpoints",
-    "javascript.nodejs.core.library.configured.version": "22.12.0",
-    "javascript.nodejs.core.library.typings.version": "22.10.6",
-    "last_opened_file_path": "D:/Projects/Rust_Practice/TestSamples/javascript/index.js",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
-    "org.rust.first.attach.projects": "true",
-    "ts.external.directory.path": "D:\\Program Files\\JetBrains\\RustRover 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Cargo.Run VisLog.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.JS Sample.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/endpoints&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.12.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.6&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Projects/Rust_Practice/TestSamples/javascript/index.js&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
+    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Program Files\\JetBrains\\RustRover 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Projects\Rust_Practice\Main\src\infrastructure\web\internal" />
@@ -180,6 +149,7 @@
       <workItem from="1736829904574" duration="3963000" />
       <workItem from="1736876332737" duration="5424000" />
       <workItem from="1736909058573" duration="4739000" />
+      <workItem from="1737210234526" duration="1673000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -261,7 +231,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737208047871</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Removed main folder. Now to fix endpoints">
+      <option name="closed" value="true" />
+      <created>1737209391150</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1737209391150</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -276,6 +254,7 @@
     <MESSAGE value="PROGRESS: Setting up proper end to end intergration" />
     <MESSAGE value="Created get endpoints for operation and logs" />
     <MESSAGE value="Added table migration script and services" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added table migration script and services" />
+    <MESSAGE value="Removed main folder. Now to fix endpoints" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed main folder. Now to fix endpoints" />
   </component>
 </project>

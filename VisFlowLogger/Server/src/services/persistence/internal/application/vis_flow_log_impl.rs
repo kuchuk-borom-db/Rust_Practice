@@ -27,14 +27,12 @@ impl VisFlowLog for VisFlowLogImpl {
         let mut query = String::from(
             "INSERT INTO logs (id, operation_id, block_name, log_type, log_value, sequence) VALUES ",
         );
-        let mut values = Vec::new();
         let mut value_placeholders = Vec::new();
 
         for (idx, log) in logs.iter().enumerate() {
             let offset = idx * 6;
             let id = Uuid::new_v4();
 
-            // Create placeholder for this row
             value_placeholders.push(format!(
                 "(${},${},${},${},${},${})",
                 offset + 1,
@@ -44,23 +42,26 @@ impl VisFlowLog for VisFlowLogImpl {
                 offset + 5,
                 offset + 6
             ));
-
-            // Add actual values
-            values.push(id.to_string());
-            values.push(log.operation_id.clone());
-            values.push(log.block_name.clone());
-            values.push(log.log_type.clone());
-            values.push(log.value.clone().unwrap_or_default());
-            values.push(log.sequence.to_string());
         }
 
         query.push_str(&value_placeholders.join(","));
 
-        // Create the query with the correct number of bindings
-        let query = sqlx::query(&query);
+        // Create the query with all placeholders
+        let mut query = sqlx::query(&query);
 
         // Bind all values
-        let query = values.iter().fold(query, |q, v| q.bind(v));
+        for log in logs {
+            let sequence = i32::try_from(log.sequence).unwrap_or_default();
+            let id = Uuid::new_v4();
+
+            query = query
+              .bind(id.to_string())
+              .bind(&log.operation_id)
+              .bind(&log.block_name)
+              .bind(&log.log_type)
+              .bind(log.value.as_deref().unwrap_or_default())
+              .bind(sequence);
+        }
 
         match query.execute(&self.db).await {
             Ok(_) => true,

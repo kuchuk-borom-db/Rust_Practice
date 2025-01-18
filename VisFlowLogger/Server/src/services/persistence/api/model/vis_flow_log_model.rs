@@ -16,7 +16,7 @@ impl VisFlowLogModel {
             operation_id: row.get("operation_id"),
             block_name: row.get("block_name"),
             log_type: row.get("log_type"),
-            value: row.get("value"),
+            value: row.get("log_value"),
             sequence: row.get::<i32, _>("sequence") as u32,
         }
     }
