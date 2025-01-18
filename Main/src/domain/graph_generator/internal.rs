@@ -40,7 +40,6 @@ pub(crate) mod application {
                 }
                 //Operation exclusive to first element in entries
                 {
-                    //TODO use lifetime to keep scope leveled variable alive after scope ends
                     let first_vis_entity =
                         create_vis_entity(first_log.name.clone(), None, Some("START".to_string()));
                     let first_vis_entity_id = first_vis_entity.id.clone();
@@ -62,7 +61,8 @@ pub(crate) mod application {
                         //Push caller(previous VisEntity) to stack.
                         caller_entity_id_stack.push(prev_entity_id.as_ref().unwrap().clone());
                         //Create new VisEntityFlow to represent the current VisFlowLog
-                        let current_vis_entity = create_vis_entity(log.name.clone(), prev_entity_id, None);
+                        let current_vis_entity =
+                            create_vis_entity(log.name.clone(), prev_entity_id, None);
                         let current_vis_entity_id = current_vis_entity.id.clone();
                         id_entity_map.insert(current_vis_entity_id.clone(), current_vis_entity);
                         prev_entity_id = Some(current_vis_entity_id);

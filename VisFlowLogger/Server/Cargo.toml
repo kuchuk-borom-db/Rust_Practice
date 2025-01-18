@@ -1,0 +1,13 @@
+[package]
+name = "Server"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "4"
+sqlx = { version = "0.8.3", features = ["runtime-async-std-native-tls", "postgres"] }
+tokio = { version = "1.42.0", features = ["rt", "rt-multi-thread", "macros"] }
+uuid = { version = "1.12.0", features = ["v4"] }
+async-trait = "0.1.85"
+serde = { version = "1.0.217", features = ["derive"] }
+
