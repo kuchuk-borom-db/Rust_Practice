@@ -5,4 +5,5 @@ pub struct AppState {
 #[derive(Clone)]
 pub struct AvailableServices {
     pub persistence: crate::services::persistence::AvailableServices,
+    pub graph_generator: crate::services::graph_generator::AvailableServices,
 }

@@ -8,22 +8,23 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="FEATURE: Graph generator endpoint implementation complete.&#10;Need to test">
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/unit_test/mod.rs" afterDir="false" />
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="FIX, TEST: Fixed graph generator implementation and added unit test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/models/payload/save_logs_payload.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/models/payload/save_logs_payload.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/models/vis_flow_log_entry.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/models/vis_flow_log_entry.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/models/app_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/models/app_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/services/graph_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/services/graph_generator.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/application/graph_generator_impl.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/application/graph_generator_impl.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/models/vis_flow.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/models/vis_flow.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:test" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:dev" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -46,12 +47,22 @@
     &quot;assignee&quot;: &quot;kuchuk-borom-db&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/kuchuk-borom-db/Rust_Practice.git&quot;,
-    &quot;accountId&quot;: &quot;471c3487-c1aa-4ebd-bc84-76f78c554bf0&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/kuchuk-borom-db/Rust_Practice.git",
+    "accountId": "471c3487-c1aa-4ebd-bc84-76f78c554bf0"
+  },
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
+    },
+    "owner": "kuchuk-borom-db",
+    "repository": "Rust_Practice"
   }
-}</component>
+}]]></component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="73eA8PYr" />
   </component>
@@ -93,7 +104,7 @@
       <recent name="D:\Projects\Rust_Practice\Main\src\infrastructure\web\internal" />
     </key>
   </component>
-  <component name="RunManager" selected="Cargo.Test services::graph_generator::internal::unit_test::graph_generator_test">
+  <component name="RunManager" selected="Cargo.Run VisLog">
     <configuration name="Run VisLog" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package VisLog --bin VisLog" />
@@ -182,7 +193,7 @@
       <workItem from="1737212947646" duration="204000" />
       <workItem from="1737218533816" duration="164000" />
       <workItem from="1737218783982" duration="1740000" />
-      <workItem from="1737244273988" duration="14382000" />
+      <workItem from="1737244273988" duration="17168000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -296,7 +307,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737255657263</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="FIX, TEST: Fixed graph generator implementation and added unit test">
+      <option name="closed" value="true" />
+      <created>1737260168548</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1737260168548</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -315,14 +334,15 @@
     <MESSAGE value="Endpoints working" />
     <MESSAGE value="FEATURE: 1. Endpoint for saving log can accept several operations now. 2. Saving operations can now bulk save" />
     <MESSAGE value="FEATURE: Graph generator endpoint implementation complete.&#10;Need to test" />
-    <option name="LAST_COMMIT_MESSAGE" value="FEATURE: Graph generator endpoint implementation complete.&#10;Need to test" />
+    <MESSAGE value="FIX, TEST: Fixed graph generator implementation and added unit test" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIX, TEST: Fixed graph generator implementation and added unit test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/application/graph_generator_impl.rs</url>
-          <line>14</line>
+          <line>16</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
