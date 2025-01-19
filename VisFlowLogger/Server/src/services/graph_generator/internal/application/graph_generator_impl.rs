@@ -6,11 +6,13 @@ use crate::services::graph_generator::internal::models::vis_flow::{
     Block, BlockFlow, BlockFlowType,
 };
 
+use async_trait::async_trait;
 use std::collections::HashMap;
 use uuid::Uuid;
 
 pub struct GraphGeneratorImpl;
 
+#[async_trait]
 impl GraphGenerator for GraphGeneratorImpl {
     fn generate_graph(
         &self,

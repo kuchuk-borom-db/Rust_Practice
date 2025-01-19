@@ -1,3 +1,4 @@
+use crate::services::graph_generator::AvailableServices as GGAS;
 use crate::services::persistence::api::services::vis_flow_op::VisFlowOp;
 use crate::services::persistence::AvailableServices as PAS;
 use actix_web::{web, App, HttpServer};
@@ -13,12 +14,16 @@ async fn main() -> std::io::Result<()> {
     //Create the services
     let vis_flow_log_repo = services::persistence::api::services::vis_flow_log::new().await;
     let vis_flow_op_repo = services::persistence::api::services::vis_flow_op::new().await;
+    let graph_generator = services::graph_generator::api::services::graph_generator::new();
 
     let app_state = AppState {
         services: AS {
             persistence: PAS {
                 vis_flow_log: Arc::new(vis_flow_log_repo),
                 vis_flow_op: Arc::new(vis_flow_op_repo),
+            },
+            graph_generator: GGAS {
+                graph_generator: Arc::new(graph_generator),
             },
         },
     };
@@ -29,6 +34,7 @@ async fn main() -> std::io::Result<()> {
             .service(server::route::save_logs)
             .service(server::route::get_logs_by_operation_id)
             .service(server::route::get_operations)
+            .service(server::route::get_graphs_by_operation_id)
     })
     .bind("127.0.0.1:8080")?
     .run()

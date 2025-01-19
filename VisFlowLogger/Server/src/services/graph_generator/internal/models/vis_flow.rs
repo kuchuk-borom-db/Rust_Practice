@@ -1,6 +1,7 @@
+use serde::{Deserialize, Serialize};
 use std::fmt::{self, Display};
 
-#[derive(Eq, PartialEq, Hash)]
+#[derive(Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct Block {
     /// Key of a block that called it.
     pub caller: Option<String>,
@@ -10,15 +11,21 @@ pub struct Block {
 
 impl Display for Block {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "VisFlowBlock {{ caller: {:?}, name: {}, flow: [{}] }}",
-               self.caller,
-               self.name,
-               self.flow.iter().map(|b| format!("{}", b)).collect::<Vec<String>>().join(", ")
+        write!(
+            f,
+            "VisFlowBlock {{ caller: {:?}, name: {}, flow: [{}] }}",
+            self.caller,
+            self.name,
+            self.flow
+                .iter()
+                .map(|b| format!("{}", b))
+                .collect::<Vec<String>>()
+                .join(", ")
         )
     }
 }
 
-#[derive(Eq, PartialEq, Hash)]
+#[derive(Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct BlockFlow {
     pub flow_pointer_id: Option<String>,
     pub flow_id: String,
@@ -28,16 +35,15 @@ pub struct BlockFlow {
 
 impl Display for BlockFlow {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "BlockFlow {{ flow_pointer_id: {:?}, flow_id: {}, flow_type: {}, value: {:?} }}",
-               self.flow_pointer_id,
-               self.flow_id,
-               self.flow_type,
-               self.value
+        write!(
+            f,
+            "BlockFlow {{ flow_pointer_id: {:?}, flow_id: {}, flow_type: {}, value: {:?} }}",
+            self.flow_pointer_id, self.flow_id, self.flow_type, self.value
         )
     }
 }
 
-#[derive(Eq, PartialEq, Hash)]
+#[derive(Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub enum BlockFlowType {
     Call,
     CallStore,
