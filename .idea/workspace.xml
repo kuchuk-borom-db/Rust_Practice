@@ -8,21 +8,22 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Project structure progress #2">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="FEATURE: Graph generator endpoint implementation complete.&#10;Need to test">
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/unit_test/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/src/domain/graph_generator/internal.rs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/src/domain/graph_generator/internal.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_op.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_op.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_op_impl.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_op_impl.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/models/payload/save_logs_payload.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/models/payload/save_logs_payload.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/models/vis_flow_log_entry.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/models/vis_flow_log_entry.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/services/graph_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/services/graph_generator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/application/graph_generator_impl.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/application/graph_generator_impl.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/models/vis_flow.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/models/vis_flow.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:dev" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:test" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -63,62 +64,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;Cargo.Run Server.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Run VisLog.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.JS Sample.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;project__structure__change&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.12.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.6&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Projects/Rust_Practice/TestSamples/javascript/index.js&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
-    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Program Files\\JetBrains\\RustRover 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Cargo.Run VisLog.executor": "Run",
+    "Cargo.Test services::graph_generator::internal::unit_test::graph_generator_test.executor": "Run",
+    "Node.js.JS Sample.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.rust.reset.selective.auto.import": "true",
+    "git-widget-placeholder": "feature/endpoints",
+    "javascript.nodejs.core.library.configured.version": "22.12.0",
+    "javascript.nodejs.core.library.typings.version": "22.10.6",
+    "last_opened_file_path": "D:/Projects/Rust_Practice/TestSamples/javascript/index.js",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
+    "org.rust.first.attach.projects": "true",
+    "ts.external.directory.path": "D:\\Program Files\\JetBrains\\RustRover 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\server" />
-      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\services\persistence\internal\application" />
-      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\services\persistence\internal" />
-      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server" />
-      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\core" />
+      <recent name="D:\Projects\Rust_Practice\Main\src\infrastructure\web\internal" />
     </key>
   </component>
-  <component name="RunManager" selected="Cargo.Run Server">
-    <configuration name="Run Server" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package Server --bin Server" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$/VisFlowLogger/Server" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Cargo.Test services::graph_generator::internal::unit_test::graph_generator_test">
     <configuration name="Run VisLog" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package VisLog --bin VisLog" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$/Main" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/VisFlowLogger/Server" />
       <envs />
       <option name="emulateTerminal" value="true" />
       <option name="channel" value="DEFAULT" />
@@ -151,18 +130,36 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test services::graph_generator::internal::unit_test::graph_generator_test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="buildProfileId" value="test" />
+      <option name="command" value="test --package Server --bin Server services::graph_generator::internal::unit_test::graph_generator_test -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/VisFlowLogger/Server" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="JS Sample" type="NodeJSConfigurationType" path-to-js-file="index.js" working-dir="$PROJECT_DIR$/TestSamples/javascript">
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Cargo.Run VisLog" />
       <item itemvalue="Cargo.Test VisLog" />
-      <item itemvalue="Cargo.Run Server" />
+      <item itemvalue="Cargo.Test services::graph_generator::internal::unit_test::graph_generator_test" />
       <item itemvalue="Node.js.JS Sample" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Run Server" />
+        <item itemvalue="Cargo.Test services::graph_generator::internal::unit_test::graph_generator_test" />
       </list>
     </recent_temporary>
   </component>
@@ -180,14 +177,12 @@
       <workItem from="1736818641469" duration="10453000" />
       <workItem from="1736829904574" duration="3963000" />
       <workItem from="1736876332737" duration="5424000" />
-      <workItem from="1736909058573" duration="6095000" />
-      <workItem from="1736993639812" duration="5912000" />
-      <workItem from="1737047187145" duration="9177000" />
-      <workItem from="1737069796345" duration="745000" />
-      <workItem from="1737087355534" duration="5373000" />
-      <workItem from="1737120604279" duration="636000" />
-      <workItem from="1737163619809" duration="15992000" />
-      <workItem from="1737201671875" duration="2365000" />
+      <workItem from="1736909058573" duration="4739000" />
+      <workItem from="1737210234526" duration="1754000" />
+      <workItem from="1737212947646" duration="204000" />
+      <workItem from="1737218533816" duration="164000" />
+      <workItem from="1737218783982" duration="1740000" />
+      <workItem from="1737244273988" duration="14382000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -253,79 +248,55 @@
       <option name="project" value="LOCAL" />
       <updated>1736881843503</updated>
     </task>
-    <task id="LOCAL-00009" summary="FEATURE: API works now">
+    <task id="LOCAL-00009" summary="Created get endpoints for operation and logs">
       <option name="closed" value="true" />
-      <created>1736916312405</created>
+      <created>1737206285695</created>
       <option name="number" value="00009" />
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1736916312405</updated>
+      <updated>1737206285695</updated>
     </task>
-    <task id="LOCAL-00010" summary="Created basic web module">
+    <task id="LOCAL-00010" summary="Added table migration script and services">
       <option name="closed" value="true" />
-      <created>1737001708421</created>
+      <created>1737208047871</created>
       <option name="number" value="00010" />
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
-      <updated>1737001708421</updated>
+      <updated>1737208047871</updated>
     </task>
-    <task id="LOCAL-00011" summary="Created dynamic app_state">
+    <task id="LOCAL-00011" summary="Removed main folder. Now to fix endpoints">
       <option name="closed" value="true" />
-      <created>1737004763434</created>
+      <created>1737209391150</created>
       <option name="number" value="00011" />
       <option name="presentableId" value="LOCAL-00011" />
       <option name="project" value="LOCAL" />
-      <updated>1737004763434</updated>
+      <updated>1737209391150</updated>
     </task>
-    <task id="LOCAL-00012" summary="Created dynamic app_state">
+    <task id="LOCAL-00012" summary="Endpoints working">
       <option name="closed" value="true" />
-      <created>1737005136296</created>
+      <created>1737212001476</created>
       <option name="number" value="00012" />
       <option name="presentableId" value="LOCAL-00012" />
       <option name="project" value="LOCAL" />
-      <updated>1737005136296</updated>
+      <updated>1737212001476</updated>
     </task>
-    <task id="LOCAL-00013" summary="Created core module">
+    <task id="LOCAL-00013" summary="FEATURE: 1. Endpoint for saving log can accept several operations now. 2. Saving operations can now bulk save">
       <option name="closed" value="true" />
-      <created>1737056107676</created>
+      <created>1737247811720</created>
       <option name="number" value="00013" />
       <option name="presentableId" value="LOCAL-00013" />
       <option name="project" value="LOCAL" />
-      <updated>1737056107676</updated>
+      <updated>1737247811720</updated>
     </task>
-    <task id="LOCAL-00014" summary="So confusing">
+    <task id="LOCAL-00014" summary="FEATURE: Graph generator endpoint implementation complete.&#10;Need to test">
       <option name="closed" value="true" />
-      <created>1737092141779</created>
+      <created>1737255657263</created>
       <option name="number" value="00014" />
       <option name="presentableId" value="LOCAL-00014" />
       <option name="project" value="LOCAL" />
-      <updated>1737092141779</updated>
+      <updated>1737255657263</updated>
     </task>
-    <task id="LOCAL-00015" summary="Project structure progress">
-      <option name="closed" value="true" />
-      <created>1737173983838</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1737173983838</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Project structure progress #1">
-      <option name="closed" value="true" />
-      <created>1737180329706</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1737180329706</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Project structure progress #2">
-      <option name="closed" value="true" />
-      <created>1737202439278</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1737202439278</updated>
-    </task>
-    <option name="localTasksCounter" value="18" />
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -338,14 +309,23 @@
     <MESSAGE value="REFACTOR: Changed logic to add STORE after function call. Made necessary changes required for new change" />
     <MESSAGE value="REFACTOR: Folder structure changes" />
     <MESSAGE value="PROGRESS: Setting up proper end to end intergration" />
-    <MESSAGE value="FEATURE: API works now" />
-    <MESSAGE value="Created basic web module" />
-    <MESSAGE value="Created dynamic app_state" />
-    <MESSAGE value="Created core module" />
-    <MESSAGE value="So confusing" />
-    <MESSAGE value="Project structure progress" />
-    <MESSAGE value="Project structure progress #1" />
-    <MESSAGE value="Project structure progress #2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Project structure progress #2" />
+    <MESSAGE value="Created get endpoints for operation and logs" />
+    <MESSAGE value="Added table migration script and services" />
+    <MESSAGE value="Removed main folder. Now to fix endpoints" />
+    <MESSAGE value="Endpoints working" />
+    <MESSAGE value="FEATURE: 1. Endpoint for saving log can accept several operations now. 2. Saving operations can now bulk save" />
+    <MESSAGE value="FEATURE: Graph generator endpoint implementation complete.&#10;Need to test" />
+    <option name="LAST_COMMIT_MESSAGE" value="FEATURE: Graph generator endpoint implementation complete.&#10;Need to test" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/application/graph_generator_impl.rs</url>
+          <line>14</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

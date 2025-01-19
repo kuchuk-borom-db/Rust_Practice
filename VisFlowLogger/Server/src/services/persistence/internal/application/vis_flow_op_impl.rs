@@ -16,17 +16,43 @@ impl VisLogOpImpl {
 }
 #[async_trait]
 impl VisFlowOp for VisLogOpImpl {
-    async fn upsert(&self, operation_id: &str) -> bool {
-        let query = "INSERT INTO operations (id, created, updated) VALUES ($1, NOW(), NOW())
-                 ON CONFLICT (id) DO UPDATE SET updated = NOW()";
-        let result = sqlx::query(query)
-            .bind(operation_id)
-            .execute(&self.db)
-            .await;
+    async fn upsert(&self, operation_ids: Vec<String>) -> bool {
+        if operation_ids.is_empty() {
+            return false; // No operations to insert or update
+        }
+
+        // Dynamically construct the VALUES part of the query
+        let placeholders: Vec<String> = operation_ids
+            .iter()
+            .enumerate()
+            .map(|(i, _)| format!("(${}, NOW(), NOW())", i + 1)) // Generates ($1, NOW(), NOW()), ($2, NOW(), NOW()), ...
+            .collect();
+
+        let query = format!(
+            "
+        INSERT INTO operations (id, created, updated)
+        VALUES {}
+        ON CONFLICT (id)
+        DO UPDATE SET updated = NOW();
+    ",
+            placeholders.join(", ")
+        );
+
+        // Bind the operation IDs dynamically
+        let mut query_builder = sqlx::query(&query);
+        for id in operation_ids {
+            query_builder = query_builder.bind(id);
+        }
+
+        // Execute the query and handle the result
+        let result = query_builder.execute(&self.db).await;
 
         match result {
             Ok(result) => result.rows_affected() > 0,
-            Err(_) => false, // Handle errors gracefully
+            Err(e) => {
+                eprintln!("Error in batch upsert: {}", e); // Log the error
+                false
+            }
         }
     }
 

@@ -1,11 +1,12 @@
-use server::models::app_state::{AppState, AvailableServices as AS};
 use crate::services::persistence::api::services::vis_flow_op::VisFlowOp;
 use crate::services::persistence::AvailableServices as PAS;
 use actix_web::{web, App, HttpServer};
+use server::models::app_state::{AppState, AvailableServices as AS};
 use std::sync::Arc;
 
 mod server;
 mod services;
+mod utils;
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
@@ -26,6 +27,8 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(web::Data::new(app_state.clone()))
             .service(server::route::save_logs)
+            .service(server::route::get_logs_by_operation_id)
+            .service(server::route::get_operations)
     })
     .bind("127.0.0.1:8080")?
     .run()
