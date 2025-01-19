@@ -7,31 +7,43 @@
 */
 
 use crate::server::models::app_state::AppState;
-use crate::services::persistence::api::model::vis_flow_log_model::VisFlowLogModel;
+use crate::server::models::payload::save_logs_payload::SaveLogsPayload;
 use actix_web::{get, post, web, HttpResponse};
 
 ///Save logs
 #[post("/")]
 pub async fn save_logs(
-    body: web::Json<Vec<VisFlowLogModel>>,
+    body: web::Json<SaveLogsPayload>,
     app_state: web::Data<AppState>,
 ) -> HttpResponse {
-    //TODO Move operation_id to server side
-    let logs = body.as_ref();
-    app_state
+    let payload = body.into_inner();
+    let all_operations: Vec<String> = payload
+        .operation
+        .iter()
+        .map(|operation| operation.operation_id.clone())
+        .collect();
+    let all_logs= payload
+        .operation
+        .iter()
+        .flat_map(|x| x.logs.iter())
+        .collect();
+    let save_logs_future = app_state
         .services
         .persistence
         .vis_flow_log
-        .save_log(logs)
-        .await;
-    app_state
+        .save_log(&all_logs);
+    let upsert_ops_future = app_state
         .services
         .persistence
         .vis_flow_op
-        .upsert(&logs[0].operation_id)
-        .await;
-    HttpResponse::Ok().json("Success")
+        .upsert(all_operations);
+    let (save_logs_result, upsert_ops_result) = tokio::join!(save_logs_future, upsert_ops_future);
+    if !save_logs_result || !upsert_ops_result {
+        return HttpResponse::InternalServerError().json("Failed to save logs or operations");
+    }
+    HttpResponse::Ok().json("Saved logs to database")
 }
+
 ///Get operation Ids
 #[get("/")]
 pub async fn get_operations(app_state: web::Data<AppState>) -> HttpResponse {

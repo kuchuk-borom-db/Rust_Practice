@@ -19,7 +19,7 @@ impl VisFlowLogImpl {
 
 #[async_trait]
 impl VisFlowLog for VisFlowLogImpl {
-    async fn save_log(&self, logs: &Vec<VisFlowLogModel>) -> bool {
+    async fn save_log(&self, logs:  &Vec<&VisFlowLogModel>) -> bool {
         if logs.is_empty() {
             return true;
         }
@@ -29,9 +29,8 @@ impl VisFlowLog for VisFlowLogImpl {
         );
         let mut value_placeholders = Vec::new();
 
-        for (idx, log) in logs.iter().enumerate() {
+        for (idx, _) in logs.iter().enumerate() {
             let offset = idx * 6;
-            let id = Uuid::new_v4();
 
             value_placeholders.push(format!(
                 "(${},${},${},${},${},${})",
@@ -59,7 +58,7 @@ impl VisFlowLog for VisFlowLogImpl {
               .bind(&log.operation_id)
               .bind(&log.block_name)
               .bind(&log.log_type)
-              .bind(log.value.as_deref().unwrap_or_default())
+              .bind(log.log_value.as_deref().unwrap_or_default())
               .bind(sequence);
         }
 

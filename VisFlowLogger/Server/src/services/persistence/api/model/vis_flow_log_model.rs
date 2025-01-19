@@ -7,7 +7,7 @@ pub struct VisFlowLogModel {
     pub operation_id: String,
     pub block_name: String,
     pub log_type: String,
-    pub value: Option<String>,
+    pub log_value: Option<String>,
     pub sequence: u32,
 }
 impl VisFlowLogModel {
@@ -16,7 +16,7 @@ impl VisFlowLogModel {
             operation_id: row.get("operation_id"),
             block_name: row.get("block_name"),
             log_type: row.get("log_type"),
-            value: row.get("log_value"),
+            log_value: row.get("log_value"),
             sequence: row.get::<i32, _>("sequence") as u32,
         }
     }
