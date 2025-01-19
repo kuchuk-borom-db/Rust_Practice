@@ -9,5 +9,5 @@ pub enum VisFlowLogEntryLogType {
 pub struct VisFlowLogEntry {
     pub block_name: String,
     pub log_type: VisFlowLogEntryLogType,
-    pub log_value: String,
+    pub log_value: Option<String>,
 }

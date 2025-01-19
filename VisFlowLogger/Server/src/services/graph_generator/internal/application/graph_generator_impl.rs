@@ -3,7 +3,7 @@ use crate::services::graph_generator::api::models::vis_flow_log_entry::{
 };
 use crate::services::graph_generator::api::services::graph_generator::GraphGenerator;
 use crate::services::graph_generator::internal::models::vis_flow::{
-    BlockFlow, BlockFlowType, VisFlowBlock,
+    Block, BlockFlow, BlockFlowType,
 };
 
 use std::collections::HashMap;
@@ -15,7 +15,7 @@ impl GraphGenerator for GraphGeneratorImpl {
     fn generate_graph(
         &self,
         entries: Vec<VisFlowLogEntry>,
-    ) -> Result<HashMap<String, VisFlowBlock>, String> {
+    ) -> Result<HashMap<String, Block>, String> {
         // Initial entries validation
         {
             if entries.len() < 2 {
@@ -26,79 +26,88 @@ impl GraphGenerator for GraphGeneratorImpl {
             }
         }
         let mut graph = HashMap::new();
-        let mut previous_block_id = None;
-        let mut caller_stack = Vec::new();
+        let mut current_block_id: Option<String> = None;
+        let mut caller_stack: Vec<String> = Vec::new();
         //First entry operations
         {
-            let first_entry = entries.first().as_ref().unwrap();
-            let block = create_block(**first_entry.block_name, None);
-            previous_block_id = Some("START".to_string());
-            graph.insert(String::from("START"), block);
+            let first_entry = entries.first().unwrap();
+            let block = create_block(&first_entry.block_name, None);
+            current_block_id = Some("START".to_string());
+            graph.insert("START".to_string(), block);
         }
         //Other Entries
         for entry in entries.iter().skip(1) {
-            let prev_block = graph.get_mut(&previous_block_id.as_ref().unwrap()).unwrap();
+            let current_block: &mut Block =
+                graph.get_mut(&current_block_id.clone().unwrap()).unwrap();
             match entry.log_type {
                 //If it's a log, it is to be directly added to the flow of the previous block.
-                VisFlowLogEntryLogType::Log => {
-                    let block = graph.get_mut(previous_block_id.as_ref().unwrap()).unwrap();
-                    block.flow.push(BlockFlow {
-                        flow_id: Uuid::new_v4().to_string(),
-                        flow_type: BlockFlowType::Log,
-                        value: Some(**entry.log_value),
-                        flow_pointer_id: None,
-                    })
-                }
+                VisFlowLogEntryLogType::Log => current_block.flow.push(BlockFlow {
+                    flow_id: Uuid::new_v4().to_string(),
+                    flow_type: BlockFlowType::Log,
+                    value: entry.log_value.clone(),
+                    flow_pointer_id: None,
+                    //current_block_id is still the same
+                }),
                 //Is a start of a new block. Called by previous block
                 VisFlowLogEntryLogType::Start => {
                     let block_id = Uuid::new_v4().to_string();
-                    let block = create_block(**entry.block_name, *previous_block_id.as_ref());
-                    caller_stack.push(previous_block_id.as_ref().unwrap());
-                    graph.insert(block_id, block);
+                    let block = create_block(&entry.block_name, current_block_id.clone());
+                    caller_stack.push(current_block_id.clone().unwrap());
+                    graph.insert(block_id.clone(), block);
+                    current_block_id = Some(block_id); //start of a new block
                 }
                 //End of current block. Added to the caller's flow.
                 VisFlowLogEntryLogType::End => {
                     //Validations
                     {
                         //Previous block's name and current entry's name needs to match
-                        if prev_block.name != entry.block_name {
+                        if current_block.name != entry.block_name {
                             return Err(
                                 "Starting and Ending block's name are not the same".to_string()
                             );
                         }
                     }
-                    let caller_id = caller_stack.pop().unwrap();
-                    let caller_block = graph.get_mut(&caller_id).unwrap();
+                    let caller_id_popped: Option<String> = caller_stack.pop();
+                    //If current block has no caller then it MUST be the starting block
+                    if caller_id_popped.is_none() {
+                        let root_block = graph.get("START").unwrap();
+                        if root_block.name != entry.block_name {
+                            return Err("End of a block but it has no caller. Only starting block can have no caller".to_string());
+                        }
+                        break;
+                    }
+                    let caller_id: String = caller_id_popped.unwrap();
+                    let caller_block: &mut Block = graph.get_mut(&caller_id).unwrap();
                     caller_block.flow.push(BlockFlow {
                         flow_id: Uuid::new_v4().to_string(),
                         flow_type: BlockFlowType::Call,
                         value: None,
                         //Points to the ID of the called block
-                        flow_pointer_id: Some(***previous_block_id.as_ref().unwrap()),
+                        flow_pointer_id: Some(current_block_id.unwrap()),
                     });
                     //Caller was popped and is now the latest interacted block.
-                    previous_block_id = Some((**caller_id).parse().unwrap());
+                    current_block_id = Some(caller_id);
                 }
-                //Previous flow was a block call and it's return value is stored
+                //Previous flow was a block call, and it's return value is stored
                 VisFlowLogEntryLogType::Store => {
                     //Validations
                     {
                         //Latest flow must be of type call
-                        if prev_block.flow.is_empty()
-                            || prev_block.flow.last().unwrap().flow_type != BlockFlowType::Call
+                        if current_block.flow.is_empty()
+                            || current_block.flow.last().unwrap().flow_type != BlockFlowType::Call
                         {
                             return Err("Store entry type while the previous block flow was either empty or not a block call".to_string());
                         }
                     }
-                    let last_flow = prev_block.flow.last_mut().unwrap();
+                    let last_flow = current_block.flow.last_mut().unwrap();
                     last_flow.flow_type = BlockFlowType::CallStore;
-                    last_flow.value = Some(entry.log_value.clone());
+                    last_flow.value = Some(entry.log_value.clone().unwrap());
                 }
                 //External block call or block store call.
                 VisFlowLogEntryLogType::ExternalCall
                 | VisFlowLogEntryLogType::ExternalCallStore => {
                     let block = BlockFlow {
-                        value: Some(entry.log_value.clone()),
+                        value: Some(entry.log_value.clone().unwrap()),
                         flow_type: match entry.log_type {
                             VisFlowLogEntryLogType::ExternalCallStore => {
                                 BlockFlowType::ExternalCallStore
@@ -111,7 +120,7 @@ impl GraphGenerator for GraphGeneratorImpl {
                         flow_id: Uuid::new_v4().to_string(),
                         flow_pointer_id: None,
                     };
-                    prev_block.flow.push(block);
+                    current_block.flow.push(block);
                 }
             }
         }
@@ -127,9 +136,9 @@ impl GraphGenerator for GraphGeneratorImpl {
         Ok(graph)
     }
 }
-fn create_block(block_name: String, caller: Option<String>) -> VisFlowBlock {
-    VisFlowBlock {
-        name: block_name,
+fn create_block(block_name: &String, caller: Option<String>) -> Block {
+    Block {
+        name: block_name.clone(),
         flow: vec![],
         caller,
     }

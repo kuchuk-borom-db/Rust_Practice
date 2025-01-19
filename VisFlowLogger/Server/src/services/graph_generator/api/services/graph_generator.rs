@@ -1,6 +1,6 @@
-use crate::services::graph_generator::api::models::vis_flow::VisFlowBlock;
 use crate::services::graph_generator::api::models::vis_flow_log_entry::VisFlowLogEntry;
 use crate::services::graph_generator::internal::application::graph_generator_impl::GraphGeneratorImpl;
+use crate::services::graph_generator::internal::models::vis_flow::Block;
 use std::collections::HashMap;
 
 pub trait GraphGenerator {
@@ -19,7 +19,7 @@ pub trait GraphGenerator {
     fn generate_graph(
         &self,
         entries: Vec<VisFlowLogEntry>,
-    ) -> Result<HashMap<String, VisFlowBlock>, String>;
+    ) -> Result<HashMap<String, Block>, String>;
 }
 
 pub fn new() -> impl GraphGenerator {
