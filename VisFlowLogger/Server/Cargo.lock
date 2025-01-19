@@ -9,6 +9,7 @@ dependencies = [
  "actix-web",
  "async-trait",
  "chrono",
+ "rand",
  "serde",
  "sqlx",
  "tokio",

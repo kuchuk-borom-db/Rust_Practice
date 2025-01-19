@@ -1,3 +1,5 @@
+use crate::services::diagram_generator::api::services::DiagramType;
+use crate::services::diagram_generator::AvailableServices;
 use crate::services::graph_generator::AvailableServices as GGAS;
 use crate::services::persistence::api::services::vis_flow_op::VisFlowOp;
 use crate::services::persistence::AvailableServices as PAS;
@@ -8,13 +10,14 @@ use std::sync::Arc;
 mod server;
 mod services;
 mod utils;
-
+//TODO public models that are required to be used externally. With helper function for converting. Use react flow json as another way of rendering. this is the second task
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
     //Create the services
     let vis_flow_log_repo = services::persistence::api::services::vis_flow_log::new().await;
     let vis_flow_op_repo = services::persistence::api::services::vis_flow_op::new().await;
     let graph_generator = services::graph_generator::api::services::graph_generator::new();
+    let diagram_generator = services::diagram_generator::api::services::new(DiagramType::Mermaid);
 
     let app_state = AppState {
         services: AS {
@@ -24,6 +27,9 @@ async fn main() -> std::io::Result<()> {
             },
             graph_generator: GGAS {
                 graph_generator: Arc::new(graph_generator),
+            },
+            diagram_generator: AvailableServices {
+                mermaid: Arc::new(diagram_generator),
             },
         },
     };
@@ -35,6 +41,7 @@ async fn main() -> std::io::Result<()> {
             .service(server::route::get_logs_by_operation_id)
             .service(server::route::get_operations)
             .service(server::route::get_graphs_by_operation_id)
+            .service(server::route::generate_diagram_for_operation)
     })
     .bind("127.0.0.1:8080")?
     .run()

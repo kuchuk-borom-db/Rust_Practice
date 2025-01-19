@@ -7,10 +7,13 @@
 */
 use crate::server::models::app_state::AppState;
 use crate::server::models::payload::save_logs_payload::SaveLogsPayload;
+use crate::services::diagram_generator::api::models::{Block, BlockFlow, BlockFlowType};
+use crate::services::graph_generator::api::models::vis_flow::BlockFlowType as GraphGenerator_BlockFlowType;
 use crate::services::graph_generator::api::models::vis_flow_log_entry::{
     VisFlowLogEntry, VisFlowLogEntryLogType,
 };
 use actix_web::{get, post, web, HttpResponse};
+use std::collections::HashMap;
 
 ///Save logs
 #[post("/")]
@@ -241,4 +244,97 @@ pub async fn get_graphs_by_operation_id(
             HttpResponse::InternalServerError().body(format!("Failed to generate graph : {}", e))
         }
     }
+}
+
+#[get("/diagram/mermaid/{operation_id}")]
+pub async fn generate_diagram_for_operation(
+    operation_id: web::Path<String>,
+    app_state: web::Data<AppState>,
+) -> HttpResponse {
+    // Get logs with proper error handling
+    let logs = match app_state
+        .services
+        .persistence
+        .vis_flow_log
+        .get_logs_by_operation_id(operation_id.into_inner())
+        .await
+    {
+        Ok(logs) => logs,
+        Err(e) => {
+            return HttpResponse::InternalServerError().body(format!("Failed to get logs: {}", e))
+        }
+    };
+    //TODO Single iteration or map
+    // First validate all log types
+    for log in &logs {
+        match log.log_type.as_str() {
+            "LOG" | "START" | "END" | "STORE" | "EXTERNAL_CALL" | "EXTERNAL_CALL_STORE" => (),
+            invalid_type => {
+                return HttpResponse::BadRequest()
+                    .body(format!("Invalid log_type: {}", invalid_type));
+            }
+        }
+    }
+
+    // Then transform logs to entries (now we know all types are valid)
+    let entries: Vec<VisFlowLogEntry> = logs
+        .iter()
+        .map(|log| VisFlowLogEntry {
+            log_type: match log.log_type.as_str() {
+                "LOG" => VisFlowLogEntryLogType::Log,
+                "START" => VisFlowLogEntryLogType::Start,
+                "END" => VisFlowLogEntryLogType::End,
+                "STORE" => VisFlowLogEntryLogType::Store,
+                "EXTERNAL_CALL" => VisFlowLogEntryLogType::ExternalCall,
+                "EXTERNAL_CALL_STORE" => VisFlowLogEntryLogType::ExternalCallStore,
+                _ => unreachable!(), // We already validated all types
+            },
+            log_value: log.log_value.clone(),
+            block_name: log.block_name.clone(),
+        })
+        .collect();
+    // Generate graph with error handling
+    let graph = app_state
+        .services
+        .graph_generator
+        .graph_generator
+        .generate_graph(entries)
+        .unwrap()
+        .iter()
+        .map(|(k, v)| {
+            let mut flow = v.flow.clone();
+            (
+                k.clone(),
+                Block {
+                    flow: flow
+                        .iter_mut()
+                        .map(|flow| BlockFlow {
+                            flow_pointer_id: flow.flow_pointer_id.clone(),
+                            flow_type: match flow.flow_type {
+                                GraphGenerator_BlockFlowType::Log => BlockFlowType::Log,
+                                GraphGenerator_BlockFlowType::Call => BlockFlowType::Call,
+                                GraphGenerator_BlockFlowType::CallStore => BlockFlowType::CallStore,
+                                GraphGenerator_BlockFlowType::ExternalCall => {
+                                    BlockFlowType::ExternalCall
+                                }
+                                GraphGenerator_BlockFlowType::ExternalCallStore => {
+                                    BlockFlowType::ExternalCallStore
+                                }
+                            },
+                            flow_id: flow.flow_id.clone(),
+                            value: flow.value.clone(),
+                        })
+                        .collect::<Vec<BlockFlow>>(),
+                    name: v.name.clone(),
+                    caller: v.caller.clone(),
+                },
+            )
+        })
+        .collect::<HashMap<String, Block>>();
+    let diagram = app_state
+        .services
+        .diagram_generator
+        .mermaid
+        .generate_diagram(graph);
+    HttpResponse::Ok().body(diagram.unwrap())
 }

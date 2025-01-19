@@ -6,4 +6,5 @@ pub struct AppState {
 pub struct AvailableServices {
     pub persistence: crate::services::persistence::AvailableServices,
     pub graph_generator: crate::services::graph_generator::AvailableServices,
+    pub diagram_generator : crate::services::diagram_generator::AvailableServices
 }
