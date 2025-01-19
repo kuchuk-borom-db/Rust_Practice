@@ -1,4 +1,4 @@
-use crate::services::persistence::api::model::vis_flow_log_model::VisFlowLogModel;
+use crate::services::persistence::api::model::vis_flow_log_model::{VisFlowLogEntity, VisFlowLogEntry};
 use crate::services::persistence::api::services::vis_flow_log::VisFlowLog;
 use crate::services::persistence::internal::common::db::init_database;
 use async_trait::async_trait;
@@ -19,7 +19,7 @@ impl VisFlowLogImpl {
 
 #[async_trait]
 impl VisFlowLog for VisFlowLogImpl {
-    async fn save_log(&self, logs:  &Vec<&VisFlowLogModel>) -> bool {
+    async fn save_log(&self, logs: &Vec<&VisFlowLogEntry>) -> bool {
         if logs.is_empty() {
             return true;
         }
@@ -54,12 +54,12 @@ impl VisFlowLog for VisFlowLogImpl {
             let id = Uuid::new_v4();
 
             query = query
-              .bind(id.to_string())
-              .bind(&log.operation_id)
-              .bind(&log.block_name)
-              .bind(&log.log_type)
-              .bind(log.log_value.as_deref().unwrap_or_default())
-              .bind(sequence);
+                .bind(id.to_string())
+                .bind(&log.operation_id)
+                .bind(&log.block_name)
+                .bind(&log.log_type)
+                .bind(log.log_value.as_deref().unwrap_or_default())
+                .bind(sequence);
         }
 
         match query.execute(&self.db).await {
@@ -74,7 +74,7 @@ impl VisFlowLog for VisFlowLogImpl {
     async fn get_logs_by_operation_id(
         &self,
         operation_id: String,
-    ) -> Result<Vec<VisFlowLogModel>, String> {
+    ) -> Result<Vec<VisFlowLogEntity>, String> {
         match sqlx::query("SELECT * FROM logs WHERE operation_id = $1 ORDER BY sequence")
             .bind(operation_id)
             .fetch_all(&self.db)
@@ -83,7 +83,7 @@ impl VisFlowLog for VisFlowLogImpl {
             Ok(rows) => {
                 let logs = rows
                     .iter()
-                    .map(|row| VisFlowLogModel::from_row(row))
+                    .map(|row| VisFlowLogEntity::from_row(row))
                     .collect();
                 Ok(logs)
             }
