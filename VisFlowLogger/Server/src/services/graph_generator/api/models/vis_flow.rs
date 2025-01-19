@@ -25,7 +25,7 @@ impl Display for Block {
     }
 }
 
-#[derive(Eq, PartialEq, Hash, Serialize, Deserialize)]
+#[derive(Eq, PartialEq, Hash, Serialize, Deserialize, Clone)]
 pub struct BlockFlow {
     pub flow_pointer_id: Option<String>,
     pub flow_id: String,
@@ -43,7 +43,7 @@ impl Display for BlockFlow {
     }
 }
 
-#[derive(Eq, PartialEq, Hash, Serialize, Deserialize)]
+#[derive(Eq, PartialEq, Hash, Serialize, Deserialize,Clone)]
 pub enum BlockFlowType {
     Call,
     CallStore,

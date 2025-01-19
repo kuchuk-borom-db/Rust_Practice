@@ -2,7 +2,7 @@ use crate::services::graph_generator::api::models::vis_flow_log_entry::{
     VisFlowLogEntry, VisFlowLogEntryLogType,
 };
 use crate::services::graph_generator::api::services::graph_generator::GraphGenerator;
-use crate::services::graph_generator::internal::models::vis_flow::{
+use crate::services::graph_generator::api::models::vis_flow::{
     Block, BlockFlow, BlockFlowType,
 };
 

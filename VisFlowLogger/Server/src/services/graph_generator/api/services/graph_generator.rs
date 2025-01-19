@@ -1,6 +1,6 @@
 use crate::services::graph_generator::api::models::vis_flow_log_entry::VisFlowLogEntry;
 use crate::services::graph_generator::internal::application::graph_generator_impl::GraphGeneratorImpl;
-use crate::services::graph_generator::internal::models::vis_flow::Block;
+use crate::services::graph_generator::api::models::vis_flow::Block;
 use async_trait::async_trait;
 use std::collections::HashMap;
 
