@@ -8,25 +8,9 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="FEATURE PROGRESS: Added diagram generator service with mermaid generator impl">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="FEATURE: Added generate diagram endpoint. Dirty and needs converting function">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/models/app_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/models/app_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/diagram_generator/api/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/diagram_generator/api/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/diagram_generator/api/services/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/diagram_generator/api/services/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/diagram_generator/internal/application/mermaid_diagram_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/diagram_generator/internal/application/mermaid_diagram_generator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/diagram_generator/internal/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/diagram_generator/internal/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/diagram_generator/internal/models/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/diagram_generator/api/models/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/diagram_generator/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/diagram_generator/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/models/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/models/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/services/graph_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/services/graph_generator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/application/graph_generator_impl.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/application/graph_generator_impl.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/models/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/internal/models/vis_flow.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/graph_generator/api/models/vis_flow.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,7 +190,7 @@
       <workItem from="1737218533816" duration="164000" />
       <workItem from="1737218783982" duration="1740000" />
       <workItem from="1737244273988" duration="17297000" />
-      <workItem from="1737269076273" duration="5920000" />
+      <workItem from="1737269076273" duration="6891000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -344,7 +328,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737270838164</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="FEATURE: Added generate diagram endpoint. Dirty and needs converting function">
+      <option name="closed" value="true" />
+      <created>1737275582206</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1737275582206</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -366,7 +358,8 @@
     <MESSAGE value="FIX, TEST: Fixed graph generator implementation and added unit test" />
     <MESSAGE value="FEATURE: Get graph by operation id complete" />
     <MESSAGE value="FEATURE PROGRESS: Added diagram generator service with mermaid generator impl" />
-    <option name="LAST_COMMIT_MESSAGE" value="FEATURE PROGRESS: Added diagram generator service with mermaid generator impl" />
+    <MESSAGE value="FEATURE: Added generate diagram endpoint. Dirty and needs converting function" />
+    <option name="LAST_COMMIT_MESSAGE" value="FEATURE: Added generate diagram endpoint. Dirty and needs converting function" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
