@@ -8,15 +8,13 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="PROJECT STRUCTURE: Updated project structure and added converter.rs">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="REFACTOR: Added names to operation">
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/reactFlow/components/block.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/migrations/1_tables_postgres.sql" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/migrations/1_tables_postgres.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/models/payload/save_logs_payload.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/models/payload/save_logs_payload.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/server/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/model/vis_flow_op_model.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_op.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/api/services/vis_flow_op.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_log_impl.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_log_impl.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_op_impl.rs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/Server/src/services/persistence/internal/application/vis_flow_op_impl.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/reactFlow/Diagram.js" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/reactFlow/Diagram.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +81,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.rust.reset.selective.auto.import": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "feature/frontend-diagram",
     "javascript.nodejs.core.library.configured.version": "22.12.0",
     "javascript.nodejs.core.library.typings.version": "22.10.6",
     "last_opened_file_path": "D:/Projects/Rust_Practice/VisFlowLogger/Server/migrations/1_tables_postgres.sql",
@@ -203,7 +201,7 @@
       <workItem from="1737218783982" duration="1740000" />
       <workItem from="1737244273988" duration="17297000" />
       <workItem from="1737269076273" duration="6891000" />
-      <workItem from="1737342880591" duration="6658000" />
+      <workItem from="1737342880591" duration="9584000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -365,7 +363,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737347982857</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="REFACTOR: Added names to operation">
+      <option name="closed" value="true" />
+      <created>1737350082341</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1737350082341</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -390,7 +396,8 @@
     <MESSAGE value="FEATURE: Added generate diagram endpoint. Dirty and needs converting function" />
     <MESSAGE value="Added ReactJS frontend" />
     <MESSAGE value="PROJECT STRUCTURE: Updated project structure and added converter.rs" />
-    <option name="LAST_COMMIT_MESSAGE" value="PROJECT STRUCTURE: Updated project structure and added converter.rs" />
+    <MESSAGE value="REFACTOR: Added names to operation" />
+    <option name="LAST_COMMIT_MESSAGE" value="REFACTOR: Added names to operation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import FlowDiagram from "./pages/VisualFlowInteractive";
-import MermaidViewer from "./pages/visualiser/MermaidViewer";
 import Diagram from "./pages/visualiser/reactFlow/Diagram";
+
 const data = {
     "9e1a92ed-64de-4ee3-a3fc-189b993ba559": {
         caller: "60ce68ed-a1bd-4a5e-8a40-bef5d8f5ddde",
@@ -45,6 +44,6 @@ const data = {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <Diagram data={data} />, document.getElementById("root")
+    <Diagram data={data}/>, document.getElementById("root")
 );
 
