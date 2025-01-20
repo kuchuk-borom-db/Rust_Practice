@@ -3,7 +3,7 @@ use crate::services::graph_generator::api::models::vis_flow_log_entry::{
 };
 use crate::services::graph_generator::api::services::graph_generator::GraphGenerator;
 use crate::services::graph_generator::api::models::vis_flow::{
-    Block, BlockFlow, BlockFlowType,
+    GGBlock, GGBlockFlow, GGBlockFlowType,
 };
 
 use async_trait::async_trait;
@@ -17,7 +17,7 @@ impl GraphGenerator for GraphGeneratorImpl {
     fn generate_graph(
         &self,
         entries: Vec<VisFlowLogEntry>,
-    ) -> Result<HashMap<String, Block>, String> {
+    ) -> Result<HashMap<String, GGBlock>, String> {
         // Initial entries validation
         {
             if entries.len() < 2 {
@@ -39,13 +39,13 @@ impl GraphGenerator for GraphGeneratorImpl {
         }
         //Other Entries
         for entry in entries.iter().skip(1) {
-            let current_block: &mut Block =
+            let current_block: &mut GGBlock =
                 graph.get_mut(&current_block_id.clone().unwrap()).unwrap();
             match entry.log_type {
                 //If it's a log, it is to be directly added to the flow of the previous block.
-                VisFlowLogEntryLogType::Log => current_block.flow.push(BlockFlow {
+                VisFlowLogEntryLogType::Log => current_block.flow.push(GGBlockFlow {
                     flow_id: Uuid::new_v4().to_string(),
-                    flow_type: BlockFlowType::Log,
+                    flow_type: GGBlockFlowType::Log,
                     value: entry.log_value.clone(),
                     flow_pointer_id: None,
                     //current_block_id is still the same
@@ -79,10 +79,10 @@ impl GraphGenerator for GraphGeneratorImpl {
                         break;
                     }
                     let caller_id: String = caller_id_popped.unwrap();
-                    let caller_block: &mut Block = graph.get_mut(&caller_id).unwrap();
-                    caller_block.flow.push(BlockFlow {
+                    let caller_block: &mut GGBlock = graph.get_mut(&caller_id).unwrap();
+                    caller_block.flow.push(GGBlockFlow {
                         flow_id: Uuid::new_v4().to_string(),
-                        flow_type: BlockFlowType::Call,
+                        flow_type: GGBlockFlowType::Call,
                         value: None,
                         //Points to the ID of the called block
                         flow_pointer_id: Some(current_block_id.unwrap()),
@@ -96,25 +96,25 @@ impl GraphGenerator for GraphGeneratorImpl {
                     {
                         //Latest flow must be of type call
                         if current_block.flow.is_empty()
-                            || current_block.flow.last().unwrap().flow_type != BlockFlowType::Call
+                            || current_block.flow.last().unwrap().flow_type != GGBlockFlowType::Call
                         {
                             return Err("Store entry type while the previous block flow was either empty or not a block call".to_string());
                         }
                     }
                     let last_flow = current_block.flow.last_mut().unwrap();
-                    last_flow.flow_type = BlockFlowType::CallStore;
+                    last_flow.flow_type = GGBlockFlowType::CallStore;
                     last_flow.value = Some(entry.log_value.clone().unwrap());
                 }
                 //External block call or block store call.
                 VisFlowLogEntryLogType::ExternalCall
                 | VisFlowLogEntryLogType::ExternalCallStore => {
-                    let block = BlockFlow {
+                    let block = GGBlockFlow {
                         value: Some(entry.log_value.clone().unwrap()),
                         flow_type: match entry.log_type {
                             VisFlowLogEntryLogType::ExternalCallStore => {
-                                BlockFlowType::ExternalCallStore
+                                GGBlockFlowType::ExternalCallStore
                             }
-                            VisFlowLogEntryLogType::ExternalCall => BlockFlowType::ExternalCall,
+                            VisFlowLogEntryLogType::ExternalCall => GGBlockFlowType::ExternalCall,
                             _ => {
                                 return Err("Expected entry log's type to be ExternalCallStore or ExternalCallStore".to_string());
                             }
@@ -138,8 +138,8 @@ impl GraphGenerator for GraphGeneratorImpl {
         Ok(graph)
     }
 }
-fn create_block(block_name: &String, caller: Option<String>) -> Block {
-    Block {
+fn create_block(block_name: &String, caller: Option<String>) -> GGBlock {
+    GGBlock {
         name: block_name.clone(),
         flow: vec![],
         caller,

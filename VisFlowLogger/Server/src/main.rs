@@ -10,7 +10,6 @@ use std::sync::Arc;
 mod server;
 mod services;
 mod utils;
-//TODO public models that are required to be used externally. With helper function for converting. Use react flow json as another way of rendering. this is the second task
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
     //Create the services

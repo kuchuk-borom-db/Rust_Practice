@@ -1,6 +1,6 @@
 use crate::services::graph_generator::api::models::vis_flow_log_entry::VisFlowLogEntry;
 use crate::services::graph_generator::internal::application::graph_generator_impl::GraphGeneratorImpl;
-use crate::services::graph_generator::api::models::vis_flow::Block;
+use crate::services::graph_generator::api::models::vis_flow::GGBlock;
 use async_trait::async_trait;
 use std::collections::HashMap;
 
@@ -8,7 +8,7 @@ use std::collections::HashMap;
 pub trait GraphGenerator: Send + Sync {
     /**
     Generates graph based on VisFlowLogEntry. Vector needs to be sorted. <br>
-    Returns back a HashMap where key is the ID of the Block and Value is the block itself.
+    Returns back a HashMap where key is the ID of the GGBlock and Value is the block itself.
     */
     /*
     Rules :-
@@ -21,7 +21,7 @@ pub trait GraphGenerator: Send + Sync {
     fn generate_graph(
         &self,
         entries: Vec<VisFlowLogEntry>,
-    ) -> Result<HashMap<String, Block>, String>;
+    ) -> Result<HashMap<String, GGBlock>, String>;
 }
 
 pub fn new() -> impl GraphGenerator {

@@ -2,15 +2,14 @@ use serde::{Deserialize, Serialize};
 use std::fmt::{self, Display};
 
 #[derive(Eq, PartialEq, Hash, Serialize, Deserialize)]
-pub struct GGBlock {
+pub struct DGBlock {
     /// Key of a block that called it.
     pub caller: Option<String>,
     pub name: String,
-    pub flow: Vec<GGBlockFlow>,
+    pub flow: Vec<DGBlockFlow>,
 }
 
-
-impl Display for GGBlock {
+impl Display for DGBlock {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
@@ -26,15 +25,15 @@ impl Display for GGBlock {
     }
 }
 
-#[derive(Eq, PartialEq, Hash, Serialize, Deserialize, Clone)]
-pub struct GGBlockFlow {
+#[derive(Eq, PartialEq, Hash, Serialize, Deserialize)]
+pub struct DGBlockFlow {
     pub flow_pointer_id: Option<String>,
     pub flow_id: String,
-    pub flow_type: GGBlockFlowType,
+    pub flow_type: DGBlockFlowType,
     pub value: Option<String>,
 }
 
-impl Display for GGBlockFlow {
+impl Display for DGBlockFlow {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
@@ -44,8 +43,8 @@ impl Display for GGBlockFlow {
     }
 }
 
-#[derive(Eq, PartialEq, Hash, Serialize, Deserialize, Clone)]
-pub enum GGBlockFlowType {
+#[derive(Eq, PartialEq, Hash, Serialize, Deserialize)]
+pub enum DGBlockFlowType {
     Call,
     CallStore,
     Log,
@@ -53,14 +52,14 @@ pub enum GGBlockFlowType {
     ExternalCallStore,
 }
 
-impl Display for GGBlockFlowType {
+impl Display for DGBlockFlowType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let type_str = match self {
-            GGBlockFlowType::Call => "Call",
-            GGBlockFlowType::CallStore => "CallStore",
-            GGBlockFlowType::Log => "Log",
-            GGBlockFlowType::ExternalCall => "ExternalCall",
-            GGBlockFlowType::ExternalCallStore => "ExternalCallStore",
+            DGBlockFlowType::Call => "Call",
+            DGBlockFlowType::CallStore => "CallStore",
+            DGBlockFlowType::Log => "Log",
+            DGBlockFlowType::ExternalCall => "ExternalCall",
+            DGBlockFlowType::ExternalCallStore => "ExternalCallStore",
         };
         write!(f, "{}", type_str)
     }

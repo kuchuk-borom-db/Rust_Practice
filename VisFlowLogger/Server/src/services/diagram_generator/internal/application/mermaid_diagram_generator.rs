@@ -1,5 +1,5 @@
+use crate::services::diagram_generator::api::models::block::{DGBlock, DGBlockFlowType};
 use crate::services::diagram_generator::api::services::DiagramGenerator;
-use crate::services::diagram_generator::api::models::{Block, BlockFlowType};
 use async_trait::async_trait;
 use std::collections::HashMap;
 use uuid::Uuid;
@@ -15,7 +15,7 @@ impl MermaidDiagramGenerator {
 }
 #[async_trait]
 impl DiagramGenerator for MermaidDiagramGenerator {
-    fn generate_diagram(&self, graph: HashMap<String, Block>) -> Result<String, String> {
+    fn generate_diagram(&self, graph: HashMap<String, DGBlock>) -> Result<String, String> {
         let mut syntax = String::from("flowchart TB\n");
         let mut subgraph_colors = HashMap::new();
         let start_color = "#FF5733";
@@ -29,17 +29,17 @@ impl DiagramGenerator for MermaidDiagramGenerator {
             for flow in &block.flow {
                 let mut to_append: String = String::from("");
                 match flow.flow_type {
-                    BlockFlowType::Log => {
+                    DGBlockFlowType::Log => {
                         to_append = format!(
                             "\t\t{}([\"{}\"])",
                             flow.flow_id,
                             flow.value.as_ref().unwrap()
                         )
                     }
-                    BlockFlowType::Call | BlockFlowType::CallStore => {
+                    DGBlockFlowType::Call | DGBlockFlowType::CallStore => {
                         let called_entity_flow =
                             graph.get(flow.flow_pointer_id.as_ref().unwrap()).unwrap();
-                        to_append = if flow.flow_type == BlockFlowType::Call {
+                        to_append = if flow.flow_type == DGBlockFlowType::Call {
                             format!("\t\t{}[\"{}\"]", flow.flow_id, called_entity_flow.name)
                         } else {
                             format!(
@@ -49,8 +49,8 @@ impl DiagramGenerator for MermaidDiagramGenerator {
                             )
                         };
                     }
-                    BlockFlowType::ExternalCall | BlockFlowType::ExternalCallStore => {
-                        to_append = if flow.flow_type == BlockFlowType::ExternalCall {
+                    DGBlockFlowType::ExternalCall | DGBlockFlowType::ExternalCallStore => {
+                        to_append = if flow.flow_type == DGBlockFlowType::ExternalCall {
                             format!("\t\t{}[\\{}/]", flow.flow_id, flow.value.as_ref().unwrap())
                         } else {
                             format!(
@@ -81,7 +81,7 @@ impl DiagramGenerator for MermaidDiagramGenerator {
             for flow in &v.flow {
                 let mut to_append: String = String::from("");
                 match flow.flow_type {
-                    BlockFlowType::Call | BlockFlowType::CallStore => {
+                    DGBlockFlowType::Call | DGBlockFlowType::CallStore => {
                         let called_entity_flow =
                             graph.get(flow.flow_pointer_id.as_ref().unwrap()).unwrap();
                         if let Some(caller_first_flow) = called_entity_flow.flow.first() {
@@ -94,7 +94,7 @@ impl DiagramGenerator for MermaidDiagramGenerator {
                                 flow.flow_pointer_id.as_ref().unwrap()
                             );
                         }
-                        if flow.flow_type == BlockFlowType::CallStore {
+                        if flow.flow_type == DGBlockFlowType::CallStore {
                             to_append += &String::from("\n");
                             if let Some(last_flow) = called_entity_flow.flow.last() {
                                 to_append += &String::from(format!(
@@ -110,10 +110,10 @@ impl DiagramGenerator for MermaidDiagramGenerator {
                             }
                         }
                     }
-                    BlockFlowType::ExternalCallStore => {
+                    DGBlockFlowType::ExternalCallStore => {
                         to_append = format!("{} .-x {}", flow.flow_id, flow.flow_id);
                     }
-                    BlockFlowType::ExternalCall => {
+                    DGBlockFlowType::ExternalCall => {
                         to_append += &String::from(format!(
                             "{} ..-x {}([\"{}\"])",
                             flow.flow_id,
@@ -121,7 +121,7 @@ impl DiagramGenerator for MermaidDiagramGenerator {
                             "External Call"
                         ));
                     }
-                    BlockFlowType::Log => {}
+                    DGBlockFlowType::Log => {}
                 }
                 syntax += &to_append;
                 syntax += "\n";
