@@ -1,49 +1,79 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Diagram from "./pages/visualiser/reactFlow/Diagram";
+import FlowGraph from "./pages/VisualFlowInteractive";
 
 const data = {
-    "9e1a92ed-64de-4ee3-a3fc-189b993ba559": {
-        caller: "60ce68ed-a1bd-4a5e-8a40-bef5d8f5ddde",
-        name: "sum",
-        flow: [
+    "START": {
+        "caller": null,
+        "name": "main",
+        "flow": [
             {
-                flow_pointer_id: null,
-                flow_id: "ac0d814c-ad94-4166-8698-23d53d4dbffd",
-                flow_type: "Log",
-                value: "1 + 1 = 2",
+                "flow_pointer_id": null,
+                "flow_id": "e14e2dee-9c6a-4644-8481-8f0d5a74aabc",
+                "flow_type": "Log",
+                "value": "Adding 2 and 1"
             },
-        ],
+            {
+                "flow_pointer_id": "9ac3b255-97a2-4310-a795-45559b27c851",
+                "flow_id": "e1daebe5-f55d-4c35-bffe-7dd2db8e06f9",
+                "flow_type": "CallStore",
+                "value": "sum = 3"
+            },
+            {
+                "flow_pointer_id": "65351ad5-060c-428c-9d07-0a3685cb4ba0",
+                "flow_id": "a805b838-221f-4057-b78f-3318d7dc1a02",
+                "flow_type": "Call",
+                "value": null
+            }
+        ]
     },
-    START: {
-        caller: null,
-        name: "main",
-        flow: [
+    "9ac3b255-97a2-4310-a795-45559b27c851": {
+        "caller": "START",
+        "name": "sum",
+        "flow": [
             {
-                flow_pointer_id: null,
-                flow_id: "7745bd7b-ecec-484a-ae39-0c5eb657a181",
-                flow_type: "Log",
-                value: "Adding 2 and 1",
+                "flow_pointer_id": null,
+                "flow_id": "11b27065-fe51-4239-ad08-f25c1b1e9df8",
+                "flow_type": "Log",
+                "value": "2 + 1 = 3"
             },
             {
-                flow_pointer_id: "60ce68ed-a1bd-4a5e-8a40-bef5d8f5ddde",
-                flow_id: "a31b67f4-92ff-4f06-8864-e2bba31c7bbf",
-                flow_type: "CallStore",
-                value: "sum = 3",
-            },
-            {
-                flow_pointer_id: "16caf84f-8836-44d0-851e-5a9d8763f7f7",
-                flow_id: "27e46faa-c117-4753-b1d2-ee1028020641",
-                flow_type: "Call",
-                value: null,
-            },
-        ],
+                "flow_pointer_id": "9dd4c31a-e4e4-47c8-a8bd-599121c98c5e",
+                "flow_id": "675d7f8b-38dc-4cc2-95b2-6402c6f46c8a",
+                "flow_type": "Call",
+                "value": null
+            }
+        ]
     },
+    "9dd4c31a-e4e4-47c8-a8bd-599121c98c5e": {
+        "caller": "9ac3b255-97a2-4310-a795-45559b27c851",
+        "name": "sum",
+        "flow": [
+            {
+                "flow_pointer_id": null,
+                "flow_id": "dedbeb82-b326-48ed-9e92-67fb13521941",
+                "flow_type": "Log",
+                "value": "1 + 1 = 2"
+            }
+        ]
+    },
+    "65351ad5-060c-428c-9d07-0a3685cb4ba0": {
+        "caller": "START",
+        "name": "foo",
+        "flow": [
+            {
+                "flow_pointer_id": null,
+                "flow_id": "e0188ee4-741c-49a7-979f-76d69c206c5a",
+                "flow_type": "Log",
+                "value": "foo called"
+            }
+        ]
+    }
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <Diagram data={data}/>, document.getElementById("root")
+    <FlowGraph data={data}/>
 );
 

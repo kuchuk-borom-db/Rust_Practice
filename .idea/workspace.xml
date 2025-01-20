@@ -8,13 +8,18 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="REFACTOR: Added names to operation">
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/reactFlow/components/block.jsx" afterDir="false" />
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Dummy custom node created">
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/components/reactFlow/FunctionNode.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/reactFlow/Diagram.js" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/reactFlow/Diagram.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/VisualFlowInteractive.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/VisualFlowInteractive.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/Mermaid.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/MermaidViewer.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/mermaid_code.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/reactFlow/Diagram.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/reactFlow/components/block.jsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,39 +77,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "Cargo.Run VisLog.executor": "Run",
-    "Cargo.Test services::graph_generator::internal::unit_test::graph_generator_test.executor": "Run",
-    "Node.js.JS Sample.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.rust.reset.selective.auto.import": "true",
-    "git-widget-placeholder": "feature/frontend-diagram",
-    "javascript.nodejs.core.library.configured.version": "22.12.0",
-    "javascript.nodejs.core.library.typings.version": "22.10.6",
-    "last_opened_file_path": "D:/Projects/Rust_Practice/VisFlowLogger/Server/migrations/1_tables_postgres.sql",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
-    "org.rust.first.attach.projects": "true",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "D:\\Program Files\\JetBrains\\RustRover 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;Cargo.Run VisLog.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test services::graph_generator::internal::unit_test::graph_generator_test.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.JS Sample.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/frontend-diagram&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.12.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.6&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Projects/Rust_Practice/VisFlowLogger/Server/migrations/1_tables_postgres.sql&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
+    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Program Files\\JetBrains\\RustRover 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\Rust_Practice\VisFlowLogger\frontend-react\src\pages\visualiser" />
       <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\services\graph_generator\api\models" />
       <recent name="D:\Projects\Rust_Practice\VisFlowLogger\Server\src\services\diagram_generator\api" />
       <recent name="D:\Projects\Rust_Practice\Main\src\infrastructure\web\internal" />
@@ -201,7 +207,8 @@
       <workItem from="1737218783982" duration="1740000" />
       <workItem from="1737244273988" duration="17297000" />
       <workItem from="1737269076273" duration="6891000" />
-      <workItem from="1737342880591" duration="9584000" />
+      <workItem from="1737342880591" duration="16738000" />
+      <workItem from="1737393795560" duration="6519000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -371,7 +378,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737350082341</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Dummy custom node created">
+      <option name="closed" value="true" />
+      <created>1737352934675</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1737352934675</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -397,7 +412,8 @@
     <MESSAGE value="Added ReactJS frontend" />
     <MESSAGE value="PROJECT STRUCTURE: Updated project structure and added converter.rs" />
     <MESSAGE value="REFACTOR: Added names to operation" />
-    <option name="LAST_COMMIT_MESSAGE" value="REFACTOR: Added names to operation" />
+    <MESSAGE value="Dummy custom node created" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dummy custom node created" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
