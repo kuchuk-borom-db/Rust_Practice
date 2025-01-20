@@ -1,4 +1,6 @@
-use crate::services::persistence::api::model::vis_flow_log_model::{VisFlowLogEntity, VisFlowLogEntry};
+use crate::services::persistence::api::model::vis_flow_log_model::{
+    VisFlowLogEntity, VisFlowLogEntry,
+};
 use crate::services::persistence::api::services::vis_flow_log::VisFlowLog;
 use crate::services::persistence::internal::common::db::init_database;
 use async_trait::async_trait;
@@ -20,6 +22,8 @@ impl VisFlowLogImpl {
 #[async_trait]
 impl VisFlowLog for VisFlowLogImpl {
     async fn save_log(&self, logs: &Vec<&VisFlowLogEntry>) -> bool {
+        println!("Saving logs :- ");
+        logs.iter().for_each(|log| println!("{}", log));
         if logs.is_empty() {
             return true;
         }

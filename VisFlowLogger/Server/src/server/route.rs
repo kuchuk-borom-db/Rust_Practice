@@ -13,27 +13,32 @@ pub async fn save_logs(
     app_state: web::Data<AppState>,
 ) -> HttpResponse {
     let payload = body.into_inner();
-    let all_operations: Vec<String> = payload
-      .operation
-      .iter()
-      .map(|operation| operation.operation_id.clone())
-      .collect();
+    let all_operations: Vec<(String, String)> = payload
+        .operation
+        .iter()
+        .map(|operation| {
+            (
+                operation.operation_id.clone(),
+                operation.operation_name.clone(),
+            )
+        })
+        .collect();
     let all_logs = payload
-      .operation
-      .iter()
-      .flat_map(|x| x.logs.iter())
-      .collect();
+        .operation
+        .iter()
+        .flat_map(|x| x.logs.iter())
+        .collect();
 
     let save_logs_future = app_state
-      .services
-      .persistence
-      .vis_flow_log
-      .save_log(&all_logs);
+        .services
+        .persistence
+        .vis_flow_log
+        .save_log(&all_logs);
     let upsert_ops_future = app_state
-      .services
-      .persistence
-      .vis_flow_op
-      .upsert(all_operations);
+        .services
+        .persistence
+        .vis_flow_op
+        .upsert(all_operations);
 
     let (save_logs_result, upsert_ops_result) = tokio::join!(save_logs_future, upsert_ops_future);
     if !save_logs_result || !upsert_ops_result {
@@ -46,11 +51,11 @@ pub async fn save_logs(
 pub async fn get_operations(app_state: web::Data<AppState>) -> HttpResponse {
     println!("Getting all operations");
     match app_state
-      .services
-      .persistence
-      .vis_flow_op
-      .get_operations()
-      .await
+        .services
+        .persistence
+        .vis_flow_op
+        .get_operations()
+        .await
     {
         Ok(ops) => HttpResponse::Ok().json(ops),
         Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
@@ -63,11 +68,11 @@ pub async fn get_logs_by_operation_id(
     app_state: web::Data<AppState>,
 ) -> HttpResponse {
     match app_state
-      .services
-      .persistence
-      .vis_flow_log
-      .get_logs_by_operation_id(operation_id.into_inner())
-      .await
+        .services
+        .persistence
+        .vis_flow_log
+        .get_logs_by_operation_id(operation_id.into_inner())
+        .await
     {
         Ok(logs) => HttpResponse::Ok().json(logs),
         Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
@@ -80,14 +85,16 @@ pub async fn get_graphs_by_operation_id(
     app_state: web::Data<AppState>,
 ) -> HttpResponse {
     let logs = match app_state
-      .services
-      .persistence
-      .vis_flow_log
-      .get_logs_by_operation_id(operation_id.into_inner())
-      .await
+        .services
+        .persistence
+        .vis_flow_log
+        .get_logs_by_operation_id(operation_id.into_inner())
+        .await
     {
         Ok(logs) => logs,
-        Err(e) => return HttpResponse::InternalServerError().body(format!("Failed to get logs: {}", e)),
+        Err(e) => {
+            return HttpResponse::InternalServerError().body(format!("Failed to get logs: {}", e))
+        }
     };
 
     if let Some(invalid_log) = logs.iter().find(|log| {
@@ -97,31 +104,36 @@ pub async fn get_graphs_by_operation_id(
         )
     }) {
         return HttpResponse::BadRequest()
-          .body(format!("Invalid log_type: {}", invalid_log.log_type));
+            .body(format!("Invalid log_type: {}", invalid_log.log_type));
     }
 
-    let entries = logs.iter().map(|log| VisFlowLogEntry {
-        log_type: match log.log_type.as_str() {
-            "LOG" => VisFlowLogEntryLogType::Log,
-            "START" => VisFlowLogEntryLogType::Start,
-            "END" => VisFlowLogEntryLogType::End,
-            "STORE" => VisFlowLogEntryLogType::Store,
-            "EXTERNAL_CALL" => VisFlowLogEntryLogType::ExternalCall,
-            "EXTERNAL_CALL_STORE" => VisFlowLogEntryLogType::ExternalCallStore,
-            _ => unreachable!(),
-        },
-        log_value: log.log_value.clone(),
-        block_name: log.block_name.clone(),
-    }).collect();
+    let entries = logs
+        .iter()
+        .map(|log| VisFlowLogEntry {
+            log_type: match log.log_type.as_str() {
+                "LOG" => VisFlowLogEntryLogType::Log,
+                "START" => VisFlowLogEntryLogType::Start,
+                "END" => VisFlowLogEntryLogType::End,
+                "STORE" => VisFlowLogEntryLogType::Store,
+                "EXTERNAL_CALL" => VisFlowLogEntryLogType::ExternalCall,
+                "EXTERNAL_CALL_STORE" => VisFlowLogEntryLogType::ExternalCallStore,
+                _ => unreachable!(),
+            },
+            log_value: log.log_value.clone(),
+            block_name: log.block_name.clone(),
+        })
+        .collect();
 
     match app_state
-      .services
-      .graph_generator
-      .graph_generator
-      .generate_graph(entries)
+        .services
+        .graph_generator
+        .graph_generator
+        .generate_graph(entries)
     {
         Ok(graph) => HttpResponse::Ok().json(graph),
-        Err(e) => HttpResponse::InternalServerError().body(format!("Failed to generate graph: {}", e)),
+        Err(e) => {
+            HttpResponse::InternalServerError().body(format!("Failed to generate graph: {}", e))
+        }
     }
 }
 
@@ -131,14 +143,16 @@ pub async fn generate_diagram_for_operation(
     app_state: web::Data<AppState>,
 ) -> HttpResponse {
     let logs = match app_state
-      .services
-      .persistence
-      .vis_flow_log
-      .get_logs_by_operation_id(operation_id.into_inner())
-      .await
+        .services
+        .persistence
+        .vis_flow_log
+        .get_logs_by_operation_id(operation_id.into_inner())
+        .await
     {
         Ok(logs) => logs,
-        Err(e) => return HttpResponse::InternalServerError().body(format!("Failed to get logs: {}", e)),
+        Err(e) => {
+            return HttpResponse::InternalServerError().body(format!("Failed to get logs: {}", e))
+        }
     };
 
     if let Some(invalid_log) = logs.iter().find(|log| {
@@ -148,39 +162,51 @@ pub async fn generate_diagram_for_operation(
         )
     }) {
         return HttpResponse::BadRequest()
-          .body(format!("Invalid log_type: {}", invalid_log.log_type));
+            .body(format!("Invalid log_type: {}", invalid_log.log_type));
     }
 
-    let entries = logs.iter().map(|log| VisFlowLogEntry {
-        log_type: match log.log_type.as_str() {
-            "LOG" => VisFlowLogEntryLogType::Log,
-            "START" => VisFlowLogEntryLogType::Start,
-            "END" => VisFlowLogEntryLogType::End,
-            "STORE" => VisFlowLogEntryLogType::Store,
-            "EXTERNAL_CALL" => VisFlowLogEntryLogType::ExternalCall,
-            "EXTERNAL_CALL_STORE" => VisFlowLogEntryLogType::ExternalCallStore,
-            _ => unreachable!(),
-        },
-        log_value: log.log_value.clone(),
-        block_name: log.block_name.clone(),
-    }).collect();
+    let entries = logs
+        .iter()
+        .map(|log| VisFlowLogEntry {
+            log_type: match log.log_type.as_str() {
+                "LOG" => VisFlowLogEntryLogType::Log,
+                "START" => VisFlowLogEntryLogType::Start,
+                "END" => VisFlowLogEntryLogType::End,
+                "STORE" => VisFlowLogEntryLogType::Store,
+                "EXTERNAL_CALL" => VisFlowLogEntryLogType::ExternalCall,
+                "EXTERNAL_CALL_STORE" => VisFlowLogEntryLogType::ExternalCallStore,
+                _ => unreachable!(),
+            },
+            log_value: log.log_value.clone(),
+            block_name: log.block_name.clone(),
+        })
+        .collect();
 
     let graph = match app_state
-      .services
-      .graph_generator
-      .graph_generator
-      .generate_graph(entries)
+        .services
+        .graph_generator
+        .graph_generator
+        .generate_graph(entries)
     {
-        Ok(gg_graph) => {
-            gg_graph.into_iter()
-              .map(|(key, block)| (key, DGBlock::from(block)))
-              .collect::<HashMap<String, DGBlock>>()
-        },
-        Err(e) => return HttpResponse::InternalServerError().body(format!("Failed to generate graph: {}", e)),
+        Ok(gg_graph) => gg_graph
+            .into_iter()
+            .map(|(key, block)| (key, DGBlock::from(block)))
+            .collect::<HashMap<String, DGBlock>>(),
+        Err(e) => {
+            return HttpResponse::InternalServerError()
+                .body(format!("Failed to generate graph: {}", e))
+        }
     };
 
-    match app_state.services.diagram_generator.mermaid.generate_diagram(graph) {
+    match app_state
+        .services
+        .diagram_generator
+        .mermaid
+        .generate_diagram(graph)
+    {
         Ok(diagram) => HttpResponse::Ok().body(diagram),
-        Err(e) => HttpResponse::InternalServerError().body(format!("Failed to generate diagram: {}", e)),
+        Err(e) => {
+            HttpResponse::InternalServerError().body(format!("Failed to generate diagram: {}", e))
+        }
     }
 }

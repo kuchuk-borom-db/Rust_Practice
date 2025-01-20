@@ -9,6 +9,7 @@ sequence INT NOT NULL
 
 CREATE TABLE IF NOT EXISTS operations (
     id VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
     created TIMESTAMP NOT NULL,
     updated TIMESTAMP NOT NULL
 );

@@ -16,21 +16,25 @@ impl VisLogOpImpl {
 }
 #[async_trait]
 impl VisFlowOp for VisLogOpImpl {
-    async fn upsert(&self, operation_ids: Vec<String>) -> bool {
+    async fn upsert(&self, operation_ids: Vec<(String, String)>) -> bool {
         if operation_ids.is_empty() {
             return false; // No operations to insert or update
         }
 
         // Dynamically construct the VALUES part of the query
+        let mut count = 0;
         let placeholders: Vec<String> = operation_ids
             .iter()
-            .enumerate()
-            .map(|(i, _)| format!("(${}, NOW(), NOW())", i + 1)) // Generates ($1, NOW(), NOW()), ($2, NOW(), NOW()), ...
+            .map(|operation| {
+                let string = format!("(${}, ${}, NOW(), NOW())", count + 1, count + 2);
+                count += 2;
+                string
+            })
             .collect();
 
         let query = format!(
             "
-        INSERT INTO operations (id, created, updated)
+        INSERT INTO operations (id, name, created, updated)
         VALUES {}
         ON CONFLICT (id)
         DO UPDATE SET updated = NOW();
@@ -41,7 +45,8 @@ impl VisFlowOp for VisLogOpImpl {
         // Bind the operation IDs dynamically
         let mut query_builder = sqlx::query(&query);
         for id in operation_ids {
-            query_builder = query_builder.bind(id);
+            query_builder = query_builder.bind(id.0);
+            query_builder = query_builder.bind(id.1);
         }
 
         // Execute the query and handle the result
