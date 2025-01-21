@@ -8,10 +8,8 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Better minimal UI">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Added download button">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/d3js/Index.js" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/d3js/Index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -203,7 +201,7 @@
       <workItem from="1737342880591" duration="16738000" />
       <workItem from="1737393795560" duration="8318000" />
       <workItem from="1737426760108" duration="8146000" />
-      <workItem from="1737454407269" duration="4942000" />
+      <workItem from="1737454407269" duration="5675000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -421,14 +419,21 @@
       <option name="project" value="LOCAL" />
       <updated>1737458798073</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Added download button">
+      <option name="closed" value="true" />
+      <created>1737459512500</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1737459512500</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="REFACTOR: moved rust files to MAIn folder" />
     <MESSAGE value="Created simple api to generate logs for javascript" />
     <MESSAGE value="FIX: sending log to server after end of function call done" />
     <MESSAGE value="REFACTOR: Changed logic to add STORE after function call. Made necessary changes required for new change" />
@@ -453,7 +458,8 @@
     <MESSAGE value="Custom diagram progress" />
     <MESSAGE value="Custom Linear Stack view complete" />
     <MESSAGE value="Better minimal UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Better minimal UI" />
+    <MESSAGE value="Added download button" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added download button" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

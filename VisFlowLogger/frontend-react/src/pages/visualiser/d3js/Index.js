@@ -38,7 +38,6 @@ const OrientationToggle = ({ orientation, setOrientation }) => {
 
 
 const getFlowTypeStyles = (type, level) => {
-    // Base styles for different types
     const baseStyles = {
         Log: { icon: <MessageSquare className="w-4 h-4" />, border: 'border-green-500/50', hover: 'hover:bg-green-500/20' },
         CallStore: { icon: <Database className="w-4 h-4" />, border: 'border-purple-500/50', hover: 'hover:bg-purple-500/20' },
@@ -48,11 +47,11 @@ const getFlowTypeStyles = (type, level) => {
     const defaultStyle = { icon: null, border: 'border-gray-500/50', hover: 'hover:bg-gray-500/20' };
     const baseStyle = baseStyles[type] || defaultStyle;
 
-    // Alternate background colors based on nesting level
+    // Enhanced contrast between levels
     const bgColors = [
-        'bg-gray-800/30 hover:bg-gray-800/40',
-        'bg-gray-900/40 hover:bg-gray-900/50',
-        'bg-gray-950/50 hover:bg-gray-950/60',
+        'bg-gray-800/90 hover:bg-gray-800/100',
+        'bg-gray-900/90 hover:bg-gray-900/100',
+        'bg-gray-950/90 hover:bg-gray-950/100',
     ];
 
     const bgColor = bgColors[level % bgColors.length];
@@ -81,7 +80,7 @@ const Arrow = ({ orientation }) => {
 
 const FlowNode = ({ type, value, flowPointerId = null, level = 0, orientation }) => {
     const [isExpanded, setIsExpanded] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
+    const [, setIsHovered] = useState(false);
     const styles = getFlowTypeStyles(type, level);
 
     const isExpandable = (type === 'Call' || type === 'CallStore') && flowPointerId;
