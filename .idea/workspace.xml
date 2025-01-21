@@ -8,10 +8,10 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Custom Linear Stack view complete">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Better minimal UI">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/d3js/Index.js" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/d3js/Index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -203,7 +203,7 @@
       <workItem from="1737342880591" duration="16738000" />
       <workItem from="1737393795560" duration="8318000" />
       <workItem from="1737426760108" duration="8146000" />
-      <workItem from="1737454407269" duration="4267000" />
+      <workItem from="1737454407269" duration="4942000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -413,7 +413,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737436687049</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Better minimal UI">
+      <option name="closed" value="true" />
+      <created>1737458798073</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1737458798073</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -444,7 +452,8 @@
     <MESSAGE value="Added mermaid viewer simple" />
     <MESSAGE value="Custom diagram progress" />
     <MESSAGE value="Custom Linear Stack view complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="Custom Linear Stack view complete" />
+    <MESSAGE value="Better minimal UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Better minimal UI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

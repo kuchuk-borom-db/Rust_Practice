@@ -7,6 +7,7 @@
     "cra-template": "1.2.0",
     "d3": "^7.9.0",
     "framer-motion": "^11.18.1",
+    "html2canvas": "^1.4.1",
     "lucide-react": "^0.473.0",
     "mermaid": "^11.4.1",
     "react": "^19.0.0",
