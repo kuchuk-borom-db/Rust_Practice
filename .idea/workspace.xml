@@ -8,9 +8,13 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Added download button">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Centered stuff not happy with vertical view being expanded unnecessariliy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/d3js/Index.js" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/d3js/Index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/kuku/KukuVisualizer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/kuku/KukuVisualizer.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +205,7 @@
       <workItem from="1737342880591" duration="16738000" />
       <workItem from="1737393795560" duration="8318000" />
       <workItem from="1737426760108" duration="8146000" />
-      <workItem from="1737454407269" duration="5675000" />
+      <workItem from="1737454407269" duration="8836000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -427,14 +431,21 @@
       <option name="project" value="LOCAL" />
       <updated>1737459512500</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Centered stuff not happy with vertical view being expanded unnecessariliy">
+      <option name="closed" value="true" />
+      <created>1737460336840</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1737460336840</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Created simple api to generate logs for javascript" />
     <MESSAGE value="FIX: sending log to server after end of function call done" />
     <MESSAGE value="REFACTOR: Changed logic to add STORE after function call. Made necessary changes required for new change" />
     <MESSAGE value="REFACTOR: Folder structure changes" />
@@ -459,7 +470,8 @@
     <MESSAGE value="Custom Linear Stack view complete" />
     <MESSAGE value="Better minimal UI" />
     <MESSAGE value="Added download button" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added download button" />
+    <MESSAGE value="Centered stuff not happy with vertical view being expanded unnecessariliy" />
+    <option name="LAST_COMMIT_MESSAGE" value="Centered stuff not happy with vertical view being expanded unnecessariliy" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import MermaidPage from "./pages/visualiser/mermaid/Index";
-import DS3Diagram from "./pages/visualiser/d3js/Index";
+import DS3Diagram from "./pages/visualiser/reactFlow/Index";
 
 const data =
     `
@@ -180,3 +180,30 @@ root.render(
     <DS3Diagram data={graph}/>
 );
 
+/*
+this is a jsx page that can view blocks and nodes. flow nodes of a block may call another block or even callStore.
+If its a call then its simply calling another block and then moving on
+
+If its callStore then its calling that block's first flow node and the last flow node of the called block must point back to the caller flow node.
+
+Currently there is no indicator showing the last flowNode of a called block returning back to the caller flow node of parent block.
+
+Do what you think is necessary to make callStore's operation directed showing the return value i.e last flow node of called block being returned to caller flow node
+And instead of horizontal view occupying while width make it use only as much as required and expand when its inner content expand and add a zoom in and zoom out and moving around feature
+Write the whole code
+ */
+
+/*
+this is a jsx page that can view blocks and nodes. flow nodes of a block may call another block or even callStore.
+If its a call then its simply calling another block and then moving on
+
+If its callStore then its calling that block's first flow node and the last flow node of the called block must point back to the caller flow node.
+
+currently its custom compoents being used to show the flow but i want you to rewrite the whole thing from scratch using reactFlow
+ but keeping the same style. Use arrows to represent connections and instead of nested blocks. And flow nodes should be inside their respective blocks with arrows pointing properly
+
+ a call / callStore flow node of a block will pop up another block which will be the vlock that was called by the caller flow node
+  and its going to be linked using arrows between the caller flow node and the called block's firest flow node.
+  if its callStore then the last flow node of the called block needs to point back an arrow to the caller flow node. thats how we show that its return value is used.
+  We should have the ability to open and close the flow node of type call and callStore
+ */
