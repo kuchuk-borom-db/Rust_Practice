@@ -1,13 +1,15 @@
 <script lang="ts">
-    import type { BlockData } from '../models/blockData'; // Adjust the import path as needed
-    import Flow from './Flow.svelte'; // Import the Flow component
+    import type { BlockData } from '../models/blockData';
+    import Flow from './Flow.svelte';
 
     export let blockID: string;
     export let blockData: BlockData;
+    export let blocks: Record<string, BlockData>;
+    export let isOpenedFromFlow: boolean;
 </script>
 
 <!-- Glassmorphism container for the block using Tailwind -->
-<div class="block-container">
+<div class="block-container bg-gray-700 rounded-lg shadow-md p-6 hover:bg-gray-600 transition-colors duration-200">
     <h2 class="text-xl font-semibold mb-2">Block ID: {blockID}</h2>
     <p class="text-sm text-gray-300">Caller: {blockData.caller}</p>
     <p class="text-sm text-gray-300">Name: {blockData.name}</p>
@@ -15,7 +17,7 @@
     <!-- Render flows inside the block -->
     <div class="flows-container mt-4">
         {#each blockData.flow as flow}
-            <Flow {blockID} {flow} />
+            <Flow {blockID} {flow} {blocks} />
         {/each}
     </div>
 </div>
@@ -23,30 +25,10 @@
 <style>
     .block-container {
         position: relative;
-        background: linear-gradient(45deg, rgba(99, 102, 241, 0.8), rgba(168, 85, 247, 0.8), rgba(236, 72, 153, 0.8), rgba(99, 102, 241, 0.8));
-        background-size: 400% 400%; /* Larger background size for more movement */
-        border-radius: 15px; /* Rounded corners */
-        border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        padding: 20px;
-        max-width: 400px; /* Adjust as needed */
-        margin: 20px auto; /* Center the block */
-        color: white; /* Text color */
-        overflow: hidden; /* Ensure the gradient doesn't overflow */
-        animation: gradientAnimation 6s ease infinite; /* Faster animation */
-    }
-
-    /* Gradient animation */
-    @keyframes gradientAnimation {
-        0% {
-            background-position: 0 50%;
-        }
-        50% {
-            background-position: 100% 50%;
-        }
-        100% {
-            background-position: 0 50%;
-        }
+        color: white;
+        overflow: hidden;
+        width: fit-content; /* Allow the block to expand based on content */
+        min-width: 300px; /* Set a minimum width for better readability */
     }
 
     h2 {
@@ -57,12 +39,12 @@
     p {
         margin: 5px 0;
         font-size: 1em;
-        color: rgba(255, 255, 255, 0.8); /* Slightly transparent text */
+        color: rgba(255, 255, 255, 0.8);
     }
 
     .flows-container {
         display: flex;
         flex-direction: column;
-        gap: 10px; /* Space between flow components */
+        gap: 10px;
     }
 </style>

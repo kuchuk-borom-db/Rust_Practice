@@ -8,9 +8,11 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Block now shows flow inside it">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Showing only starting block">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/models/blockData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/models/blockData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Block.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Block.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Flow.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Flow.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/+page.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -486,14 +488,21 @@
       <option name="project" value="LOCAL" />
       <updated>1737527281389</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Showing only starting block">
+      <option name="closed" value="true" />
+      <created>1737533326453</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1737533326453</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Created get endpoints for operation and logs" />
     <MESSAGE value="Added table migration script and services" />
     <MESSAGE value="Removed main folder. Now to fix endpoints" />
     <MESSAGE value="Endpoints working" />
@@ -518,7 +527,8 @@
     <MESSAGE value="Creating svelte version" />
     <MESSAGE value="Flow component created too" />
     <MESSAGE value="Block now shows flow inside it" />
-    <option name="LAST_COMMIT_MESSAGE" value="Block now shows flow inside it" />
+    <MESSAGE value="Showing only starting block" />
+    <option name="LAST_COMMIT_MESSAGE" value="Showing only starting block" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { fade, fly } from 'svelte/transition';
-    import { GitBranch, Globe, Share2 } from 'lucide-svelte';
+    import {fly} from 'svelte/transition';
+    import {GitBranch, Globe, Share2} from 'lucide-svelte';
 
     interface Feature {
         icon: any;
@@ -42,7 +42,8 @@
 
             <h1 class="text-5xl font-bold mb-4">VisFlow Logger</h1>
             <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                Revolutionize your debugging experience with visual log flows. Transform complex system logs into clear, actionable visualizations that make sense at first glance.
+                Revolutionize your debugging experience with visual log flows. Transform complex system logs into clear,
+                actionable visualizations that make sense at first glance.
             </p>
 
             <button
@@ -63,7 +64,7 @@
                         class="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors duration-200"
                 >
                     <div class="bg-blue-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                        <svelte:component this={feature.icon} class="w-6 h-6" />
+                        <svelte:component this={feature.icon} class="w-6 h-6"/>
                     </div>
                     <h3 class="text-xl font-semibold mb-2">{feature.title}</h3>
                     <p class="text-gray-400">{feature.description}</p>

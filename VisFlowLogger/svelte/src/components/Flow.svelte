@@ -1,8 +1,22 @@
 <script lang="ts">
-    import type { BlockFlow } from '../models/blockData'; // Import BlockFlow as a type
-    import { BlockFlowType } from '../models/blockData'; // Import BlockFlowType as a value
-    export let blockID: string;
+    import type {BlockData, BlockFlow} from '../models/blockData';
+    import {BlockFlowType} from '../models/blockData';
+    import Block from './Block.svelte';
+
     export let flow: BlockFlow;
+    export let blocks: Record<string, BlockData>;
+    export let blockID: string;
+
+    let showSubBlock = false;
+
+    // Toggle between flow and sub-block
+    function toggleSubBlock(event: MouseEvent) {
+        event.stopPropagation();
+
+        if (flow.flowType === BlockFlowType.Call || flow.flowType === BlockFlowType.CallStore) {
+            showSubBlock = !showSubBlock;
+        }
+    }
 
     // Helper function to get the flow type label
     function getFlowTypeLabel(flowType: BlockFlowType): string {
@@ -26,36 +40,73 @@
     function getFlowTypeColor(flowType: BlockFlowType): string {
         switch (flowType) {
             case BlockFlowType.Log:
-                return 'bg-blue-500';
+                return 'bg-blue-500'; // Keep blue for Log
             case BlockFlowType.CallStore:
-                return 'bg-green-500';
+                return 'bg-green-600'; // Change to a deeper green for CallStore
             case BlockFlowType.Call:
-                return 'bg-purple-500';
+                return 'bg-purple-600'; // Keep purple for Call
             case BlockFlowType.ExternCall:
-                return 'bg-yellow-500';
+                return 'bg-yellow-600'; // Change to a deeper yellow for ExternCall
             case BlockFlowType.ExternCallStore:
-                return 'bg-red-500';
+                return 'bg-red-600'; // Keep red for ExternCallStore
             default:
-                return 'bg-gray-500';
+                return 'bg-gray-600'; // Default to gray
         }
     }
 </script>
 
 <!-- Flow container -->
-<div class="flow-container {getFlowTypeColor(flow.flowType)} p-4 rounded-lg shadow-md text-white">
-    <div class="flex items-center justify-between mb-2">
-        <h3 class="text-lg font-semibold">{getFlowTypeLabel(flow.flowType)}</h3>
-        <span class="text-sm bg-black/20 px-2 py-1 rounded">{flow.flowId}</span>
-    </div>
-    <p class="text-sm mb-2">Pointer ID: {flow.flowPointerId}</p>
-    {#if flow.value}
-        <p class="text-sm">Value: {flow.value}</p>
+<!-- Flow container -->
+<div on:click={toggleSubBlock}
+     class="flow-container {getFlowTypeColor(flow.flowType)} p-4 rounded-lg shadow-md text-white cursor-pointer relative bg-gray-800 hover:bg-gray-700 transition-colors duration-200">
+    {#if showSubBlock && flow.flowPointerId}
+        <!-- Render the sub-block if the flow has a pointer ID -->
+        <div class="sub-block-container relative">
+            <!-- Connecting line -->
+            <div class="connecting-line"></div>
+            <Block blockID={flow.flowPointerId} blockData={blocks[flow.flowPointerId]} {blocks}
+                   isOpenedFromFlow={true}/>
+            {#if flow.flowType === BlockFlowType.CallStore}
+                <!-- Special representation for CallStore sub-blocks -->
+                <div class="stored-value-banner bg-green-700/50 p-2 rounded-t-lg">
+                    <p class="text-sm font-semibold">Storing result: <span class="font-mono">{flow.value}</span></p>
+                </div>
+            {/if}
+        </div>
+    {:else}
+        <!-- Render the flow details -->
+        <div class="flex items-center justify-between mb-2">
+            <h3 class="text-lg font-semibold">{getFlowTypeLabel(flow.flowType)}</h3>
+            <span class="text-sm bg-black/20 px-2 py-1 rounded">{flow.flowId}</span>
+        </div>
+        <p class="text-sm mb-2">Pointer ID: {flow.flowPointerId}</p>
+        {#if flow.value}
+            <p class="text-sm">Value: {flow.value}</p>
+        {/if}
     {/if}
 </div>
 
 <style>
     .flow-container {
-        max-width: 300px;
         margin: 10px 0;
+        width: 100%; /* Allow the flow to expand based on content */
+    }
+
+    .sub-block-container {
+        margin-top: 10px;
+        padding-left: 20px; /* Indent the sub-block */
+    }
+
+    .connecting-line {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .stored-value-banner {
+        margin-bottom: -10px; /* Overlap slightly with the sub-block */
     }
 </style>
