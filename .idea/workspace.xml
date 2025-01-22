@@ -8,10 +8,9 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Better">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Orientation v1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Block.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Block.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Flow.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Flow.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -519,14 +518,21 @@
       <option name="project" value="LOCAL" />
       <updated>1737538942875</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Orientation v1">
+      <option name="closed" value="true" />
+      <created>1737539495238</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1737539495238</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FEATURE: 1. Endpoint for saving log can accept several operations now. 2. Saving operations can now bulk save" />
     <MESSAGE value="FEATURE: Graph generator endpoint implementation complete.&#10;Need to test" />
     <MESSAGE value="FIX, TEST: Fixed graph generator implementation and added unit test" />
     <MESSAGE value="FEATURE: Get graph by operation id complete" />
@@ -551,7 +557,8 @@
     <MESSAGE value="Proper expand and collapse" />
     <MESSAGE value="Animations" />
     <MESSAGE value="Better" />
-    <option name="LAST_COMMIT_MESSAGE" value="Better" />
+    <MESSAGE value="Orientation v1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Orientation v1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

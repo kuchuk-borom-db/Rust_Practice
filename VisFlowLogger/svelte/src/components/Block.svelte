@@ -6,12 +6,30 @@
     export let blockData: BlockData;
     export let blocks: Record<string, BlockData>;
     export let isOpenedFromFlow: boolean;
-    export let isHorizontal: boolean = false;
+
+    // Per-block orientation state
+    let isHorizontal = false;
+
+    // Function to toggle orientation for this block
+    function toggleOrientation(event: MouseEvent) {
+        event.stopPropagation(); // Stop event propagation
+        isHorizontal = !isHorizontal;
+    }
 </script>
 
 <!-- Block container -->
 <div class="block-container {isHorizontal ? 'horizontal' : 'vertical'}">
-    <h2 class="text-xl font-semibold mb-2">Block ID: {blockID}</h2>
+    <!-- Block header -->
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold">Block ID: {blockID}</h2>
+        <!-- Orientation toggle button -->
+        <button
+                on:click={toggleOrientation}
+                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded-lg text-white text-sm transition-colors"
+        >
+            {isHorizontal ? 'Vertical' : 'Horizontal'}
+        </button>
+    </div>
     <p class="text-sm text-gray-300">Caller: {blockData.caller}</p>
     <p class="text-sm text-gray-300">Name: {blockData.name}</p>
 
@@ -43,6 +61,7 @@
     /* Horizontal layout */
     .block-container.horizontal {
         margin: 0 10px;
+        white-space: nowrap; /* Prevent text wrapping */
     }
 
     .flows-container.vertical {
@@ -55,5 +74,6 @@
         display: flex;
         flex-direction: row;
         gap: 20px;
+        align-items: flex-start; /* Align items to the top */
     }
 </style>

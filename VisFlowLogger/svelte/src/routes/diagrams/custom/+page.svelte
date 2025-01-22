@@ -1,8 +1,7 @@
 <script lang="ts">
     import Block from '../../../components/Block.svelte';
-    import { type BlockData, BlockFlowType } from "../../../models/blockData";
+    import { type BlockData, BlockFlowType } from "../../../models/blockData"; // Adjust the import path as needed
 
-    // Your existing blocks data
     const blocks: Record<string, BlockData> = {
         "START": {
             caller: null,
@@ -167,14 +166,6 @@
             ]
         }
     };
-
-    // Orientation state
-    let isHorizontal = false;
-
-    // Function to toggle orientation
-    function toggleOrientation() {
-        isHorizontal = !isHorizontal;
-    }
 </script>
 
 <main class="p-4 bg-gray-900 min-h-screen text-white">
@@ -184,17 +175,9 @@
             This page demonstrates a professional stack diagram visualization. Each block represents a function or process, and the flows show the interactions between them.
         </p>
 
-        <!-- Orientation Toggle Button -->
-        <button
-                on:click={toggleOrientation}
-                class="mb-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors"
-        >
-            {isHorizontal ? 'Switch to Vertical' : 'Switch to Horizontal'}
-        </button>
-
         <!-- Render the root block -->
-        <div class="stack-diagram {isHorizontal ? 'horizontal' : 'vertical'}">
-            <Block blockID="START" blockData={blocks["START"]} {blocks} {isHorizontal} />
+        <div class="stack-diagram">
+            <Block blockID="START" blockData={blocks["START"]} {blocks} />
         </div>
     </div>
 </main>
@@ -202,27 +185,15 @@
 <style>
     .stack-diagram {
         display: flex;
-        gap: 20px;
-    }
-
-    /* Vertical layout (default) */
-    .stack-diagram.vertical {
         flex-direction: column;
-        align-items: center;
-    }
-
-    /* Horizontal layout */
-    .stack-diagram.horizontal {
-        flex-direction: row;
-        align-items: flex-start;
-        flex-wrap: wrap;
+        align-items: center; /* Center blocks horizontally */
+        gap: 20px; /* Space between blocks */
     }
 
     /* Responsive adjustments */
     @media (max-width: 768px) {
-        .stack-diagram.horizontal {
-            flex-direction: column;
-            align-items: center;
+        .stack-diagram {
+            align-items: center; /* Ensure blocks stay centered on smaller screens */
         }
     }
 </style>
