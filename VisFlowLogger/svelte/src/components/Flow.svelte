@@ -2,6 +2,7 @@
     import type {BlockData, BlockFlow} from '../models/blockData';
     import {BlockFlowType} from '../models/blockData';
     import Block from './Block.svelte';
+    import {slide} from 'svelte/transition'; // Import slide transition
 
     export let flow: BlockFlow;
     export let blocks: Record<string, BlockData>;
@@ -40,32 +41,30 @@
     function getFlowTypeColor(flowType: BlockFlowType): string {
         switch (flowType) {
             case BlockFlowType.Log:
-                return 'bg-blue-500'; // Keep blue for Log
+                return 'bg-blue-500';
             case BlockFlowType.CallStore:
-                return 'bg-green-600'; // Change to a deeper green for CallStore
+                return 'bg-red-400';
             case BlockFlowType.Call:
-                return 'bg-purple-600'; // Keep purple for Call
+                return 'bg-pink-600';
             case BlockFlowType.ExternCall:
-                return 'bg-yellow-600'; // Change to a deeper yellow for ExternCall
+                return 'bg-yellow-600';
             case BlockFlowType.ExternCallStore:
-                return 'bg-red-600'; // Keep red for ExternCallStore
+                return 'bg-red-600';
             default:
-                return 'bg-gray-600'; // Default to gray
+                return 'bg-gray-600';
         }
     }
 </script>
 
 <!-- Flow container -->
-<!-- Flow container -->
 <div on:click={toggleSubBlock}
-     class="flow-container {getFlowTypeColor(flow.flowType)} p-4 rounded-lg shadow-md text-white cursor-pointer relative bg-gray-800 hover:bg-gray-700 transition-colors duration-200">
+     class="flow-container {getFlowTypeColor(flow.flowType)} hover-{flow.flowType} p-4 rounded-lg shadow-md text-white cursor-pointer relative bg-gray-800 transition-colors duration-200">
     {#if showSubBlock && flow.flowPointerId}
-        <!-- Render the sub-block if the flow has a pointer ID -->
-        <div class="sub-block-container relative">
+        <!-- Render the sub-block with slide transition and fade effect -->
+        <div transition:slide|local={{duration: 200}} class="sub-block-container relative opacity-0 animate-fade-in">
             <!-- Connecting line -->
             <div class="connecting-line"></div>
-            <Block blockID={flow.flowPointerId} blockData={blocks[flow.flowPointerId]} {blocks}
-                   isOpenedFromFlow={true}/>
+            <Block blockID={flow.flowPointerId} blockData={blocks[flow.flowPointerId]} {blocks} isOpenedFromFlow={true}/>
             {#if flow.flowType === BlockFlowType.CallStore}
                 <!-- Special representation for CallStore sub-blocks -->
                 <div class="stored-value-banner bg-green-700/50 p-2 rounded-t-lg">
@@ -108,5 +107,44 @@
 
     .stored-value-banner {
         margin-bottom: -10px; /* Overlap slightly with the sub-block */
+    }
+
+    /* Fade-in animation */
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .animate-fade-in {
+        animation: fade-in 200ms ease-out forwards;
+    }
+
+    /* Hover classes for each flow type */
+    .hover-BlockFlowType.Log:hover {
+        background-color: #3b82f6; /* Lighter blue */
+    }
+
+    .hover-BlockFlowType.CallStore:hover {
+        background-color: #ef4444; /* Lighter red */
+    }
+
+    .hover-BlockFlowType.Call:hover {
+        background-color: #db2777; /* Lighter pink */
+    }
+
+    .hover-BlockFlowType.ExternCall:hover {
+        background-color: #eab308; /* Lighter yellow */
+    }
+
+    .hover-BlockFlowType.ExternCallStore:hover {
+        background-color: #dc2626; /* Lighter red */
+    }
+
+    .hover-BlockFlowType.Unknown:hover {
+        background-color: #6b7280; /* Lighter gray */
     }
 </style>

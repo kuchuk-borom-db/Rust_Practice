@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { BlockData } from '../models/blockData';
     import Flow from './Flow.svelte';
+    import { fade, fly } from 'svelte/transition'; // Import Svelte transitions
 
     export let blockID: string;
     export let blockData: BlockData;
@@ -9,7 +10,11 @@
 </script>
 
 <!-- Glassmorphism container for the block using Tailwind -->
-<div class="block-container bg-gray-700 rounded-lg shadow-md p-6 hover:bg-gray-600 transition-colors duration-200">
+<div
+        in:fly={{ y: 20, duration: 300 }}
+        out:fade={{ duration: 200 }}
+        class="block-container bg-gray-700 rounded-lg shadow-md p-6 hover:bg-gray-600 transition-all duration-300 ease-in-out transform hover:scale-105"
+>
     <h2 class="text-xl font-semibold mb-2">Block ID: {blockID}</h2>
     <p class="text-sm text-gray-300">Caller: {blockData.caller}</p>
     <p class="text-sm text-gray-300">Name: {blockData.name}</p>
@@ -29,6 +34,7 @@
         overflow: hidden;
         width: fit-content; /* Allow the block to expand based on content */
         min-width: 300px; /* Set a minimum width for better readability */
+        transition: all 300ms ease-in-out; /* Smooth transition for all properties */
     }
 
     h2 {
@@ -45,6 +51,12 @@
     .flows-container {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 20px;
+    }
+
+    /* Hover effect with a one-time scale animation */
+    .block-container:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
 </style>
