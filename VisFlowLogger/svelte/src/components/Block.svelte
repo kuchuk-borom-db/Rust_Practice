@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { BlockData } from '../models/blockData'; // Adjust the import path as needed
+    import Flow from './Flow.svelte'; // Import the Flow component
 
     export let blockID: string;
     export let blockData: BlockData;
@@ -10,7 +11,13 @@
     <h2 class="text-xl font-semibold mb-2">Block ID: {blockID}</h2>
     <p class="text-sm text-gray-300">Caller: {blockData.caller}</p>
     <p class="text-sm text-gray-300">Name: {blockData.name}</p>
-    <!-- Add more details or logic here later -->
+
+    <!-- Render flows inside the block -->
+    <div class="flows-container mt-4">
+        {#each blockData.flow as flow}
+            <Flow {blockID} {flow} />
+        {/each}
+    </div>
 </div>
 
 <style>
@@ -51,5 +58,11 @@
         margin: 5px 0;
         font-size: 1em;
         color: rgba(255, 255, 255, 0.8); /* Slightly transparent text */
+    }
+
+    .flows-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* Space between flow components */
     }
 </style>

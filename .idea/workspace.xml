@@ -8,11 +8,7 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Creating svelte version">
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Flow.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" afterDir="false" />
-    </list>
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Flow component created too" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -212,7 +208,7 @@
       <workItem from="1737426760108" duration="8146000" />
       <workItem from="1737454407269" duration="9659000" />
       <workItem from="1737478480326" duration="10375000" />
-      <workItem from="1737518339328" duration="7803000" />
+      <workItem from="1737518339328" duration="7989000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -470,14 +466,21 @@
       <option name="project" value="LOCAL" />
       <updated>1737526488319</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Flow component created too">
+      <option name="closed" value="true" />
+      <created>1737527159083</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1737527159083</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="REFACTOR: Folder structure changes" />
     <MESSAGE value="PROGRESS: Setting up proper end to end intergration" />
     <MESSAGE value="Created get endpoints for operation and logs" />
     <MESSAGE value="Added table migration script and services" />
@@ -502,7 +505,8 @@
     <MESSAGE value="Centered stuff not happy with vertical view being expanded unnecessariliy" />
     <MESSAGE value="React flow progress" />
     <MESSAGE value="Creating svelte version" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating svelte version" />
+    <MESSAGE value="Flow component created too" />
+    <option name="LAST_COMMIT_MESSAGE" value="Flow component created too" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
