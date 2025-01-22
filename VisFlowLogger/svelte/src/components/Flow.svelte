@@ -64,7 +64,14 @@
         <div transition:slide|local={{duration: 200}} class="sub-block-container relative opacity-0 animate-fade-in">
             <!-- Connecting line -->
             <div class="connecting-line"></div>
-            <Block blockID={flow.flowPointerId} blockData={blocks[flow.flowPointerId]} {blocks} isOpenedFromFlow={true}/>
+            {#if flow.flowType === BlockFlowType.CallStore}
+                <!-- Special representation for CallStore sub-blocks -->
+                <div class="stored-value-banner bg-green-700/50 p-2 rounded-t-lg">
+                    <p class="text-sm font-semibold">Storing result: <span class="font-mono">{flow.value}</span></p>
+                </div>
+            {/if}
+            <Block blockID={flow.flowPointerId} blockData={blocks[flow.flowPointerId]} {blocks}
+                   isOpenedFromFlow={true}/>
             {#if flow.flowType === BlockFlowType.CallStore}
                 <!-- Special representation for CallStore sub-blocks -->
                 <div class="stored-value-banner bg-green-700/50 p-2 rounded-t-lg">
