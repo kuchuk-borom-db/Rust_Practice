@@ -9,30 +9,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Creating svelte version">
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/.npmrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/postcss.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/app.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/app.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/app.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Block.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/lib/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/models/blockData.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/+layout.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/+page.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/operations/+page.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/static/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/svelte.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/tailwind.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/vite.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Flow.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/reactFlow/Index.js" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/frontend-react/src/pages/visualiser/reactFlow/Index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,7 +212,7 @@
       <workItem from="1737426760108" duration="8146000" />
       <workItem from="1737454407269" duration="9659000" />
       <workItem from="1737478480326" duration="10375000" />
-      <workItem from="1737518339328" duration="7206000" />
+      <workItem from="1737518339328" duration="7803000" />
     </task>
     <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
       <option name="closed" value="true" />
@@ -483,7 +462,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737488532520</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Creating svelte version">
+      <option name="closed" value="true" />
+      <created>1737526488319</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1737526488319</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
