@@ -1,14 +1,14 @@
 export interface BlockData {
-    caller: string,
-    name: string,
-    flow: [BlockFlow]
+    caller: string | null; // Allow null
+    name: string;
+    flow: BlockFlow[];
 }
 
 export interface BlockFlow {
-    flowPointerId: string,
-    flowId: string,
-    flowType: BlockFlowType,
-    value: string | null
+    flowPointerId: string | null; // Allow null
+    flowId: string;
+    flowType: BlockFlowType;
+    value: string | null;
 }
 
 export enum BlockFlowType {
