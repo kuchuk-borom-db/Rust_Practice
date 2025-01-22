@@ -1,6 +1,7 @@
 <script lang="ts">
     import Block from '../../../components/Block.svelte';
-    import { type BlockData, BlockFlowType } from "../../../models/blockData"; // Adjust the import path as needed
+    import DiagramWrapper from '../../../components/DiagramWrapper.svelte';
+    import { type BlockData, BlockFlowType } from "../../../models/blockData";
 
     const blocks: Record<string, BlockData> = {
         "START": {
@@ -166,34 +167,33 @@
             ]
         }
     };
+
+    let currentBlockId = "START";
+
+    function handleNavigate(event: CustomEvent<string>) {
+        currentBlockId = event.detail;
+    }
 </script>
 
-<main class="p-4 bg-gray-900 min-h-screen text-white">
-    <div class="container mx-auto">
-        <h1 class="text-3xl font-bold mb-6">Stack Diagram</h1>
-        <p class="text-gray-300 mb-8 max-w-2xl">
-            This page demonstrates a professional stack diagram visualization. Each block represents a function or process, and the flows show the interactions between them.
-        </p>
 
-        <!-- Render the root block -->
-        <div class="stack-diagram">
-            <Block blockID="START" blockData={blocks["START"]} {blocks} />
+<main class="w-screen h-screen bg-gray-900 text-white">
+    <div class="h-full flex flex-col">
+        <div class="p-4">
+            <h1 class="text-3xl font-bold">Stack Diagram</h1>
+            <p class="text-gray-300 mt-2">
+                This page demonstrates a professional stack diagram visualization. Each block represents a function or process, and the flows show the interactions between them.
+            </p>
+        </div>
+
+        <div class="flex-1">
+            <DiagramWrapper {blocks} {currentBlockId} on:navigate={handleNavigate}>
+                <Block
+                        blockID={currentBlockId}
+                        blockData={blocks[currentBlockId]}
+                        {blocks}
+                        isOpenedFromFlow={false}
+                />
+            </DiagramWrapper>
         </div>
     </div>
 </main>
-
-<style>
-    .stack-diagram {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Center blocks horizontally */
-        gap: 20px; /* Space between blocks */
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .stack-diagram {
-            align-items: center; /* Ensure blocks stay centered on smaller screens */
-        }
-    }
-</style>
