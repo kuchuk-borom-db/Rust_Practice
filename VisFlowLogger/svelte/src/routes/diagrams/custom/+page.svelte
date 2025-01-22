@@ -79,10 +79,7 @@
     <h1 class="text-2xl font-bold mb-4">Dummy Page</h1>
     <p class="text-gray-300 mb-6">This page demonstrates multiple Block components with their flows.</p>
 
-    <!-- Render each block -->
-    {#each Object.entries(blocks) as [blockID, blockData]}
-        <Block {blockID} {blockData} />
-    {/each}
+    <Block blockID="START" blockData={blocks["START"]}/>
 </main>
 
 <style>
