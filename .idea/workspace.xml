@@ -8,10 +8,11 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Animations">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Better">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Block.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Block.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Flow.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Flow.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -510,14 +511,21 @@
       <option name="project" value="LOCAL" />
       <updated>1737538565614</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Better">
+      <option name="closed" value="true" />
+      <created>1737538942875</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1737538942875</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Endpoints working" />
     <MESSAGE value="FEATURE: 1. Endpoint for saving log can accept several operations now. 2. Saving operations can now bulk save" />
     <MESSAGE value="FEATURE: Graph generator endpoint implementation complete.&#10;Need to test" />
     <MESSAGE value="FIX, TEST: Fixed graph generator implementation and added unit test" />
@@ -542,7 +550,8 @@
     <MESSAGE value="Showing only starting block" />
     <MESSAGE value="Proper expand and collapse" />
     <MESSAGE value="Animations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Animations" />
+    <MESSAGE value="Better" />
+    <option name="LAST_COMMIT_MESSAGE" value="Better" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
