@@ -1,34 +1,53 @@
-import React from 'react';
-import ReactFlow, {Controls, ReactFlowProvider} from 'reactflow';
+import React, { useCallback } from 'react';
+import ReactFlow, { Controls, ReactFlowProvider, useNodesState, useEdgesState } from 'reactflow';
+import dagre from 'dagre';
 import 'reactflow/dist/style.css';
 import FlowNode from './components/FlowNode';
 import Block from './components/Block';
-import * as edge from "framer-motion/m";
-
 const nodeTypes = {
     flowNode: FlowNode,
     block: Block,
 };
 
-
-// Constants for layout
-const BLOCK_PADDING = 40;
-const NODE_HEIGHT = 60;
 const NODE_WIDTH = 200;
-const NODE_VERTICAL_SPACING = 40;
-const COLUMN_SPACING = 40;
-const MIN_BLOCK_WIDTH = 300;
+const NODE_HEIGHT = 60;
+const BLOCK_PADDING = 40;
+const VERTICAL_SPACING = 80;
+const HORIZONTAL_SPACING = 250;
 
-function calculateLayout(rawNodes, rawEdges) {
-    const blockGroups = {};
-    const blocks = [];
-    const nodes = [...rawNodes];
+const getLayoutedElements = (nodes, edges) => {
+    // Find implementation relationships
+    const implEdges = edges.filter(edge =>
+        edge.sourceHandle === 'impl' || edge.targetHandle === 'hasImpl'
+    );
+
+    // Create a map of implementation relationships
+    const implMap = new Map();
+    implEdges.forEach(edge => {
+        implMap.set(edge.source, edge.target);
+    });
+
+    const g = new dagre.graphlib.Graph({
+        compound: true
+    });
+
+    g.setGraph({
+        rankdir: 'TB',
+        nodesep: VERTICAL_SPACING,
+        ranksep: HORIZONTAL_SPACING,
+        marginx: 50,
+        marginy: 50,
+        ranker: 'tight-tree'
+    });
+
+    g.setDefaultEdgeLabel(() => ({}));
 
     // Group nodes by their parent blocks
+    const blockGroups = {};
+    const blocks = nodes.filter(node => node.type === 'block');
+
     nodes.forEach(node => {
-        if (node.type === 'block') {
-            blocks.push(node);
-        } else if (node.type === 'flowNode') {
+        if (node.type === 'flowNode') {
             if (!blockGroups[node.parentId]) {
                 blockGroups[node.parentId] = [];
             }
@@ -36,131 +55,120 @@ function calculateLayout(rawNodes, rawEdges) {
         }
     });
 
-    // Find implementation relationships
-    const implConnections = rawEdges.filter(edge =>
-        edge.sourceHandle === 'impl' || edge.targetHandle === 'hasImpl'
-    ).map(edge => ({
-        sourceId: edge.source,
-        targetId: edge.target,
-        sourceBlock: nodes.find(n => n.id === edge.source)?.parentId,
-        targetBlock: nodes.find(n => n.id === edge.target)?.parentId,
-        sourceNode: nodes.find(n => n.id === edge.source)
-    }));
+    // Add blocks to graph
+    blocks.forEach(block => {
+        const childNodes = blockGroups[block.id] || [];
+        // Calculate block dimensions based on contained nodes and their implementations
+        let maxNodesInRow = 0;
+        let totalRows = 0;
+        let currentRow = [];
 
-    // Create a map to track block positions by column
-    const columnBlocks = new Map(); // Maps column index to array of blocks in that column
-    const blockPositions = new Map(); // Maps block ID to its column and vertical position
-
-    // Start with main block in column 0
-    const mainBlock = blocks.find(b => b.data.name === 'main');
-    columnBlocks.set(0, [mainBlock]);
-
-    // Position main block and its nodes
-    mainBlock.position = { x: 0, y: 0 };
-    let maxY = BLOCK_PADDING;
-    blockGroups[mainBlock.id].forEach(node => {
-        node.position = {
-            x: BLOCK_PADDING,
-            y: maxY
-        };
-        maxY += NODE_HEIGHT + NODE_VERTICAL_SPACING;
-    });
-
-    mainBlock.style = {
-        width: MIN_BLOCK_WIDTH,
-        height: maxY + BLOCK_PADDING,
-        zIndex: -1
-    };
-
-    blockPositions.set(mainBlock.id, { column: 0, y: 0 });
-
-    // Process implementation relationships to build column structure
-    function getSourceColumn(blockId) {
-        return blockPositions.get(blockId)?.column || 0;
-    }
-
-    // Sort connections based on source node vertical position
-    const sortedConnections = [...implConnections].sort((a, b) => {
-        const aNode = a.sourceNode;
-        const bNode = b.sourceNode;
-        const aY = aNode.position.y;
-        const bY = bNode.position.y;
-        return aY - bY;
-    });
-
-    // Process each implementation connection
-    sortedConnections.forEach(conn => {
-        const sourceColumn = getSourceColumn(conn.sourceBlock);
-        const targetColumn = sourceColumn + 1;
-        const implBlock = blocks.find(b => b.id === conn.targetBlock);
-        const implNodes = blockGroups[conn.targetBlock] || [];
-
-        // Calculate impl block height
-        const implHeight = (implNodes.length * (NODE_HEIGHT + NODE_VERTICAL_SPACING)) + BLOCK_PADDING * 2;
-
-        // Get source node's absolute position
-        const sourceBlock = blocks.find(b => b.id === conn.sourceBlock);
-        const sourceNodeAbsY = sourceBlock.position.y + conn.sourceNode.position.y;
-
-        // Position the implementation block in next column aligned with source node
-        const xPos = (targetColumn * (MIN_BLOCK_WIDTH + COLUMN_SPACING));
-        const yPos = sourceNodeAbsY - BLOCK_PADDING;
-
-        // Update block position and style
-        implBlock.position = {
-            x: xPos,
-            y: yPos
-        };
-
-        implBlock.style = {
-            width: MIN_BLOCK_WIDTH,
-            height: implHeight,
-            zIndex: -1
-        };
-
-        // Position nodes within implementation block
-        let currentNodeY = BLOCK_PADDING;
-        implNodes.forEach(node => {
-            node.position = {
-                x: BLOCK_PADDING,
-                y: currentNodeY
-            };
-            currentNodeY += NODE_HEIGHT + NODE_VERTICAL_SPACING;
+        childNodes.forEach(node => {
+            if (implMap.has(node.id)) {
+                currentRow.push(node);
+                maxNodesInRow = Math.max(maxNodesInRow, currentRow.length);
+                currentRow = [];
+                totalRows++;
+            } else {
+                currentRow.push(node);
+            }
         });
-
-        // Track block position
-        if (!columnBlocks.has(targetColumn)) {
-            columnBlocks.set(targetColumn, []);
+        if (currentRow.length > 0) {
+            maxNodesInRow = Math.max(maxNodesInRow, currentRow.length);
+            totalRows++;
         }
-        columnBlocks.get(targetColumn).push(implBlock);
-        blockPositions.set(implBlock.id, { column: targetColumn, y: yPos });
 
-        // Adjust other blocks in the same column if there's overlap
-        const blocksInColumn = columnBlocks.get(targetColumn);
-        blocksInColumn.sort((a, b) => a.position.y - b.position.y);
+        const blockWidth = (maxNodesInRow * (NODE_WIDTH + BLOCK_PADDING)) + BLOCK_PADDING;
+        const blockHeight = (totalRows * (NODE_HEIGHT + BLOCK_PADDING)) + BLOCK_PADDING;
 
-        for (let i = 1; i < blocksInColumn.length; i++) {
-            const currentBlock = blocksInColumn[i];
-            const previousBlock = blocksInColumn[i - 1];
-            const minY = previousBlock.position.y + previousBlock.style.height + NODE_VERTICAL_SPACING;
+        g.setNode(block.id, {
+            width: blockWidth,
+            height: blockHeight,
+            label: block.id
+        });
+    });
 
-            if (currentBlock.position.y < minY) {
-                currentBlock.position.y = minY;
-                blockPositions.set(currentBlock.id, {
-                    column: targetColumn,
-                    y: minY
-                });
+    // Add all nodes with their parent relationships
+    nodes.forEach(node => {
+        if (node.type === 'flowNode') {
+            g.setNode(node.id, {
+                width: NODE_WIDTH,
+                height: NODE_HEIGHT,
+                label: node.id
+            });
+            if (node.parentId) {
+                g.setParent(node.id, node.parentId);
             }
         }
     });
 
-    return nodes;
-}
+    // Add edges
+    edges.forEach(edge => {
+        if (edge.sourceHandle === 'impl' || edge.targetHandle === 'hasImpl') {
+            // For implementation edges, enforce horizontal alignment
+            g.setEdge(edge.source, edge.target, {
+                weight: 2,
+                minlen: 1,
+                rankdir: 'LR'
+            });
+        } else {
+            g.setEdge(edge.source, edge.target, {
+                weight: 1
+            });
+        }
+    });
+
+    // Apply layout
+    dagre.layout(g);
+
+    // Position the nodes
+    const layoutedNodes = nodes.map(node => {
+        const nodeWithPosition = g.node(node.id);
+
+        if (node.type === 'block') {
+            return {
+                ...node,
+                position: {
+                    x: nodeWithPosition.x - nodeWithPosition.width / 2,
+                    y: nodeWithPosition.y - nodeWithPosition.height / 2
+                },
+                style: {
+                    ...node.style,
+                    width: nodeWithPosition.width,
+                    height: nodeWithPosition.height,
+                    zIndex: -1
+                }
+            };
+        }
+
+        // For implementation nodes, adjust position relative to their parent
+        const isImpl = Array.from(implMap.values()).includes(node.id);
+        if (isImpl) {
+            const parentNode = nodes.find(n => implMap.get(n.id) === node.id);
+            const parentPos = g.node(parentNode.id);
+            return {
+                ...node,
+                position: {
+                    x: parentPos.x + NODE_WIDTH + BLOCK_PADDING,
+                    y: parentPos.y
+                }
+            };
+        }
+
+        return {
+            ...node,
+            position: {
+                x: nodeWithPosition.x - NODE_WIDTH / 2,
+                y: nodeWithPosition.y - NODE_HEIGHT / 2
+            }
+        };
+    });
+
+    return layoutedNodes;
+};
 
 const FlowWithGroup = () => {
-
-
-    const nodes = [
+    const initialNodes = [
         //Blocks
         //Main
         {
@@ -352,7 +360,7 @@ const FlowWithGroup = () => {
             extent: "parent"
         },
     ]
-    const edges = [
+    const initialEdges = [
         //block edges
         {
             id: 'main-1-2',
@@ -405,18 +413,35 @@ const FlowWithGroup = () => {
         },
     ]
 
-    const final = calculateLayout(nodes, edges);
+
+    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+    const onLayout = useCallback(() => {
+        const layoutedNodes = getLayoutedElements(nodes, edges);
+        setNodes([...layoutedNodes]);
+    }, [nodes, edges, setNodes]);
+
+    React.useEffect(() => {
+        onLayout();
+    }, []);
 
     return (
         <div className="h-screen">
-            <ReactFlowProvider> {/* Add this provider */}
+            <ReactFlowProvider>
                 <ReactFlow
-                    nodes={final}
+                    nodes={nodes}
                     edges={edges}
                     nodeTypes={nodeTypes}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
                     fitView
+                    fitViewOptions={{ padding: 0.2 }}
+                    minZoom={0.1}
+                    maxZoom={4}
+                    defaultViewport={{ x: 0, y: 0, zoom: 1 }}
                 >
-                    <Controls/>
+                    <Controls />
                 </ReactFlow>
             </ReactFlowProvider>
         </div>
