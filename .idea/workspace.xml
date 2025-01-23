@@ -8,9 +8,11 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="page for stack diagram done">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Panning works">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/src/pages/stack-diagram.astro" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/pages/stack-diagram.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/src/components/VisualFlowBlockReactComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/components/VisualFlowBlockReactComponent.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -600,7 +602,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737627613509</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Panning works">
+      <option name="closed" value="true" />
+      <created>1737627776887</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1737627776887</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -618,7 +628,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Experimenting and decided to use D3" />
     <MESSAGE value="Added mermaid viewer simple" />
     <MESSAGE value="Custom diagram progress" />
     <MESSAGE value="Custom Linear Stack view complete" />
@@ -643,7 +652,8 @@
     <MESSAGE value="Added tailwind and reactjs" />
     <MESSAGE value="Astro looking good." />
     <MESSAGE value="page for stack diagram done" />
-    <option name="LAST_COMMIT_MESSAGE" value="page for stack diagram done" />
+    <MESSAGE value="Panning works" />
+    <option name="LAST_COMMIT_MESSAGE" value="Panning works" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
-import {AnimatePresence, motion} from 'framer-motion';
-import {ArrowRightLeft, ArrowUpDown, Database, ExternalLink, MessageSquare, Phone, Save} from 'lucide-react';
-import {type BlockData, type BlockFlow, BlockFlowType} from '../models/BlockData';
+import React, { useState, useRef } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowRightLeft, ArrowUpDown, Database, ExternalLink, MessageSquare, Phone, Save, Download } from 'lucide-react';
+import { type BlockData, type BlockFlow, BlockFlowType } from '../models/BlockData';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const getFlowTypeStyles = (flowType: BlockFlowType) => {
     const styles: Record<BlockFlowType, {
@@ -157,15 +159,37 @@ const Block: React.FC<{
     blockID: string;
     blockData: BlockData;
     blocks: Record<string, BlockData>;
-}> = ({blockID, blockData, blocks}) => {
+}> = ({ blockID, blockData, blocks }) => {
     const [isHorizontal, setIsHorizontal] = useState(false);
+    const blockRef = useRef<HTMLDivElement>(null);
+
+    const handleExport = async (format: 'png' | 'pdf') => {
+        if (blockRef.current) {
+            const canvas = await html2canvas(blockRef.current);
+            const imgData = canvas.toDataURL('image/png');
+
+            if (format === 'png') {
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = `${blockData.name}.png`;
+                link.click();
+            } else if (format === 'pdf') {
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgWidth = 210; // A4 width in mm
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                pdf.save(`${blockData.name}.pdf`);
+            }
+        }
+    };
 
     return (
         <motion.div
+            ref={blockRef}
             layout
-            initial={{opacity: 0, scale: 0.95}}
-            animate={{opacity: 1, scale: 1}}
-            transition={{duration: 0.3}}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
             className={`
                 block-container 
                 bg-[#1a202c]
@@ -181,15 +205,38 @@ const Block: React.FC<{
             `}
         >
             <div className="flex items-center justify-between mb-4">
-                <motion.h2
-                    layout
-                    className="text-xl font-semibold"
-                >
-                    {blockData.name}
-                </motion.h2>
+                <div className="flex items-center space-x-3">
+                    <motion.h2
+                        layout
+                        className="text-xl font-semibold"
+                    >
+                        {blockData.name}
+                    </motion.h2>
+                    <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleExport('png'); // Change to 'pdf' for PDF export
+                        }}
+                        className="
+                            p-1
+                            bg-green-600
+                            hover:bg-green-700
+                            rounded-lg
+                            text-white
+                            transition-colors
+                            flex
+                            items-center
+                            justify-center
+                        "
+                    >
+                        <Download size={16} />
+                    </motion.button>
+                </div>
                 <motion.button
-                    whileHover={{scale: 1.1}}
-                    whileTap={{scale: 0.9}}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     onClick={(e) => {
                         e.stopPropagation();
                         setIsHorizontal(!isHorizontal);
@@ -206,7 +253,7 @@ const Block: React.FC<{
                         justify-center
                     "
                 >
-                    {isHorizontal ? <ArrowRightLeft size={20}/> : <ArrowUpDown size={20}/>}
+                    {isHorizontal ? <ArrowRightLeft size={20} /> : <ArrowUpDown size={20} />}
                 </motion.button>
             </div>
             {
