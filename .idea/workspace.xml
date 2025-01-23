@@ -8,11 +8,9 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Panning works">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Save as image button added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/src/components/VisualFlowBlockReactComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/components/VisualFlowBlockReactComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/src/pages/stack-diagram.astro" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/pages/stack-diagram.astro" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,14 +215,6 @@
       <workItem from="1737454407269" duration="9659000" />
       <workItem from="1737478480326" duration="10375000" />
       <workItem from="1737518339328" duration="9133000" />
-    </task>
-    <task id="LOCAL-00001" summary="REFACTOR: moved rust files to MAIn folder">
-      <option name="closed" value="true" />
-      <created>1736818801629</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1736818801629</updated>
     </task>
     <task id="LOCAL-00002" summary="Created simple api to generate logs for javascript">
       <option name="closed" value="true" />
@@ -610,7 +600,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737627776887</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Save as image button added">
+      <option name="closed" value="true" />
+      <created>1737628320319</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1737628320319</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -628,7 +626,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added mermaid viewer simple" />
     <MESSAGE value="Custom diagram progress" />
     <MESSAGE value="Custom Linear Stack view complete" />
     <MESSAGE value="Better minimal UI" />
@@ -653,7 +650,8 @@
     <MESSAGE value="Astro looking good." />
     <MESSAGE value="page for stack diagram done" />
     <MESSAGE value="Panning works" />
-    <option name="LAST_COMMIT_MESSAGE" value="Panning works" />
+    <MESSAGE value="Save as image button added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Save as image button added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
