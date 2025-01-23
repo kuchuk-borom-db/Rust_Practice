@@ -22,6 +22,7 @@ const initialBlockId = Object.keys(mockBlocks)[0];
             background: linear-gradient(135deg, #0A1128, #1A1A2E);
             background-size: 200% 200%;
             animation: gradientAnimation 10s ease infinite;
+            overflow: hidden; /* Prevent scrolling */
         }
 
         /* Gradient animation for background */
@@ -71,18 +72,127 @@ const initialBlockId = Object.keys(mockBlocks)[0];
             width: 100%;
             padding-top: 20px; /* Add padding at the top */
         }
+
+        /* Container for the block with zoom and pan */
+        .block-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Controls for zoom and pan */
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .controls button {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .controls button:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
     </style>
 
     <div class="title-container">
         <h1 class="title">Stack Flow Diagram</h1>
     </div>
 
-    <div class="flex justify-center items-center w-full">
-        <Block
-                client:load
-                blockID={initialBlockId}
-                blockData={mockBlocks[initialBlockId]}
-                blocks={mockBlocks}
-        />
+    <div class="block-container">
+        <div class="controls">
+            <button id="zoom-in">Zoom In</button>
+            <button id="zoom-out">Zoom Out</button>
+            <button id="center">Center</button>
+        </div>
+        <div id="block-wrapper" style="transform: scale(1) translate(0px, 0px); transform-origin: 0 0;">
+            <Block
+                    client:load
+                    blockID={initialBlockId}
+                    blockData={mockBlocks[initialBlockId]}
+                    blocks={mockBlocks}
+            />
+        </div>
     </div>
+
+    <script>
+        let scale = 1;
+        let translateX = 0;
+        let translateY = 0;
+        let isDragging = false;
+        let startX, startY;
+
+        const blockWrapper = document.getElementById('block-wrapper');
+        const zoomInButton = document.getElementById('zoom-in');
+        const zoomOutButton = document.getElementById('zoom-out');
+        const centerButton = document.getElementById('center');
+
+        // Zoom in
+        zoomInButton.addEventListener('click', () => {
+            scale *= 1.2;
+            updateTransform();
+        });
+
+        // Zoom out
+        zoomOutButton.addEventListener('click', () => {
+            scale /= 1.2;
+            updateTransform();
+        });
+
+        // Center the block
+        centerButton.addEventListener('click', () => {
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateTransform();
+        });
+
+        // Panning
+        blockWrapper.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+        });
+
+        blockWrapper.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                updateTransform();
+            }
+        });
+
+        blockWrapper.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        blockWrapper.addEventListener('mouseleave', () => {
+            isDragging = false;
+        });
+
+        // Zoom with mouse wheel
+        blockWrapper.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY;
+            if (delta < 0) {
+                scale *= 1.1;
+            } else {
+                scale /= 1.1;
+            }
+            updateTransform();
+        });
+
+        function updateTransform() {
+            blockWrapper.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+        }
+    </script>
 </Layout>
