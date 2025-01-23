@@ -8,10 +8,13 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Fixed drag bug">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Attempting to fix overflow and cut off">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Block.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Block.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Flow.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Flow.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -542,7 +545,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737542166021</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Attempting to fix overflow and cut off">
+      <option name="closed" value="true" />
+      <created>1737614083864</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1737614083864</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -560,7 +571,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FEATURE PROGRESS: Added diagram generator service with mermaid generator impl" />
     <MESSAGE value="FEATURE: Added generate diagram endpoint. Dirty and needs converting function" />
     <MESSAGE value="Added ReactJS frontend" />
     <MESSAGE value="PROJECT STRUCTURE: Updated project structure and added converter.rs" />
@@ -585,7 +595,8 @@
     <MESSAGE value="Beautiful orientation" />
     <MESSAGE value="Dragable first phase done" />
     <MESSAGE value="Fixed drag bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed drag bug" />
+    <MESSAGE value="Attempting to fix overflow and cut off" />
+    <option name="LAST_COMMIT_MESSAGE" value="Attempting to fix overflow and cut off" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -597,7 +608,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/+page.svelte</url>
-          <line>12</line>
+          <line>30</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>

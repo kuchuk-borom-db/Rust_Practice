@@ -89,7 +89,7 @@
     .sub-block-container {
         margin-top: 10px;
         padding-left: 20px;
-        overflow: visible; /* Change to visible to prevent cutting off content */
+        overflow: auto; /* Change to visible to prevent cutting off content */
     }
 
     .connecting-line {

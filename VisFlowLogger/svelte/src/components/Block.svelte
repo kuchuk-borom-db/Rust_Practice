@@ -1,16 +1,13 @@
 <script lang="ts">
     import type {BlockData} from '../models/blockData';
     import Flow from './Flow.svelte';
+    import {ArrowRightLeft, ArrowUpDown} from "lucide-svelte";
 
     export let blockID: string;
     export let blockData: BlockData;
     export let blocks: Record<string, BlockData>;
-    export let isOpenedFromFlow: boolean;
-
-    // Per-block orientation state
     let isHorizontal = false;
 
-    // Function to toggle orientation for this block
     function toggleOrientation(event: MouseEvent) {
         event.stopPropagation(); // Stop event propagation
         isHorizontal = !isHorizontal;
@@ -25,9 +22,13 @@
         <!-- Orientation toggle button -->
         <button
                 on:click={toggleOrientation}
-                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded-lg text-white text-sm transition-colors"
+                class="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors flex items-center justify-center"
         >
-            {isHorizontal ? 'Vertical' : 'Horizontal'}
+            {#if isHorizontal}
+                <ArrowRightLeft size={20}/>
+            {:else}
+                <ArrowUpDown size={20}/>
+            {/if}
         </button>
     </div>
     <p class="text-sm text-gray-300">Caller: {blockData.caller}</p>
@@ -46,8 +47,8 @@
         position: relative;
         color: white;
         overflow: visible; /* Allow content to overflow */
-        width: 100%; /* Expand to fill the container */
-        height: 100%; /* Expand to fill the container */
+        width: max-content; /* Expand to fill the container */
+        height: max-content; /* Expand to fill the container */
         padding: 1.5rem;
         background: #1a202c;
         border-radius: 0.5rem;
