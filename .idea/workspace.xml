@@ -10,9 +10,8 @@
   <component name="ChangeListManager">
     <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Panning works">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/src/components/VisualFlowBlockReactComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/components/VisualFlowBlockReactComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/src/pages/stack-diagram.astro" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/pages/stack-diagram.astro" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,37 +80,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;Cargo.Run VisLog.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test services::graph_generator::internal::unit_test::graph_generator_test.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.JS Sample.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/frontend-diagram&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.12.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.6&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Projects/Rust_Practice/VisFlowLogger/Server/migrations/1_tables_postgres.sql&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
-    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Projects\\Rust_Practice\\VisFlowLogger\\svelte\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Cargo.Run VisLog.executor": "Run",
+    "Cargo.Test services::graph_generator::internal::unit_test::graph_generator_test.executor": "Run",
+    "Node.js.JS Sample.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.rust.reset.selective.auto.import": "true",
+    "git-widget-placeholder": "fix/scaling__button__save",
+    "javascript.nodejs.core.library.configured.version": "22.12.0",
+    "javascript.nodejs.core.library.typings.version": "22.10.6",
+    "last_opened_file_path": "D:/Projects/Rust_Practice/VisFlowLogger/Server/migrations/1_tables_postgres.sql",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
+    "org.rust.first.attach.projects": "true",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "ts.external.directory.path": "D:\\Projects\\Rust_Practice\\VisFlowLogger\\svelte\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Projects\Rust_Practice\VisFlowLogger\frontend-react\src\pages\visualiser" />
@@ -186,6 +185,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test services::graph_generator::internal::unit_test::graph_generator_test" />
         <item itemvalue="Cargo.Test services::graph_generator::internal::unit_test::graph_generator_test" />
       </list>
     </recent_temporary>

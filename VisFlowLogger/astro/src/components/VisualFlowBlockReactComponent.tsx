@@ -4,6 +4,7 @@ import { ArrowRightLeft, ArrowUpDown, Database, ExternalLink, MessageSquare, Pho
 import { type BlockData, type BlockFlow, BlockFlowType } from '../models/BlockData';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { state } from '../models/global'; // Import the state object
 
 const getFlowTypeStyles = (flowType: BlockFlowType) => {
     const styles: Record<BlockFlowType, {
@@ -88,8 +89,10 @@ const Flow: React.FC<{
             exit={{opacity: 0, scale: 0.95}}
             transition={{duration: 0.3}}
             onClick={(e) => {
-                e.stopPropagation();
-                setIsExpanded(!isExpanded);
+                if (!state.isDragging) { // Only allow interaction if not dragging
+                    e.stopPropagation();
+                    setIsExpanded(!isExpanded);
+                }
             }}
             className={`
                 flow-container 
@@ -108,6 +111,7 @@ const Flow: React.FC<{
                 border-l-4
                 hover:shadow-lg
                 max-w-full
+                ${state.isDragging ? 'pointer-events-none' : ''} // Disable pointer events when dragging
             `}
         >
             {flow.flowType !== BlockFlowType.Call || !isExpanded ? (
@@ -164,7 +168,7 @@ const Block: React.FC<{
     const blockRef = useRef<HTMLDivElement>(null);
 
     const handleExport = async (format: 'png' | 'pdf') => {
-        if (blockRef.current) {
+        if (!state.isDragging && blockRef.current) { // Only allow export if not dragging
             const canvas = await html2canvas(blockRef.current);
             const imgData = canvas.toDataURL('image/png');
 
@@ -216,8 +220,10 @@ const Block: React.FC<{
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={(e) => {
-                            e.stopPropagation();
-                            handleExport('png'); // Change to 'pdf' for PDF export
+                            if (!state.isDragging) { // Only allow export if not dragging
+                                e.stopPropagation();
+                                handleExport('png'); // Change to 'pdf' for PDF export
+                            }
                         }}
                         className="
                             p-1
@@ -229,7 +235,9 @@ const Block: React.FC<{
                             flex
                             items-center
                             justify-center
+                            ${state.isDragging ? 'pointer-events-none opacity-50' : ''} // Disable button when dragging
                         "
+                        disabled={state.isDragging} // Disable button when dragging
                     >
                         <Download size={16} />
                     </motion.button>
@@ -238,8 +246,10 @@ const Block: React.FC<{
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={(e) => {
-                        e.stopPropagation();
-                        setIsHorizontal(!isHorizontal);
+                        if (!state.isDragging) { // Only allow toggle if not dragging
+                            e.stopPropagation();
+                            setIsHorizontal(!isHorizontal);
+                        }
                     }}
                     className="
                         p-2
@@ -251,7 +261,9 @@ const Block: React.FC<{
                         flex
                         items-center
                         justify-center
+                        ${state.isDragging ? 'pointer-events-none opacity-50' : ''} // Disable button when dragging
                     "
+                    disabled={state.isDragging} // Disable button when dragging
                 >
                     {isHorizontal ? <ArrowRightLeft size={20} /> : <ArrowUpDown size={20} />}
                 </motion.button>

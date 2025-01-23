@@ -128,8 +128,11 @@ const initialBlockId = Object.keys(mockBlocks)[0];
         let scale = 1;
         let translateX = 0;
         let translateY = 0;
-        let isDragging = false;
-        let startX, startY;
+        let startX: any, startY: any;
+        let initialMouseX: any, initialMouseY: any; // Track initial mouse position
+        const DRAG_THRESHOLD = 5; // Threshold in pixels
+        let isMouseDown = false; // Track if the mouse is pressed
+        import {state} from "../models/global"
 
         const blockWrapper = document.getElementById('block-wrapper');
         const zoomInButton = document.getElementById('zoom-in');
@@ -137,19 +140,19 @@ const initialBlockId = Object.keys(mockBlocks)[0];
         const centerButton = document.getElementById('center');
 
         // Zoom in
-        zoomInButton.addEventListener('click', () => {
+        zoomInButton!.addEventListener('click', () => {
             scale *= 1.2;
             updateTransform();
         });
 
         // Zoom out
-        zoomOutButton.addEventListener('click', () => {
+        zoomOutButton!.addEventListener('click', () => {
             scale /= 1.2;
             updateTransform();
         });
 
         // Center the block
-        centerButton.addEventListener('click', () => {
+        centerButton!.addEventListener('click', () => {
             scale = 1;
             translateX = 0;
             translateY = 0;
@@ -157,30 +160,48 @@ const initialBlockId = Object.keys(mockBlocks)[0];
         });
 
         // Panning
-        blockWrapper.addEventListener('mousedown', (e) => {
-            isDragging = true;
+        blockWrapper!.addEventListener('mousedown', (e) => {
+            isMouseDown = true;
+            // Store initial mouse position
+            initialMouseX = e.clientX;
+            initialMouseY = e.clientY;
             startX = e.clientX - translateX;
             startY = e.clientY - translateY;
         });
 
-        blockWrapper.addEventListener('mousemove', (e) => {
-            if (isDragging) {
-                translateX = e.clientX - startX;
-                translateY = e.clientY - startY;
-                updateTransform();
+        blockWrapper!.addEventListener('mousemove', (e) => {
+            if (isMouseDown) {
+                // Calculate the distance moved
+                const dx = Math.abs(e.clientX - initialMouseX);
+                const dy = Math.abs(e.clientY - initialMouseY);
+
+                // Only start dragging if the threshold is exceeded
+                if (!state.isDragging && (dx > DRAG_THRESHOLD || dy > DRAG_THRESHOLD)) {
+                    console.log("Dragging start")
+                    state.isDragging = true;
+                }
+
+                // Update translation if dragging
+                if (state.isDragging) {
+                    translateX = e.clientX - startX;
+                    translateY = e.clientY - startY;
+                    updateTransform();
+                }
             }
         });
 
-        blockWrapper.addEventListener('mouseup', () => {
-            isDragging = false;
+        blockWrapper!.addEventListener('mouseup', () => {
+            isMouseDown = false;
+            setTimeout(() => state.isDragging = false, 5);
         });
 
-        blockWrapper.addEventListener('mouseleave', () => {
-            isDragging = false;
+        blockWrapper!.addEventListener('mouseleave', () => {
+            isMouseDown = false;
+            setTimeout(() => state.isDragging = false, 5);
         });
 
         // Zoom with mouse wheel
-        blockWrapper.addEventListener('wheel', (e) => {
+        blockWrapper!.addEventListener('wheel', (e) => {
             e.preventDefault();
             const delta = e.deltaY;
             if (delta < 0) {
@@ -192,7 +213,7 @@ const initialBlockId = Object.keys(mockBlocks)[0];
         });
 
         function updateTransform() {
-            blockWrapper.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+            blockWrapper!.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
         }
     </script>
 </Layout>
