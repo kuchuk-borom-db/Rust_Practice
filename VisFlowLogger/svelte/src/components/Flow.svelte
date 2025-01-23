@@ -3,22 +3,18 @@
     import { BlockFlowType } from '../models/blockData';
     import Block from './Block.svelte';
     import { slide } from 'svelte/transition';
-    import { dragState } from './stores/DiagramStores';
 
-    export let blockID: string;
     export let flow: BlockFlow;
     export let blocks: Record<string, BlockData>;
-    export let isHorizontal = false;
+    let isExpanded = false; // Tracks whether the section is expanded or collapsed
 
-    let isExpanded = false;
-
+    // Toggle expand/collapse
     function toggleExpand(event: MouseEvent) {
         event.stopPropagation();
-        if (!$dragState.isDragging) {
-            isExpanded = !isExpanded;
-        }
+        isExpanded = !isExpanded;
     }
 
+    // Helper function to get the flow type label
     function getFlowTypeLabel(flowType: BlockFlowType): string {
         switch (flowType) {
             case BlockFlowType.Log:
@@ -36,6 +32,7 @@
         }
     }
 
+    // Helper function to get the flow type color
     function getFlowTypeColor(flowType: BlockFlowType): string {
         switch (flowType) {
             case BlockFlowType.Log:
@@ -54,21 +51,20 @@
     }
 </script>
 
-<div
-        on:click={toggleExpand}
-        class="flow-container {getFlowTypeColor(flow.flowType)} p-4 rounded-lg shadow-md text-white cursor-pointer relative bg-gray-800 transition-colors duration-200"
-        class:pointer-events-none={$dragState.isDragging}
->
+<!-- Flow container -->
+<div on:click={toggleExpand}
+     class="flow-container {getFlowTypeColor(flow.flowType)} p-4 rounded-lg shadow-md text-white cursor-pointer relative bg-gray-800 transition-colors duration-200">
+    <!-- Flow header -->
     <div class="flex items-center justify-between mb-2">
         <h3 class="text-lg font-semibold">{getFlowTypeLabel(flow.flowType)}</h3>
         <span class="text-sm bg-black/20 px-2 py-1 rounded">{flow.flowId}</span>
     </div>
-
     <p class="text-sm mb-2">Pointer ID: {flow.flowPointerId}</p>
     {#if flow.value}
         <p class="text-sm">Value: {flow.value}</p>
     {/if}
 
+    <!-- Sub-block (collapsible) -->
     {#if isExpanded && flow.flowPointerId}
         <div transition:slide|local={{duration: 200}} class="sub-block-container relative opacity-0 animate-fade-in">
             <div class="connecting-line"></div>
@@ -77,12 +73,8 @@
                     <p class="text-sm font-semibold">Storing result: <span class="font-mono">{flow.value}</span></p>
                 </div>
             {/if}
-            <Block
-                    blockID={flow.flowPointerId}
-                    blockData={blocks[flow.flowPointerId]}
-                    {blocks}
-                    isOpenedFromFlow={true}
-            />
+            <Block blockID={flow.flowPointerId} blockData={blocks[flow.flowPointerId]} {blocks}
+                   isOpenedFromFlow={true}/>
         </div>
     {/if}
 </div>
@@ -114,8 +106,12 @@
     }
 
     @keyframes fade-in {
-        from { opacity: 0; }
-        to { opacity: 1; }
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
     }
 
     .animate-fade-in {
