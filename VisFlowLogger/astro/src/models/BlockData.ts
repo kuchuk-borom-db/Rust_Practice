@@ -28,7 +28,7 @@ export const testData: Record<string, BlockData> = {
                 flowPointerId: null,
                 flowId: "e14e2dee-9c6a-4644-8481-8f0d5a74aabc",
                 flowType: BlockFlowType.Log,
-                value: "Initializing application"
+                value: `Initializing application\nGGEZ`
             },
             {
                 flowPointerId: "9ac3b255-97a2-4310-a795-45559b27c851",

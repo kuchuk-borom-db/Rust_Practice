@@ -58,6 +58,26 @@ const Flow: React.FC<{
     const [isExpanded, setIsExpanded] = useState(false);
     const {bgColor, border, icon, textColor} = getFlowTypeStyles(flow.flowType);
 
+    const getDisplayValue = () => {
+        if (flow.value && flow.value.trim() !== '') {
+            const lines = flow.value.split('\n');
+            const uniqueLines = [...new Set(lines)];
+
+            if (uniqueLines.length === 1 && lines.length > 1) {
+                return `${uniqueLines[0]} (${lines.length} times)`;
+            }
+
+            return flow.value;
+        }
+
+        if (flow.flowPointerId) {
+            const referencedBlock = blocks[flow.flowPointerId];
+            return referencedBlock ? referencedBlock.name : 'Unnamed Block';
+        }
+
+        return 'Unnamed Flow';
+    };
+
     return (
         <motion.div
             layout
@@ -85,14 +105,27 @@ const Flow: React.FC<{
                 justify-start
                 border-l-4
                 hover:shadow-lg
+                max-w-full
             `}
         >
-            <div className="flex items-center space-x-3 mb-2">
-                {icon}
-                <div className="flex-grow">
-                    <p className={`text-lg font-semibold ${textColor}`}>{flow.value}</p>
+            {flow.flowType !== BlockFlowType.Call || !isExpanded ? (
+                <div className="flex items-center space-x-3 mb-2">
+                    {icon}
+                    <div className="flex-grow overflow-hidden">
+                        <p className={`
+                            text-lg 
+                            font-semibold 
+                            ${textColor} 
+                            whitespace-nowrap 
+                            overflow-hidden 
+                            text-ellipsis
+                            max-w-full
+                        `}>
+                            {getDisplayValue()}
+                        </p>
+                    </div>
                 </div>
-            </div>
+            ) : null}
 
             <AnimatePresence>
                 {isExpanded && flow.flowPointerId && (
@@ -176,7 +209,9 @@ const Block: React.FC<{
                     {isHorizontal ? <ArrowRightLeft size={20}/> : <ArrowUpDown size={20}/>}
                 </motion.button>
             </div>
-            <p className="text-sm text-gray-300 mb-1">Caller: {blockData.caller}</p>
+            {
+                blockData.caller && <p className="text-sm text-gray-300 mb-1">Caller: {blockData.caller}</p>
+            }
             <p className="text-sm text-gray-300 mb-4">Name: {blockData.name}</p>
 
             <motion.div
