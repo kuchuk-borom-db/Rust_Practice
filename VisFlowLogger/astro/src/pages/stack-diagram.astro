@@ -132,6 +132,7 @@ const initialBlockId = Object.keys(mockBlocks)[0];
         let initialMouseX: any, initialMouseY: any; // Track initial mouse position
         const DRAG_THRESHOLD = 5; // Threshold in pixels
         let isMouseDown = false; // Track if the mouse is pressed
+        let initialDistance: any = null; // For pinch-to-zoom
         import {state} from "../models/global"
 
         const blockWrapper = document.getElementById('block-wrapper');
@@ -159,10 +160,9 @@ const initialBlockId = Object.keys(mockBlocks)[0];
             updateTransform();
         });
 
-        // Panning
+        // Panning with mouse
         blockWrapper!.addEventListener('mousedown', (e) => {
             isMouseDown = true;
-            // Store initial mouse position
             initialMouseX = e.clientX;
             initialMouseY = e.clientY;
             startX = e.clientX - translateX;
@@ -171,17 +171,13 @@ const initialBlockId = Object.keys(mockBlocks)[0];
 
         blockWrapper!.addEventListener('mousemove', (e) => {
             if (isMouseDown) {
-                // Calculate the distance moved
                 const dx = Math.abs(e.clientX - initialMouseX);
                 const dy = Math.abs(e.clientY - initialMouseY);
 
-                // Only start dragging if the threshold is exceeded
                 if (!state.isDragging && (dx > DRAG_THRESHOLD || dy > DRAG_THRESHOLD)) {
-                    console.log("Dragging start")
                     state.isDragging = true;
                 }
 
-                // Update translation if dragging
                 if (state.isDragging) {
                     translateX = e.clientX - startX;
                     translateY = e.clientY - startY;
@@ -212,6 +208,43 @@ const initialBlockId = Object.keys(mockBlocks)[0];
             updateTransform();
         });
 
+        // Touch events for mobile
+        blockWrapper!.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                // Swipe-to-pan start
+                isMouseDown = true;
+                initialMouseX = e.touches[0].clientX;
+                initialMouseY = e.touches[0].clientY;
+                startX = e.touches[0].clientX - translateX;
+                startY = e.touches[0].clientY - translateY;
+            }
+        });
+
+        blockWrapper!.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1 && isMouseDown) {
+                // Swipe-to-pan
+                const dx = Math.abs(e.touches[0].clientX - initialMouseX);
+                const dy = Math.abs(e.touches[0].clientY - initialMouseY);
+
+                if (!state.isDragging && (dx > DRAG_THRESHOLD || dy > DRAG_THRESHOLD)) {
+                    state.isDragging = true;
+                }
+
+                if (state.isDragging) {
+                    translateX = e.touches[0].clientX - startX;
+                    translateY = e.touches[0].clientY - startY;
+                    updateTransform();
+                }
+            }
+        });
+
+        blockWrapper!.addEventListener('touchend', () => {
+            isMouseDown = false;
+            initialDistance = null;
+            setTimeout(() => state.isDragging = false, 5);
+        });
+
+        // Update the transform of the block wrapper
         function updateTransform() {
             blockWrapper!.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
         }
