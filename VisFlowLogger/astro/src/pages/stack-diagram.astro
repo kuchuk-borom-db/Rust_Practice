@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Block from "../components/VisualFlowBlockReactComponent"
+import {type BlockData, testData} from "../models/BlockData";
+
+// Mock data for demonstration
+const mockBlocks: Record<string, BlockData> = testData
+
+const initialBlockId = Object.keys(mockBlocks)[0];
+---
+
+<Layout title="Visual Flow Logger - Block Visualization">
+    <div class="min-h-screen bg-[#0A1128] flex items-center justify-center p-4">
+        <div class="w-full max-w-6xl">
+            <Block
+                    client:load
+                    blockID={initialBlockId}
+                    blockData={mockBlocks[initialBlockId]}
+                    blocks={mockBlocks}
+            />
+        </div>
+    </div>
+</Layout>

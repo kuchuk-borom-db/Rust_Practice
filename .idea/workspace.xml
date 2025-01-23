@@ -8,13 +8,15 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Attempting to fix overflow and cut off">
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Added tailwind and reactjs">
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/components/VisualFlowBlockReactComponent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/models/BlockData.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/pages/stack-diagram.astro" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Block.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Block.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Flow.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/components/Flow.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/svelte/src/routes/diagrams/custom/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/astro.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/astro.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/src/pages/index.astro" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/pages/index.astro" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +69,9 @@
     <setting file="file://$PROJECT_DIR$/VisFlowLogger/frontend-react/node_modules/framer-motion/dist/index.d.ts" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/VisFlowLogger/frontend-react/node_modules/lucide-react/dist/lucide-react.d.ts" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/VisFlowLogger/frontend-react/node_modules/mermaid/dist/config.type.d.ts" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/VisFlowLogger/svelte/node_modules/svelte-motion/types/index.d.ts" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/VisFlowLogger/svelte/node_modules/svelte-motion/types/render/dom/motion.d.ts" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/VisFlowLogger/svelte/node_modules/typescript/lib/lib.es5.d.ts" root0="SKIP_INSPECTION" />
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="73eA8PYr" />
@@ -553,7 +558,31 @@
       <option name="project" value="LOCAL" />
       <updated>1737614083864</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="GG fix">
+      <option name="closed" value="true" />
+      <created>1737617607030</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1737617607030</updated>
+    </task>
+    <task id="LOCAL-00044" summary="ADded astro project">
+      <option name="closed" value="true" />
+      <created>1737617858249</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1737617858249</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Added tailwind and reactjs">
+      <option name="closed" value="true" />
+      <created>1737617924271</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1737617924271</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -571,9 +600,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FEATURE: Added generate diagram endpoint. Dirty and needs converting function" />
-    <MESSAGE value="Added ReactJS frontend" />
-    <MESSAGE value="PROJECT STRUCTURE: Updated project structure and added converter.rs" />
     <MESSAGE value="REFACTOR: Added names to operation" />
     <MESSAGE value="Dummy custom node created" />
     <MESSAGE value="Experimenting and decided to use D3" />
@@ -596,7 +622,10 @@
     <MESSAGE value="Dragable first phase done" />
     <MESSAGE value="Fixed drag bug" />
     <MESSAGE value="Attempting to fix overflow and cut off" />
-    <option name="LAST_COMMIT_MESSAGE" value="Attempting to fix overflow and cut off" />
+    <MESSAGE value="GG fix" />
+    <MESSAGE value="ADded astro project" />
+    <MESSAGE value="Added tailwind and reactjs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added tailwind and reactjs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
