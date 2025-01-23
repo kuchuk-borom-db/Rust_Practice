@@ -8,15 +8,9 @@
     <cargoProject FILE="$PROJECT_DIR$/VisFlowLogger/Server/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Added tailwind and reactjs">
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/components/VisualFlowBlockReactComponent.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/models/BlockData.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/pages/stack-diagram.astro" afterDir="false" />
+    <list default="true" id="84e62d19-105d-4d4c-aad2-cea24e2080b1" name="Changes" comment="Astro looking good.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/astro.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/astro.config.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/src/pages/index.astro" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/pages/index.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VisFlowLogger/astro/src/components/VisualFlowBlockReactComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/VisFlowLogger/astro/src/components/VisualFlowBlockReactComponent.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -582,7 +576,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737617924271</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Astro looking good.">
+      <option name="closed" value="true" />
+      <created>1737621426210</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1737621426210</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -600,7 +602,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="REFACTOR: Added names to operation" />
     <MESSAGE value="Dummy custom node created" />
     <MESSAGE value="Experimenting and decided to use D3" />
     <MESSAGE value="Added mermaid viewer simple" />
@@ -625,7 +626,8 @@
     <MESSAGE value="GG fix" />
     <MESSAGE value="ADded astro project" />
     <MESSAGE value="Added tailwind and reactjs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added tailwind and reactjs" />
+    <MESSAGE value="Astro looking good." />
+    <option name="LAST_COMMIT_MESSAGE" value="Astro looking good." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,6 +1,53 @@
 import React, {useState} from 'react';
-import {ArrowRightLeft, ArrowUpDown} from 'lucide-react';
+import {AnimatePresence, motion} from 'framer-motion';
+import {ArrowRightLeft, ArrowUpDown, Database, ExternalLink, MessageSquare, Phone, Save} from 'lucide-react';
 import {type BlockData, type BlockFlow, BlockFlowType} from '../models/BlockData';
+
+const getFlowTypeStyles = (flowType: BlockFlowType) => {
+    const styles: Record<BlockFlowType, {
+        bgColor: string;
+        border: string;
+        icon: React.ReactNode;
+        textColor: string;
+    }> = {
+        [BlockFlowType.Log]: {
+            bgColor: 'bg-blue-900/30',
+            border: 'border-blue-500',
+            icon: <MessageSquare className="text-blue-400"/>,
+            textColor: 'text-blue-300'
+        },
+        [BlockFlowType.CallStore]: {
+            bgColor: 'bg-purple-900/30',
+            border: 'border-purple-500',
+            icon: <Save className="text-purple-400"/>,
+            textColor: 'text-purple-300'
+        },
+        [BlockFlowType.Call]: {
+            bgColor: 'bg-green-900/30',
+            border: 'border-green-500',
+            icon: <Phone className="text-green-400"/>,
+            textColor: 'text-green-300'
+        },
+        [BlockFlowType.ExternCall]: {
+            bgColor: 'bg-yellow-900/30',
+            border: 'border-yellow-500',
+            icon: <ExternalLink className="text-yellow-400"/>,
+            textColor: 'text-yellow-300'
+        },
+        [BlockFlowType.ExternCallStore]: {
+            bgColor: 'bg-red-900/30',
+            border: 'border-red-500',
+            icon: <Database className="text-red-400"/>,
+            textColor: 'text-red-300'
+        }
+    };
+    return styles[flowType] || {
+        bgColor: 'bg-gray-900/30',
+        border: 'border-gray-500',
+        icon: null,
+        textColor: 'text-gray-300'
+    };
+};
 
 const Flow: React.FC<{
     blockID: string,
@@ -9,82 +56,67 @@ const Flow: React.FC<{
     isHorizontal: boolean
 }> = ({flow, blocks, isHorizontal}) => {
     const [isExpanded, setIsExpanded] = useState(false);
-
-    const getFlowTypeLabel = (flowType: BlockFlowType) => {
-        const labels: Record<BlockFlowType, string> = {
-            [BlockFlowType.Log]: 'Log',
-            [BlockFlowType.CallStore]: 'Call Store',
-            [BlockFlowType.Call]: 'Call',
-            [BlockFlowType.ExternCall]: 'Extern Call',
-            [BlockFlowType.ExternCallStore]: 'Extern Call Store',
-        };
-        return labels[flowType] || 'Unknown';
-    };
-
-    const getFlowTypeColor = (flowType: BlockFlowType) => {
-        const colors: Record<BlockFlowType, string> = {
-            [BlockFlowType.Log]: 'bg-blue-500/30 border-blue-500/50',
-            [BlockFlowType.CallStore]: 'bg-red-400/30 border-red-400/50',
-            [BlockFlowType.Call]: 'bg-pink-600/30 border-pink-600/50',
-            [BlockFlowType.ExternCall]: 'bg-yellow-600/30 border-yellow-600/50',
-            [BlockFlowType.ExternCallStore]: 'bg-red-600/30 border-red-600/50',
-        };
-        return colors[flowType] || 'bg-gray-600/30 border-gray-600/50';
-    };
+    const {bgColor, border, icon, textColor} = getFlowTypeStyles(flow.flowType);
 
     return (
-        <div
+        <motion.div
+            layout
+            initial={{opacity: 0, scale: 0.95}}
+            animate={{opacity: 1, scale: 1}}
+            exit={{opacity: 0, scale: 0.95}}
+            transition={{duration: 0.3}}
             onClick={(e) => {
                 e.stopPropagation();
                 setIsExpanded(!isExpanded);
             }}
             className={`
                 flow-container 
-                ${getFlowTypeColor(flow.flowType)} 
+                ${bgColor}
+                ${border}
                 p-4 
                 rounded-lg 
-                text-white 
-                cursor-pointer 
                 relative 
+                cursor-pointer 
                 transition-colors 
                 duration-200 
                 ${isHorizontal ? 'mr-4 h-auto' : 'mb-4'}
-                w-max
+                w-full
                 flex flex-col
                 justify-start
+                border-l-4
+                hover:shadow-lg
             `}
         >
-            <div className="flex items-center justify-between mb-2">
-                <h3 className="text-lg font-semibold">{getFlowTypeLabel(flow.flowType)}</h3>
-                <span className="text-sm bg-black/20 px-2 py-1 rounded">{flow.flowId}</span>
-            </div>
-            <p className="text-sm mb-2">Pointer ID: {flow.flowPointerId}</p>
-            {flow.value && (
-                <p className="text-sm">Value: {flow.value}</p>
-            )}
-
-            {isExpanded && flow.flowPointerId && (
-                <div
-                    className="relative mt-4 pl-5 sub-block-container"
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <div
-                        className="absolute left-0 top-0 bottom-0 w-0.5 bg-white/30"
-                        style={{left: '-20px'}}
-                    />
-                    {flow.flowType === BlockFlowType.CallStore && (
-                        <div className="bg-green-700/50 p-2 rounded-t-lg mb-2">
-                            <p className="text-sm font-semibold">Storing result: <span className="font-mono">{flow.value}</span></p>
-                        </div>
-                    )}
-                    <Block
-                        blockID={flow.flowPointerId}
-                        blockData={blocks[flow.flowPointerId]}
-                        blocks={blocks}
-                    />
+            <div className="flex items-center space-x-3 mb-2">
+                {icon}
+                <div className="flex-grow">
+                    <p className={`text-lg font-semibold ${textColor}`}>{flow.value}</p>
                 </div>
-            )}
-        </div>
+            </div>
+
+            <AnimatePresence>
+                {isExpanded && flow.flowPointerId && (
+                    <motion.div
+                        initial={{opacity: 0, height: 0}}
+                        animate={{opacity: 1, height: 'auto'}}
+                        exit={{opacity: 0, height: 0}}
+                        transition={{duration: 0.3}}
+                        className="relative mt-4 pl-5 sub-block-container"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div
+                            className="absolute left-0 top-0 bottom-0 w-0.5 bg-white/30"
+                            style={{left: '-20px'}}
+                        />
+                        <Block
+                            blockID={flow.flowPointerId}
+                            blockData={blocks[flow.flowPointerId]}
+                            blocks={blocks}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
     );
 };
 
@@ -96,7 +128,11 @@ const Block: React.FC<{
     const [isHorizontal, setIsHorizontal] = useState(false);
 
     return (
-        <div
+        <motion.div
+            layout
+            initial={{opacity: 0, scale: 0.95}}
+            animate={{opacity: 1, scale: 1}}
+            transition={{duration: 0.3}}
             className={`
                 block-container 
                 bg-[#1a202c]
@@ -108,11 +144,19 @@ const Block: React.FC<{
                 transition-all 
                 duration-300
                 ${isHorizontal ? 'mr-4' : 'mb-4'}
+                hover:shadow-xl
             `}
         >
             <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold">Block ID: {blockID}</h2>
-                <button
+                <motion.h2
+                    layout
+                    className="text-xl font-semibold"
+                >
+                    {blockData.name}
+                </motion.h2>
+                <motion.button
+                    whileHover={{scale: 1.1}}
+                    whileTap={{scale: 0.9}}
                     onClick={(e) => {
                         e.stopPropagation();
                         setIsHorizontal(!isHorizontal);
@@ -130,12 +174,13 @@ const Block: React.FC<{
                     "
                 >
                     {isHorizontal ? <ArrowRightLeft size={20}/> : <ArrowUpDown size={20}/>}
-                </button>
+                </motion.button>
             </div>
             <p className="text-sm text-gray-300 mb-1">Caller: {blockData.caller}</p>
             <p className="text-sm text-gray-300 mb-4">Name: {blockData.name}</p>
 
-            <div
+            <motion.div
+                layout
                 className={`
                     flows-container 
                     ${isHorizontal ? 'flex flex-row items-start' : 'flex flex-col'} 
@@ -143,17 +188,19 @@ const Block: React.FC<{
                     w-max
                 `}
             >
-                {blockData.flow.map((flow, index) => (
-                    <Flow
-                        key={index}
-                        blockID={blockID}
-                        flow={flow}
-                        blocks={blocks}
-                        isHorizontal={isHorizontal}
-                    />
-                ))}
-            </div>
-        </div>
+                <AnimatePresence>
+                    {blockData.flow.map((flow, index) => (
+                        <Flow
+                            key={index}
+                            blockID={blockID}
+                            flow={flow}
+                            blocks={blocks}
+                            isHorizontal={isHorizontal}
+                        />
+                    ))}
+                </AnimatePresence>
+            </motion.div>
+        </motion.div>
     );
 };
 
