@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { BlockData } from '../models/blockData';
+    import type {BlockData} from '../models/blockData';
     import Flow from './Flow.svelte';
     import { dragState } from './stores/DiagramStores';
 
@@ -34,7 +34,7 @@
 
     <div class="flows-container {isHorizontal ? 'horizontal' : 'vertical'} mt-4">
         {#each blockData.flow as flow}
-            <Flow {blockID} {flow} {blocks} {isHorizontal} />
+            <Flow {blockID} {flow} {blocks} {isHorizontal}/>
         {/each}
     </div>
 </div>
@@ -43,9 +43,9 @@
     .block-container {
         position: relative;
         color: white;
-        overflow: hidden;
-        width: fit-content;
-        min-width: 300px;
+        overflow: visible; /* Allow content to overflow */
+        width: 100%; /* Expand to fill the container */
+        height: 100%; /* Expand to fill the container */
         padding: 1.5rem;
         background: #1a202c;
         border-radius: 0.5rem;
